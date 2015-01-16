@@ -1,0 +1,5 @@
+This file can hold links to helpful documentation pages that aren't related to a specific topic or file.
+
+This page explains how to use djgnao to generate pdfs. https://docs.djangoproject.com/en/1.6/howto/outputting-pdf/
+
+This page is about static files, like images and css. https://docs.djangoproject.com/en/1.6/howto/static-files/
