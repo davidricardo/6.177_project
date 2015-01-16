@@ -1,3 +1,10 @@
+"""
+Urls for the site will be passed here first, and this passes
+them on to chargen/urls.py. 
+
+More information at https://docs.djangoproject.com/en/1.6/intro/tutorial03/
+"""
+
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
