@@ -2,9 +2,56 @@
 import math
 from chargen.models import Weapon
 
+<<<<<<< HEAD:character.py
 print Weapon.objects.all()
 RULING_ABILITIES = {"acrobatics":"dexterity","animal handling":"wisdom","arcana":"intelligence","athletics":"strength","deception":"charisma","history":"intelligence","insight":"wisdom","intimidation":"charisma","investigation":"intelligence","medicine":"wisdom","nature":"intelligence","perception":"wisdom","performance":"charisma","persuasion":"charisma","religion":"intelligence","sleight of hand":"dexterity","stealth":"dexterity","survival":"wisdom"}
 LANGUAGES = ["Abyssal", "Celestial", "Common", "Deep Speech", "Draconic", "Druidic", "Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin", "Halfling", "Infernal", "Orc", "Primordial", "Sylvan", "Thieves Cant", "Undercommon"]
+=======
+#splitting up long lists and dicts like this makes them much easier to read, 
+#plus it gets rid of obnoxiously long lines and you can easily collapse them.
+RULING_ABILITIES = {
+    "acrobatics": "dexterity",
+    "animal handling":" wisdom",
+    "arcana": "intelligence",
+    "athletics": "strength",
+    "deception": "charisma",
+    "history": "intelligence",
+    "insight": "wisdom",
+    "intimidation": "charisma",
+    "investigation": "intelligence",
+    "medicine": "wisdom",
+    "nature": "intelligence",
+    "perception": "wisdom",
+    "performance": "charisma",
+    "persuasion": "charisma",
+    "religion": "intelligence",
+    "sleight of hand": "dexterity",
+    "stealth": "dexterity",
+    "survival": "wisdom"
+}
+
+LANGUAGES = [
+    "Abyssal",
+    "Celestial",
+    "Common",
+    "Deep Speech",
+    "Draconic",
+    "Druidic",
+    "Dwarvish",
+    "Elvish",
+    "Giant",
+    "Gnomish",
+    "Goblin",
+    "Halfling",
+    "Infernal",
+    "Orc",
+    "Primordial",
+    "Sylvan",
+    "Thieves Cant",
+    "Undercommon"
+    ]
+
+>>>>>>> FETCH_HEAD:oursite/chargen/character.py
 
 class Character:
     def __init__(self, name, char_class, race, ability_scores={"strength":10,"dexterity":10,"constitution":10,"intelligence":10,"wisdom":10,"charisma":10}, level=1):
