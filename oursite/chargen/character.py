@@ -43,6 +43,7 @@ LANGUAGES = [
     "Sylvan",
     "Thieves Cant",
     "Undercommon"
+    ]
 
 
 class Character:
