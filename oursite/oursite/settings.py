@@ -37,9 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chargen',
-    'django_mongoengine.auth',
-    'django_mongoengine.admin.sites',
-    'django_mongoengine.admin',
+    #'django_mongoengine.auth',
+    #'django_mongoengine.admin.sites',
+    #'django_mongoengine.admin',
 )
 
 MIDDLEWARE_CLASSES = (

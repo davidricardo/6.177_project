@@ -1,6 +1,6 @@
 #stores Character objects
 import math
-
+TEST_MESSAGE = "HELLO? Rachel put in this test message text in character.py."
 #splitting up long lists and dicts like this makes them much easier to read, 
 #plus it gets rid of obnoxiously long lines and you can easily collapse them.
 RULING_ABILITIES = {
@@ -44,7 +44,6 @@ LANGUAGES = [
     "Thieves Cant",
     "Undercommon"
     ]
-
 
 class Character:
     def __init__(self, name, char_class, race, ability_scores={"strength":10,"dexterity":10,"constitution":10,"intelligence":10,"wisdom":10,"charisma":10}, level=1):
@@ -145,5 +144,3 @@ class Background:
 class Weapon:
     def __init__(self):
         pass
-
-\
