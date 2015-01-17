@@ -37,6 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chargen',
+    #'django_mongoengine.auth',
+    #'django_mongoengine.admin.sites',
+    #'django_mongoengine.admin',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -81,3 +84,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TEMPLATE_DIRS = [ os.path.join( BASE_DIR, 'templates' ) ]
