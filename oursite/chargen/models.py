@@ -27,8 +27,8 @@ class Weapon(models.Model):
     
     def __unicode__(self):
         return self.weapon_name
-class Race(models.Model):
-    name= models.CharField(max_length=25)
+class Char_Race(models.Model):
+    name= models.CharField(max_length=40)
     dex_mod= models.IntegerField(default=0)
     char_mod= models.IntegerField(default=0)
     str_mod= models.IntegerField(default=0)
@@ -36,4 +36,61 @@ class Race(models.Model):
     wis_mod= models.IntegerField(default=0)
     con_mod= models.IntegerField(default=0)
     speed= models.IntegerField()
+    skill_proficiencies= models.CharField(max_length=400)
+    optional_skill_proficiencies= models.IntegerField(default=0)
+    language= models.CharField(max_length=400)
+    optional_lang_proficiencies= models.IntegerField(default=0)
+    weapon_proficiencies= models.CharField(max_length=400)
+    armour_proficiencies= models.CharField(max_length=100)
+    tool_proficiencies= models.CharField(max_length=400)
+    features=models.CharField(max_length=2000)
+    
+
+    def __unicode__(self):
+        return self.name
+class job(models.Model):
+    name= models.CharField(max_length=40)
+    hit_die=models.IntegerField()
+    armour_proficiencies= models.CharField(max_length=100)
+    weapon_proficiencies= models.CharField(max_length=400)
+    tool_proficiencies= models.CharField(max_length=400)
+    saving_throws_proficiencies=models.CharField(max_length=400)
+    skill_proficiencies= models.CharField(max_length=400)
+    number_skill_proficiencies= models.IntegerField()
+    features=models.CharField(max_length=3000)
+    cantrips_known= models.IntegerField()
+    spells_known= models.IntegerField()
+    spell_slots_1st_level= models.IntegerField()
+    spell_casting_ability= models.CharField(max_length=15)
+    sugested_cantrips= models.CharField(max_length=2000)
+    sugested_1st_level_spells= models.CharField(max_length=2000)
+
+
+    def __unicode__(self):
+        return self.name
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+    
     
