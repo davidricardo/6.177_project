@@ -1,5 +1,6 @@
 #stores Character objects
 import math
+<<<<<<< Updated upstream
 
 
 TEST_MESSAGE = {
@@ -9,6 +10,14 @@ TEST_MESSAGE = {
 
 
 
+=======
+import os, sys
+sys.path.append('../')
+import oursite.settings
+os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
+from models import Weapon
+TEST_MESSAGE = "HELLO? Rachel put in this test message text in character.py."
+>>>>>>> Stashed changes
 #splitting up long lists and dicts like this makes them much easier to read, 
 #plus it gets rid of obnoxiously long lines and you can easily collapse them.
 RULING_ABILITIES = {
@@ -149,6 +158,4 @@ class Background:
         self.bonds = ""
         self.flaws = ""
 
-class Weapon:
-    def __init__(self):
-        pass
+print Weapon.objects.all()
