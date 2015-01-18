@@ -12,12 +12,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import Context, RequestContext, loader
 
-import character
-# from character import TEST_MESSAGE
+from character import VARS_TO_PASS
 
-def index(request, test_var_b):
+def index(request):
     #the template to load
     template = loader.get_template('chargen/index.html')
     #contexts are a set of variable => value pairs that a template uses to generate a page.
-    context = Context(character.TEST_MESSAGE)
+    context = Context(VARS_TO_PASS)
     return HttpResponse(template.render(context))

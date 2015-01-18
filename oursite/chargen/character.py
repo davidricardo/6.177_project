@@ -1,15 +1,17 @@
-#stores Character objects
-import math
+"""
+This file stores Character objects.
+"""
 
-import os, sys
+#Imports related to the django and the system
+import math, os, sys
 sys.path.append('../')
 import oursite.settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
-from models import Weapon
-TEST_MESSAGE = "HELLO? Rachel put in this test message text in character.py."
 
-#splitting up long lists and dicts like this makes them much easier to read, 
-#plus it gets rid of obnoxiously long lines and you can easily collapse them.
+#Imports that this file actually uses
+from models import Weapon
+
+
 RULING_ABILITIES = {
     "acrobatics": "dexterity",
     "animal handling":" wisdom",
@@ -50,7 +52,13 @@ LANGUAGES = [
     "Sylvan",
     "Thieves Cant",
     "Undercommon"
-    ]
+]
+
+#this dictionary includes everything that will be passed to the user.
+# its entries should take the form of "<variable name>": <varible value>.
+VARS_TO_PASS = {
+    "test_message" : Weapon.objects.all()
+}
 
 class Character:
     def __init__(self, name, char_class, race, ability_scores={"strength":10,"dexterity":10,"constitution":10,"intelligence":10,"wisdom":10,"charisma":10}, level=1):

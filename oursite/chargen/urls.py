@@ -9,11 +9,11 @@ or at https://docs.djangoproject.com/en/1.6/ref/urls/.
 """
 
 from django.conf.urls import patterns, url
-from chargen import views, character
+from chargen import views
 
-message = character.TEST_MESSAGE
+# message = character.TEST_MESSAGE
 
 urlpatterns = patterns('',
-    #not sure why this regex only matches
-    url(r'^$', views.index, kwargs={'test_var_b': message}, name='index')
+    #not sure why this regex only matches the empty string?
+    url(r'^$', views.index, name='index')
     )
