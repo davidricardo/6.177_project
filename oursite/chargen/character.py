@@ -6,7 +6,6 @@ sys.path.append('../')
 import oursite.settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from models import *
-TEST_MESSAGE = "HELLO? Rachel put in this test message text in character.py."
 
 #splitting up long lists and dicts like this makes them much easier to read,
 #plus it gets rid of obnoxiously long lines and you can easily collapse them.
@@ -83,20 +82,20 @@ class Character:
         for v in saves.keys():
             saves[v] = calculate_save(v)
 
-def get_proficiencies(self):
-    proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
+    def get_proficiencies(self):
+        proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
         for key in proficiencies.keys():
             proficiencies[key] = list(set(self.my_class.proficiencies[key].append(self.my_class.my_race.proficiencies[key].append(self.background.proficiencies[key]))))
-    return proficiencies
+        return proficiencies
 
-def get_equipment(self):
-    return list(set(self.my_class.equipment.append(self.background.equipment)))
+    def get_equipment(self):
+        return list(set(self.my_class.equipment.append(self.background.equipment)))
     
-    def get_languages(self):
-        return list(set(self.my_class.languages.append(self.background.languages.append(self.my_race.languages))))
+        def get_languages(self):
+            return list(set(self.my_class.languages.append(self.background.languages.append(self.my_race.languages))))
     
-    def get_features(self):
-        return list(set(self.my_class.features.append(self.background.langugaes.append(self.my_race.languages))))
+        def get_features(self):
+            return list(set(self.my_class.features.append(self.background.langugaes.append(self.my_race.languages))))
     
     #returns proficiency bonus, calculated from level
     def get_proficiency_bonus(self):
@@ -117,18 +116,18 @@ def get_equipment(self):
         else:
             return get_modifier(self.ability_scores[RULING_ABILITIES[skill]])
 
-#calculates saves from abilities and proficiencies
-def calculate_save(self,save):
-    if save in get_proficiencies()["saves"]:
-        return get_modifier(self.ability_scores[save])+get_proficiency_bonus()
+    #calculates saves from abilities and proficiencies
+    def calculate_save(self,save):
+        if save in get_proficiencies()["saves"]:
+            return get_modifier(self.ability_scores[save])+get_proficiency_bonus()
         else:
             return get_modifier(self.ability_scores[save])
                 
-                def get_max_hit_points(self):
-                    if self.level==1:
-return self.my_class.hit_die+get_modifier(self.ability_scores["constitution"])
-    else:
-        return level*(self.my_class.hit_die/2+1+get_modifier(self.ability_scores["constitution"]))
+    def get_max_hit_points(self):
+        if self.level==1:
+            return self.my_class.hit_die+get_modifier(self.ability_scores["constitution"])
+        else:
+            return level*(self.my_class.hit_die/2+1+get_modifier(self.ability_scores["constitution"]))
 
 class Char_Class:
     def __init__(self, character, name, level):
