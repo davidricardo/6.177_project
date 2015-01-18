@@ -21,9 +21,13 @@ class Weapon(models.Model):
     type_of_damage_die= models.IntegerField()
     range_close= models.IntegerField(default=0, blank=True)
     range_max=models.IntegerField(default=0,blank=True)
+<<<<<<< HEAD
     
     
     
+=======
+
+>>>>>>> origin/Rachael-shmer-shmer
     def __unicode__(self):
         return self.weapon_name
 
@@ -46,7 +50,10 @@ class Char_Race(models.Model):
     armour_proficiencies= models.CharField(max_length=100)
     tool_proficiencies= models.CharField(max_length=400)
     features=models.CharField(max_length=2000)
+<<<<<<< HEAD
   
+=======
+>>>>>>> origin/Rachael-shmer-shmer
 
     def __unicode__(self):
         return self.name
@@ -69,8 +76,11 @@ class job(models.Model):
     spell_casting_ability= models.CharField(max_length=15)
     sugested_cantrips= models.CharField(max_length=2000)
     sugested_1st_level_spells= models.CharField(max_length=2000)
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> origin/Rachael-shmer-shmer
     def __unicode__(self):
         return self.name
 
