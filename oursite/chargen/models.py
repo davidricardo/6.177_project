@@ -21,12 +21,15 @@ class Weapon(models.Model):
     type_of_damage_die= models.IntegerField()
     range_close= models.IntegerField(default=0, blank=True)
     range_max=models.IntegerField(default=0,blank=True)
-    
+     
     
     
     
     def __unicode__(self):
         return self.weapon_name
+
+    class Meta:
+        app_label= 'chargen'
 class Char_Race(models.Model):
     name= models.CharField(max_length=40)
     dex_mod= models.IntegerField(default=0)
@@ -48,6 +51,9 @@ class Char_Race(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        app_label= 'chargen'
 class job(models.Model):
     name= models.CharField(max_length=40)
     hit_die=models.IntegerField()
@@ -69,7 +75,27 @@ class job(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        app_label= 'chargen'
 
+        '''
+
+class sub_job(models.Model):
+    name = models.CharField(max_length=40)
+    
+
+
+
+
+
+
+    def __unicode__(self):
+        return self.name
+
+
+    class Meta:
+        app_label= 'chargen'
+        '''
 
 
 
