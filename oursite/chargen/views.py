@@ -18,8 +18,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, RequestContext, loader
 from django import forms
 
-<<<<<<< HEAD
-=======
 class AbilityScoreForm(forms.Form):
     strength     = forms.ChoiceField(
         [
@@ -129,23 +127,9 @@ class AbilityScoreForm(forms.Form):
             "onChange": 'updateAbilityScores()'
             })
         )
->>>>>>> FETCH_HEAD
 
 def index(request):
     template = loader.get_template('chargen/index.html')
-<<<<<<< HEAD
-    #contexts are a set of variable => value pairs that a template uses to generate a page.
-    context = Context(VARS_TO_PASS)
-    return HttpResponse(template.render(context))
-
-def pdf_view(request):
-    with open('charactergen.pdf', 'r') as pdf:
-        response = HttpResponse(pdf.read(), mimetype='application/pdf')
-        response['Content-Disposition'] = 'filename=mycharacter.pdf'
-        return response
-    pdf.closed
-=======
-
     if request.method == 'POST': # If the form has been submitted...
         ab_score_form = AbilityScoreForm(request.POST) # A form bound to the POST data
 
@@ -176,4 +160,10 @@ def pdf_view(request):
                 } )
             )
         )
->>>>>>> FETCH_HEAD
+
+def pdf_view(request):
+    with open('charactergen.pdf', 'r') as pdf:
+        response = HttpResponse(pdf.read(), mimetype='application/pdf')
+        response['Content-Disposition'] = 'filename=mycharacter.pdf'
+        return response
+    pdf.closed
