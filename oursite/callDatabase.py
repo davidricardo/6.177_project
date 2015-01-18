@@ -16,6 +16,7 @@ from oursite import settings
 DJANGO_SETTINGS_MODULE = settings
 """
 import os
+import oursite
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from chargen.models import Weapon
 from django.core import serializers
