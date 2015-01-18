@@ -10,17 +10,14 @@ or at https://docs.djangoproject.com/en/1.6/topics/http/views/
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.template import RequestContext, loader
+from django.template import Context, RequestContext, loader
 
+import character
+# from character import TEST_MESSAGE
 
 def index(request, test_var_b):
-
-
     #the template to load
     template = loader.get_template('chargen/index.html')
     #contexts are a set of variable => value pairs that a template uses to generate a page.
-    context = RequestContext(request, {
-        'test_var_a': test_var_b,
-        })
+    context = Context(character.TEST_MESSAGE)
     return HttpResponse(template.render(context))
-    # return HttpResponse("Hello, world. This is the index page.")
