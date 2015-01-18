@@ -57,7 +57,15 @@ LANGUAGES = [
 #this dictionary includes everything that will be passed to the user.
 # its entries should take the form of "<variable name>": <varible value>.
 VARS_TO_PASS = {
-    "test_message" : Weapon.objects.all()
+    # "test_message" : Weapon.objects.all()
+    "starting_ability_scores" : {
+        "strength" : 8,
+        "dexterity" : 8,
+        "constitution" : 8,
+        "intelligence" : 8,
+        "wisdom" : 8,
+        "charisma" : 8
+        }
 }
 
 class Character:
