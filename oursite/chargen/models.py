@@ -21,12 +21,6 @@ class Weapon(models.Model):
     type_of_damage_die= models.IntegerField()
     range_close= models.IntegerField(default=0, blank=True)
     range_max=models.IntegerField(default=0,blank=True)
-<<<<<<< HEAD
-     
-=======
-    class Meta:
-        app_label = 'chargen'
->>>>>>> f4b8b48c073a172fe4b611121516f1a22338a3cf
     
     
     
@@ -52,8 +46,7 @@ class Char_Race(models.Model):
     armour_proficiencies= models.CharField(max_length=100)
     tool_proficiencies= models.CharField(max_length=400)
     features=models.CharField(max_length=2000)
-    class Meta:
-        app_label = 'chargen'
+  
 
     def __unicode__(self):
         return self.name
@@ -76,15 +69,41 @@ class job(models.Model):
     spell_casting_ability= models.CharField(max_length=15)
     sugested_cantrips= models.CharField(max_length=2000)
     sugested_1st_level_spells= models.CharField(max_length=2000)
-    class Meta:
-        app_label = 'chargen'
+    
 
     def __unicode__(self):
         return self.name
 
     class Meta:
         app_label= 'chargen'
+class armors(models.Model):
+     name= models.CharField(max_length=40)
+     armour_class= models.CharField(max_length=40)
+     ac_mod= models.IntegerField()
+     strgenth_requirement= models.IntegerField(default=0)
+     disadvantage_stealth= models.BooleanField(default=False)
+     very_expensive= models.BooleanField(default=False)
+     moderatly_expensive= models.BooleanField(default=False)
 
+     def __unicode__(self):
+        return self.name
+     class Meta:
+        app_label= 'chargen'
+class backround(models.Model):
+    name= models.CharField(max_length=40)
+    skill_proficiencies= models.CharField(max_length=400)
+    language= models.CharField(max_length=400)
+    tool_proficiencies= models.CharField(max_length=400)
+    equipment = models.CharField(max_length=2000)
+    feature = models.CharField(max_length=2000)
+    
+
+
+
+    def __unicode__(self):
+        return self.name
+    class Meta:
+        app_label= 'chargen'
         '''
 
 class sub_job(models.Model):
