@@ -10,7 +10,7 @@ from django.db import models
 
 # Create your models here.
 
-class Weapon(models.Model):
+class dWeapon(models.Model):
     weapon_name= models.CharField(max_length=30)
     martial_arts= models.BooleanField(default=False)
     mele= models.BooleanField(default=True)
@@ -21,13 +21,15 @@ class Weapon(models.Model):
     type_of_damage_die= models.IntegerField()
     range_close= models.IntegerField(default=0, blank=True)
     range_max=models.IntegerField(default=0,blank=True)
-
+    
+    
+    
     def __unicode__(self):
         return self.weapon_name
 
     class Meta:
         app_label= 'chargen'
-class Char_Race(models.Model):
+class dRace(models.Model):
     name= models.CharField(max_length=40)
     dex_mod= models.IntegerField(default=0)
     char_mod= models.IntegerField(default=0)
@@ -44,14 +46,14 @@ class Char_Race(models.Model):
     armour_proficiencies= models.CharField(max_length=100)
     tool_proficiencies= models.CharField(max_length=400)
     features=models.CharField(max_length=2000)
-
+  
 
     def __unicode__(self):
         return self.name
 
     class Meta:
         app_label= 'chargen'
-class job(models.Model):
+class dChar_class(models.Model):
     name= models.CharField(max_length=40)
     hit_die=models.IntegerField()
     armour_proficiencies= models.CharField(max_length=100)
@@ -67,13 +69,14 @@ class job(models.Model):
     spell_casting_ability= models.CharField(max_length=15)
     sugested_cantrips= models.CharField(max_length=2000)
     sugested_1st_level_spells= models.CharField(max_length=2000)
+    
 
     def __unicode__(self):
         return self.name
 
     class Meta:
         app_label= 'chargen'
-class armors(models.Model):
+class darmors(models.Model):
      name= models.CharField(max_length=40)
      armour_class= models.CharField(max_length=40)
      ac_mod= models.IntegerField()
@@ -86,7 +89,7 @@ class armors(models.Model):
         return self.name
      class Meta:
         app_label= 'chargen'
-class backround(models.Model):
+class dbackround(models.Model):
     name= models.CharField(max_length=40)
     skill_proficiencies= models.CharField(max_length=400)
     language= models.CharField(max_length=400)
@@ -101,16 +104,31 @@ class backround(models.Model):
         return self.name
     class Meta:
         app_label= 'chargen'
-        '''
+        
 
-class sub_job(models.Model):
+class dsub_Char_class(models.Model):
     name = models.CharField(max_length=40)
+    level_1_feature = models.CharField(max_length=2000)
+    level_2_feature = models.CharField(max_length=2000)
+    level_3_feature = models.CharField(max_length=2000)
+    level_4_feature = models.CharField(max_length=2000)
+    level_5_feature = models.CharField(max_length=2000)
+    level_6_feature = models.CharField(max_length=2000)
+    level_7_feature = models.CharField(max_length=2000)
+    level_8_feature = models.CharField(max_length=2000)
+    level_9_feature = models.CharField(max_length=2000)
+    level_10_feature = models.CharField(max_length=2000)
+    level_11_feature = models.CharField(max_length=2000)
+    level_12_feature = models.CharField(max_length=2000)
+    level_13_feature = models.CharField(max_length=2000)
+    level_14_feature = models.CharField(max_length=2000)
+    level_15_feature = models.CharField(max_length=2000)
+    level_16_feature = models.CharField(max_length=2000)
+    level_17_feature = models.CharField(max_length=2000)
+    level_18_feature = models.CharField(max_length=2000)
+    level_19_feature = models.CharField(max_length=2000)
+    level_20_feature = models.CharField(max_length=2000)
     
-
-
-
-
-
 
     def __unicode__(self):
         return self.name
@@ -118,8 +136,7 @@ class sub_job(models.Model):
 
     class Meta:
         app_label= 'chargen'
-        '''
-
+        
 
 
 
