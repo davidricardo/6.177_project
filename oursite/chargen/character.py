@@ -87,6 +87,7 @@ class Character:
         my_dict["Proficiency Bonus"]=self.get_proficiency_bonus(),
         
         for key in self.ability_scores.keys():
+            #capitalizes ability scores, i.e, "Strength" and "Strength modifier"
             my_dict[key[0].upper()+key[1:len(key)]]=self.ability_scores[key]
             my_dict[key[0].upper()+key[1:len(key)]+" Modifier"]=self.get_modifier(self.ability_scores[key])
         my_dict["Initiative"] = self.get_initiative()
@@ -102,7 +103,6 @@ class Character:
         my_dict["Features"]=', '.join(self.get_features())
         return my_dict
 
-        
     def get_proficiencies(self):
         proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
         for key in proficiencies.keys():
@@ -132,7 +132,7 @@ class Character:
         features = list(set(theList))
         return features
 
-    def get_passive(self):
+    def get_passive_perception(self):
         return 10+self.skills["perception"]
     
     #returns proficiency bonus, calculated from level
