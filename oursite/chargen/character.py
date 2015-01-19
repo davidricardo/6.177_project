@@ -1,5 +1,5 @@
 #stores Character objects
-import math
+import math, random
 
 import os, sys
 sys.path.append('../')
@@ -30,6 +30,27 @@ RULING_ABILITIES = {
     "stealth": "dexterity",
     "survival": "wisdom"
 }
+
+SKILLS_TOTAL = [
+    "acrobatics",
+    "animal handling",
+    "arcana",
+    "athletics",
+    "deception",
+    "history",
+    "insight",
+    "intimidation",
+    "investigation",
+    "medicine",
+    "nature",
+    "perception",
+    "performance",
+    "persuasion",
+    "religion",
+    "sleight of hand",
+    "stealth",
+    "survival"
+]
 
 ABILITY_KEYS = {"strength":"str",
                 "dexterity":"dex",
@@ -62,6 +83,10 @@ LANGUAGES = [
 
 class Character:
     def __init__(self, name, char_class, race, ability_scores={"strength":10,"dexterity":10,"constitution":10,"intelligence":10,"wisdom":10,"charisma":10}, level=1):
+        self.languages = []
+        self.equipment = []
+        self.proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
+        self.features = []
         self.level = level
         self.name = name
         self.ability_scores = ability_scores
@@ -102,35 +127,6 @@ class Character:
         my_dict["Features"]=', '.join(self.get_features())
         return my_dict
 
-    def get_proficiencies(self):
-        proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
-        for key in proficiencies.keys():
-            theList = self.my_class.proficiencies[key]
-            theList.extend(self.my_race.proficiencies[key])
-            theList.extend(self.background.proficiencies[key])
-            proficiencies[key] = list(set(theList))
-        return proficiencies
-
-    def get_equipment(self):
-        theList = self.my_class.equipment
-        theList.extend(self.background.equipment)
-        equipment = list(set(theList))
-        return equipment
-    
-    def get_languages(self):
-        theList = self.my_class.languages
-        theList.extend(self.my_race.languages)
-        theList.extend(self.background.languages)
-        languages = list(set(theList))
-        return languages
-    
-    def get_features(self):
-        theList = self.my_class.features
-        theList.extend(self.my_race.features)
-        theList.extend(self.background.features)
-        features = list(set(theList))
-        return features
-
     def get_passive_perception(self):
         return 10+self.skills["perception"]
     
@@ -148,16 +144,16 @@ class Character:
     
     #calculates skills from ruling abilities and proficiencies
     def calculate_skill(self,skill):
-        if skill in self.get_proficiencies()["skill"]:
+        if skill in self.proficiencies["skill"]:
             return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+self.get_proficiency_bonus()
         else:
             return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])
 
     #calculates saves from abilities and proficiencies
     def calculate_save(self,save):
-        if save in self.get_proficiencies()["saves"]:
+        if save in self.proficiencies["saves"]:
             return self.get_modifier(self.ability_scores[save])+self.get_proficiency_bonus()
-        elif ABILITY_KEYS[save] in self.get_proficiencies()["saves"]:
+        elif ABILITY_KEYS[save] in self.proficiencies["saves"]:
             return self.get_modifier(self.ability_scores[save])+self.get_proficiency_bonus()
         else:
             return self.get_modifier(self.ability_scores[save])
@@ -179,12 +175,17 @@ class Char_Class:
         armor = string_to_list(job.objects.get(name=name).armour_proficiencies)
         tools = string_to_list(job.objects.get(name=name).tool_proficiencies)
         saves = string_to_list(job.objects.get(name=name).saving_throws_proficiencies)
-        skills = string_to_list(job.objects.get(name=name).skill_proficiencies)
+        skills = choose(string_to_list(job.objects.get(name=name).skill_proficiencies),job.objects.get(name=name).number_skill_proficiencies,character.proficiencies["skill"])
         self.proficiencies = {"weapon":weapons,"armor":armor,"skill":skills,"saves":saves,"tools":tools}
+        for key in self.proficiencies:
+            character.proficiencies[key].extend(self.proficiencies[key])
         self.equipment = []
+        character.equipment.extend(self.equipment)
         self.features = string_to_list(job.objects.get(name=name).features)
+        character.features.extend(self.features)
         self.archetype = Archetype("",level)
         self.languages = []
+        character.languages.extend(self.languages)
 
 class Archetype(Char_Class):
     def __init__(self, name, level):
@@ -202,15 +203,15 @@ class Race:
         weapons = string_to_list(Char_Race.objects.get(name=name).weapon_proficiencies)
         armor = string_to_list(Char_Race.objects.get(name=name).armour_proficiencies)
         tools = string_to_list(Char_Race.objects.get(name=name).tool_proficiencies)
-        skills = string_to_list(Char_Race.objects.get(name=name).skill_proficiencies)
+        skills = string_to_list(Char_Race.objects.get(name=name).skill_proficiencies)+choose(SKILLS_TOTAL,Char_Race.objects.get(name=name).optional_skill_proficiencies,character.proficiencies["skill"])
         self.proficiencies = {"weapon":weapons,"armor":armor,"skill":skills,"saves":[],"tools":tools}
-        self.languages = string_to_list(Char_Race.objects.get(name=name).language)
+        for key in self.proficiencies:
+            character.proficiencies[key].extend(self.proficiencies[key])
+        self.languages = string_to_list(Char_Race.objects.get(name=name).language)+choose(LANGUAGES,Char_Race.objects.get(name=name).optional_lang_proficiencies,character.languages)
+        character.languages.extend(self.languages)
         self.base_speed = Char_Race.objects.get(name=name).speed
         self.features = string_to_list(Char_Race.objects.get(name=name).features)
-
-class Subrace(Race):
-    def __init__(self):
-        pass
+        character.features.extend(self.features)
 
 class Background:
     def __init__(self):
@@ -225,6 +226,30 @@ class Background:
         self.flaws = ""
 
 def string_to_list(string):
+    if string==" " or string=="" or string==None:
+        return []
     string = string.replace(", ",",")
     string = string.lower()
     return string.split(",")
+
+def choose(l,n,l2):
+    if n==0:
+        return []
+    index_array = []
+    return_array = []
+    p = 0
+    for k in range(len(l)):
+        if l[k] in l2:
+            p+=1
+    if len(l)-p<n:
+        return l
+    for i in range(n):
+        x = random.randrange(0,len(l))
+        while (x in index_array) or (l[x] in l2):
+            x = random.randrange(0,len(l))
+        index_array.append(x)
+        return_array.append(l[x])
+    return return_array
+
+
+        

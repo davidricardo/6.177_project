@@ -56,10 +56,10 @@ def fill_pdf(c = Character("Rachel","Barbarian","Dwarf - Hill",{"strength":8,"de
               ('Persuasion',pre(c.skills["persuasion"])),
               ('SleightofHand',pre(c.skills["sleight of hand"])),
               ('Survival',pre(c.skills["survival"])),
-              ('Passive',c.get_passive()),
-              ('ProficienciesLang',c.get_languages()),
-              ('Equipment',c.get_equipment()),
-              ('Features and Traits',c.get_features())
+              ('Passive',c.get_passive_perception()),
+              ('ProficienciesLang',c.languages),
+              ('Equipment',c.equipment),
+              ('Features and Traits',c.features)
               ]
     fdf = forge_fdf("",fields,[],[],[])
     fdf_file = open("data.fdf","wb")
