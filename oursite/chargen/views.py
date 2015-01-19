@@ -124,9 +124,21 @@ class AbilityScoreForm(forms.Form):
         )
 
 def index(request):
-    template = loader.get_template('chargen/index.html')
+    index = loader.get_template('chargen/index.html')
+    classrace = loader.get_template('chargen/classrace.html')
+    abilityscores = loader.get_template('chargen/abilityscores.html')
 
-    if request.method == 'POST': # If the form has been submitted...
+    if request.method != 'POST': # If a form has not been submitted yet, i.e, it is the first part
+        return HttpResponse(
+                classrace.render(
+                    RequestContext( request, {
+                        #variable : value pairs would go here
+                    } )
+                )
+            )        
+
+
+    else: # If the form has been submitted...
         ab_score_form = AbilityScoreForm(request.POST) # A form bound to the POST data
 
         if ab_score_form.is_valid(): # All validation rules pass
@@ -146,13 +158,5 @@ def index(request):
                 "<p>Charisma: " + str(int(charisma)) + "</p>"
                 )
     
-    else:
-        ab_score_form = AbilityScoreForm() # An unbound form
+    return HttpResponse( "Error!" )
 
-    return HttpResponse(
-            template.render(
-                RequestContext( request, {
-                'ab_score_form': ab_score_form
-                } )
-            )
-        )

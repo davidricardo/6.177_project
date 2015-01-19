@@ -7,7 +7,6 @@ import oursite.settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from models import *
 from collections import OrderedDict
-TEST_MESSAGE = "HELLO? Rachel put in this test message text in character.py."
 
 #splitting up long lists and dicts like this makes them much easier to read,
 #plus it gets rid of obnoxiously long lines and you can easily collapse them.

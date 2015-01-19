@@ -1,0 +1,69 @@
+{% extends "chargen/index.html" %}
+
+{% block tracker %}
+You are currently inputting ability scores.
+{% endblock %}
+
+{% block classrace %}
+{% endblock classrace %}
+
+{% block abilityscores %}
+<form method="post">{% csrf_token %}
+    <table>
+        <tr>
+            <td>
+                <table class="ability_score_table">
+                {{ ab_score_form.as_table }}
+                </table>
+            </td>
+            <td>
+                <div>
+                    <p class="total_ability_score_title"> 
+                        <span id="total_ability_score_box"></span> 
+                    points spent</p>
+                </div>
+            </td>
+        </tr>
+    </table>
+<input type="submit" value="Submit" />
+</form>
+
+<script type="text/javascript">
+    function updateAbilityScores() {
+        var strength_box = document.getElementById("id_strength");
+        var dexterity_box = document.getElementById("id_dexterity");
+        var constitution_box = document.getElementById("id_constitution");
+        var intelligence_box = document.getElementById("id_intelligence");
+        var wisdom_box = document.getElementById("id_wisdom");
+        var charisma_box = document.getElementById("id_charisma");
+
+        strength = strength_box.options[strength_box.selectedIndex].value;
+        dexterity = dexterity_box.options[dexterity_box.selectedIndex].value;
+        constitution = constitution_box.options[constitution_box.selectedIndex].value;
+        intelligence = intelligence_box.options[intelligence_box.selectedIndex].value;
+        wisdom = wisdom_box.options[wisdom_box.selectedIndex].value;
+        charisma = charisma_box.options[charisma_box.selectedIndex].value;
+
+        document.getElementById("total_ability_score_box").innerHTML = 
+            getCost(strength) + getCost(dexterity) + getCost(constitution) + getCost(intelligence) + getCost(wisdom) + getCost(charisma)
+    }
+
+    function getCost(ability) {
+        //returns the point-buy cost for an ability
+        var to_return = ability - 8;
+        if (ability ==14) {
+            to_return = 7;
+        }
+        if (ability == 16) {
+            to_return -= 1
+        }
+        if (ability > 14) {
+            to_return += ability-15+ ((ability-13)^2) / (2*Math.floor( (ability-13)/2 ));
+        }
+        to_return = Math.floor(to_return);
+        return to_return        
+    }
+</script>
+
+<script type="text/javascript">updateAbilityScores();</script>
+{% endblock abilityscores %}

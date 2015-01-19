@@ -47,7 +47,7 @@ class Char_Race(models.Model):
 
     def __unicode__(self):
         return self.name
-
+        
     class Meta:
         app_label= 'chargen'
 class job(models.Model):
@@ -92,25 +92,6 @@ class sub_job(models.Model):
         '''
 
 
-
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-    
-    
+class Task(models.Model):
+    def foo(self):
+        return "bar"
