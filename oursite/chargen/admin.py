@@ -16,4 +16,13 @@ from chargen.models import dbackstory
 admin.site.register(dbackstory)
 from chargen.models import dsub_class
 admin.site.register(dsub_class)
+from chargen.models import user_entry
+admin.site.register(user_entry)
+#from chargen.models import spell
+#admin.site.register(spell)
+
+
+
+
+
 # Register your models here.
