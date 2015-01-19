@@ -14,12 +14,12 @@ from chargen.models import darmors
 admin.site.register(darmors)
 from chargen.models import dbackstory
 admin.site.register(dbackstory)
-from chargen.models import dsub_class
-admin.site.register(dsub_class)
+from chargen.models import dsubclass
+admin.site.register(dsubclass)
 from chargen.models import user_entry
 admin.site.register(user_entry)
-#from chargen.models import spell
-#admin.site.register(spell)
+from chargen.models import dspell
+admin.site.register(dspell)
 
 
 

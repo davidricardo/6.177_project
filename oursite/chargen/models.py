@@ -107,8 +107,9 @@ class dbackstory(models.Model):
         app_label= 'chargen'
         
 
-class dsub_class(models.Model):
+class dsubclass(models.Model):
     name = models.CharField(max_length=40)
+    char_class=models.ForeignKey('dChar_class')
     level_1_feature = models.CharField(max_length=2000)
     level_2_feature = models.CharField(max_length=2000)
     level_3_feature = models.CharField(max_length=2000)
@@ -142,7 +143,7 @@ class dsub_class(models.Model):
 class user_entry(models.Model):
     name = models.CharField(max_length=40)
     char_class= models.ForeignKey('dChar_class')
-    sub_class= models.ForeignKey('dsub_class')
+    sub_class= models.ForeignKey('dsubclass')
     race= models.ForeignKey('dRace')
     strgenth=models.IntegerField()
     dexterity=models.IntegerField()
@@ -163,53 +164,41 @@ class user_entry(models.Model):
         app_label= 'chargen'
         
 
-class spell(models.Model):
+class dspell(models.Model):
     char_class= models.ForeignKey('dChar_class')
-    sub_class= models.ForeignKey('dsub_class')
+    sub_class= models.ForeignKey('dsubclass')
     level=models.IntegerField()
-    known_cantrips= models.IntegerField()
-    known_spell_level1= models.IntegerField()
-    known_spell_level2= models.IntegerField()
-    known_spell_level3= models.IntegerField()
-    known_spell_level4= models.IntegerField()
-    known_spell_level5= models.IntegerField()
-    known_spell_level6= models.IntegerField()
-    known_spell_level7= models.IntegerField()
-    known_spell_level18= models.IntegerField()
-    known_spell_level9=models.IntegerField()
-    slots_or_prepered_spell_level1= models.IntegerField()
-    slots_or_prepered_spell_level2= models.IntegerField()
-    slots_or_prepered_spell_level3= models.IntegerField()
-    slots_or_prepered_spell_level4= models.IntegerField()
-    slots_or_prepered_spell_level5= models.IntegerField()
-    slots_or_prepered_spell_level6= models.IntegerField()
-    slots_or_prepered_spell_level7= models.IntegerField()
-    slots_or_prepered_spell_level8= models.IntegerField()
-    slots_or_prepered_spell_level9=models.IntegerField()
-    possible_spells_level1= models.IntegerField()
-    possible_spells_level2= models.IntegerField()
-    possible_spells_level3= models.IntegerField()
-    possible_spells_level4= models.IntegerField()
-    possible_spells_level5= models.IntegerField()
-    possible_spells_level6= models.IntegerField()
-    possible_spells_level7= models.IntegerField()
-    possible_spells_level8= models.IntegerField()
-    possible_spells_level9= models.IntegerField()
+    slots_or_prepered_spell_level1= models.IntegerField(default=0)
+    slots_or_prepered_spell_level2= models.IntegerField(default=0)
+    slots_or_prepered_spell_level3= models.IntegerField(default=0)
+    slots_or_prepered_spell_level4= models.IntegerField(default=0)
+    slots_or_prepered_spell_level5= models.IntegerField(default=0)
+    slots_or_prepered_spell_level6= models.IntegerField(default=0)
+    slots_or_prepered_spell_level7= models.IntegerField(default=0)
+    slots_or_prepered_spell_level8= models.IntegerField(default=0)
+    slots_or_prepered_spell_level9=models.IntegerField(default=0)
+    possible_spells_level1= models.IntegerField(default=0)
+    possible_spells_level2= models.IntegerField(default=0)
+    possible_spells_level3= models.IntegerField(default=0)
+    possible_spells_level4= models.IntegerField(default=0)
+    possible_spells_level5= models.IntegerField(default=0)
+    possible_spells_level6= models.IntegerField(default=0)
+    possible_spells_level7= models.IntegerField(default=0)
+    possible_spells_level8= models.IntegerField(default=0)
+    possible_spells_level9= models.IntegerField(default=0)
+    cantrips_known= models.IntegerField()
     total_spells= models.IntegerField()
     minium_1st_level_spells= models.IntegerField()
 
 
     def __unicode__(self):
-        return self.sub_class
+        name=self.char_class.name +" "+ self.sub_class.name + " level "+ str(self.level)
+        return name
 
 
     class Meta:
         app_label= 'chargen'
-        
-
-
-
-
+    
 
 
     
