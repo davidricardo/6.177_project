@@ -89,10 +89,11 @@ class darmors(models.Model):
         return self.name
      class Meta:
         app_label= 'chargen'
-class dbackround(models.Model):
+class dbackstory(models.Model):
     name= models.CharField(max_length=40)
     skill_proficiencies= models.CharField(max_length=400)
     language= models.CharField(max_length=400)
+    optional_lang_proficiencies= models.IntegerField(default=0)
     tool_proficiencies= models.CharField(max_length=400)
     equipment = models.CharField(max_length=2000)
     feature = models.CharField(max_length=2000)
@@ -106,7 +107,7 @@ class dbackround(models.Model):
         app_label= 'chargen'
         
 
-class dsub_Char_class(models.Model):
+class dsub_class(models.Model):
     name = models.CharField(max_length=40)
     level_1_feature = models.CharField(max_length=2000)
     level_2_feature = models.CharField(max_length=2000)

@@ -12,8 +12,8 @@ from chargen.models import dChar_class
 admin.site.register(dChar_class)
 from chargen.models import darmors
 admin.site.register(darmors)
-from chargen.models import dbackround
-admin.site.register(dbackround)
-from chargen.models import dsub_Char_class
-admin.site.register(dsub_Char_class)
+from chargen.models import dbackstory
+admin.site.register(dbackstory)
+from chargen.models import dsub_class
+admin.site.register(dsub_class)
 # Register your models here.
