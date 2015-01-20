@@ -1,6 +1,37 @@
-id,weapon_name,martial_arts,mele,finesse,damage_type,two_handed,number_of_damage_die,type_of_damage_die,range_close,range_max
-5,Javelin,0,1,0,piercing,0,1,6,30,120
-4,Handaxe,0,1,0,slashing,0,1,6,20,60
-3,Greatclub,0,1,0,bludgeoning,0,1,8,0,0
-2,Dagger,0,1,1,piercing,0,1,4,20,60
-1,Club,0,1,0,bludgeoning,0,1,4,0,0
+id,weapon_name,martial_arts,mele,finesse,damage_type,two_handed,number_of_damage_die,type_of_damage_die,range_close,range_max,versatile,two_handed_damage
+5,Javelin,0,1,0,piercing,0,1,6,30,120,0,0
+4,Handaxe,0,1,0,slashing,0,1,6,20,60,0,0
+3,Greatclub,0,1,0,bludgeoning,1,1,8,0,0,0,0
+2,Dagger,0,1,1,piercing,0,1,4,20,60,0,0
+1,Club,0,1,0,bludgeoning,0,1,4,0,0,0,0
+6,Light hammer,0,1,0,bludgeoning,0,1,4,20,60,0,0
+8,Quarterstaff,0,1,0,bludgeoning,0,1,6,0,0,1,8
+9,Sickel,0,1,0,slashing,0,1,4,0,0,0,0
+10,Spear,0,1,0,piercing,0,1,6,20,60,1,8
+11,Unarmed strikes,0,1,0,bludgeoning,0,0,1,0,0,0,0
+12,light crossbow,0,0,0,piercing,1,1,8,80,320,0,0
+13,dart,0,0,1,piercing,0,1,4,20,60,0,0
+14,Shortbow,0,0,0,piercing,1,1,6,80,320,0,0
+15,Sling,0,0,0,bludgeoning,0,1,4,30,120,0,0
+16,Battleaxe,1,1,1,slashing,0,1,8,0,0,1,10
+17,flail,1,1,0,bludgeoning,0,1,8,0,0,0,0
+18,glaive,1,1,0,slashing,1,1,10,0,0,0,0
+19,Greataxe,1,1,0,slashing,1,1,12,0,0,0,0
+20,Greatsword,1,1,0,slashing,1,2,6,0,0,0,0
+21,Halberd,1,1,0,slashing,1,1,10,0,0,0,0
+22,lance,1,1,0,piercing,1,1,12,0,0,0,0
+23,longsword,1,1,0,slashing,0,1,8,0,0,1,10
+24,Maul,1,1,0,bludgeoning,1,2,6,0,0,0,0
+25,Morningstar,1,1,0,piercing,0,1,8,0,0,0,0
+26,Pike,1,1,0,piercing,1,1,10,0,0,0,0
+27,Rapier,1,1,1,piercing,1,1,8,0,0,0,0
+28,Scimitar,1,1,1,slashing,0,1,6,0,0,0,0
+29,shortswords,1,1,1,piercing,0,1,6,0,0,0,0
+30,trident,1,1,0,piercing,0,1,6,20,60,1,8
+31,War pick,1,1,0,piercing,0,1,8,0,0,0,0
+32,warhammer,1,1,0,bludgeoning,0,1,8,0,0,1,10
+33,whip,1,1,1,slashing,0,1,4,0,0,0,0
+34,blowgun,1,0,0,piercing,0,0,1,25,100,0,0
+35,hand crossbow,1,0,0,piercing,0,1,6,30,120,0,0
+36,heavy crossbow,1,0,0,piercing,1,1,10,100,400,0,0
+37,longbow,1,0,0,piercing,1,1,8,150,600,0,0
