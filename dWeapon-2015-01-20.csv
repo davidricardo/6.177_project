@@ -1,0 +1,6 @@
+id,weapon_name,martial_arts,mele,finesse,damage_type,two_handed,number_of_damage_die,type_of_damage_die,range_close,range_max
+5,Javelin,0,1,0,piercing,0,1,6,30,120
+4,Handaxe,0,1,0,slashing,0,1,6,20,60
+3,Greatclub,0,1,0,bludgeoning,0,1,8,0,0
+2,Dagger,0,1,1,piercing,0,1,4,20,60
+1,Club,0,1,0,bludgeoning,0,1,4,0,0

@@ -64,7 +64,15 @@ admin.site.register(dsubclass)
 from chargen.models import user_entry
 admin.site.register(user_entry)
 from chargen.models import dspell
-admin.site.register(dspell)
+
+class dspellResource(resources.ModelResource):
+    class Meta:
+        model = dspell
+
+class dspellAdmin(ImportExportModelAdmin):
+    resource_class = dspellResource
+
+admin.site.register(dspell,dspellAdmin)
 
 
 class dRaceResource(resources.ModelResource):

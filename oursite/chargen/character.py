@@ -31,6 +31,18 @@ RULING_ABILITIES = {
     "survival": "wisdom"
 }
 
+INSTRUMENTS = ["bagpipes",
+               "drum",
+               "dulcimer",
+               "flute",
+               "lute",
+               "lyre",
+               "horn",
+               "pan flute",
+               "shawm",
+               "viol"
+               ]
+
 SKILLS_TOTAL = [
     "acrobatics",
     "animal handling",
@@ -112,8 +124,11 @@ class Character:
         self.background = Background(self)
         self.skills = {"acrobatics":0,"animal handling":0,"arcana":0,"athletics":0,"deception":0,"history":0,"insight":0,"intimidation":0,"investigation":0,"medicine":0,"nature":0,"perception":0,"performance":0,"persuasion":0,"religion":0,"sleight of hand":0,"stealth":0,"survival":0}
         self.saves = {"strength":0,"dexterity":0,"constitution":0,"intelligence":0,"wisdom":0,"charisma":0}
+        [x.lower() for x in self.features]
         self.features = list(set(self.features))
+        [x.lower() for x in self.equipment]
         self.equipment = list(set(self.equipment))
+        [x.lower() for x in self.languages]
         self.languages = list(set(self.languages))
         for key in self.proficiencies.keys():
             self.proficiencies[key] = list(set(self.proficiencies[key]))
@@ -211,23 +226,66 @@ class Char_Class:
         character.languages.extend(self.languages)
 
     def get_equipment(self, character):
-        if name=="Barbarian":
-            if (random.randrange(0,1)==0):
+        if self.class_name=="Barbarian":
+            if (random.randrange(0,2)==0):
                 character.weapons.append("greataxe")
             else:
-                character.weapons.append(dWeapons.objects.get(martial=True,mele=True))
+                pass
+                #x = len(dWeapon.objects.filter(martial_arts=True).filter(mele=True))
+                #character.weapons.append(dWeapon.objects.filter(martial_arts=True).filter(mele=True)[random.randrange(0,x)].weapon_name)
+                
+            if (random.randrange(0,2)==0):
+                character.weapons.extend(["handaxe","handaxe"])
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+            self.equipment.extend(["explorer's pack", "four javelins"])
+        if self.class_name=="Bard":
+            if (random.randrange(0,3)==0):
+                character.weapons.append("rapier")
+            elif random.randrange(0,2)==0:
+                character.weapons.append("longsword")
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+                
+            if (random.randrange(0,2)==0):
+                self.equipment.append("diplomat's pack")
+            else:
+                self.equipment.append("entertainer's pack")
+            if (random.randrange(0,3)>0):
+                self.equipment.append("lute")
+            else:
+                self.equipment.append(INSTRUMENTS[random.randrange(0,len(INSTRUMENTS))])
+            character.armor = "leather"
+            character.weapons.append("dagger")
+        if self.class_name=="Cleric":
+            if (random.randrange(0,2)==0):
+                character.weapons.append("mace")
+            else:
+                if "warhammer" in self.proficiencies["weapon"] or "martial" in self.proficiencies["weapon"] or "martial melee" in self.proficiencies["weapon"]:
+                    character.weapons.append("warhammer")
+                else:
+                    character.weapons.append("mace")
+            
+            if (random.randrange(0,3)==0):
+                character.armor = "scale mail"
+            elif random.randrange(0,2)==0:
+                character.armor = "leather"
+            else:
+                character.armor = "chain mail"
+            if (random.randrange(0,2)==0):
+                character.weapons.append("light crossbow")
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].name)
+            if (random.randrange(0,2)==0):
+                character.weapons.append("priest's pack")
+            else:
+                self.equipment.append("explorer's pack")
+            self.equipment.extend(["shield","holy symbol"])
+            
 """
-Barbarian
-a greataxe or martial melee weapon
-two handaxes or simply weapon
-explorer's pack, four javelins
-
-Bard
-a rapier, longsword, or simple weapon
-a diplomat's pack or entertainer's pack
-a lute or any instrument
-leather armor and a dagger
-
 Cleric
 a mace or a warhammer(if proficient)
 scale mail, leather armor, or chain mail(if proficient)
@@ -342,9 +400,9 @@ class Background:
 def string_to_list(string):
     if string==" " or string=="" or string==None:
         return []
-    string = string.replace(", ",",")
+    string = string.replace("; ",";")
     string = string.lower()
-    return string.split(",")
+    return string.split(";")
 
 def choose(l,n,l2):
     if n==0:
