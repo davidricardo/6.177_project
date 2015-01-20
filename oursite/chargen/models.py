@@ -228,7 +228,7 @@ spells= {'aid':2,
          'barkskin':2,
          'beacon of hope':3,
          'beast sense':2,
-         'bestow curse'3,
+         'bestow curse':3,
          'bigbys hanb':5,
          'blade barrier':6,
          'bless':1,
@@ -313,7 +313,7 @@ spells= {'aid':2,
          'enalrge/reduce':2,
          'ensnaring strike':1,
          'entangle':1,
-         'enthrall';2,
+         'enthrall':2,
          'etheralness':7,
          'evards black tentacles':4,
          'expiditious retreat':1,
@@ -425,7 +425,7 @@ spells= {'aid':2,
          'mordenkainens sword':7,
          'move earth':6,
          'nondetection':3,
-         '
+         }
          
          
          

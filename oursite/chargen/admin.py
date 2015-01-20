@@ -9,7 +9,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
-from import_export.admin import ImportExportActionModelAdmin
 from chargen.models import dWeapon
 
 class dWeaponResource(resources.ModelResource):
@@ -53,15 +52,15 @@ class dbackstoryAdmin(ImportExportModelAdmin):
     resource_class = dbackstoryResource
     
 admin.site.register(dbackstory,dbackstoryAdmin)
-from chargen.models import dsub_class
+from chargen.models import dsubclass
 
-class dsub_classResource(resources.ModelResource):
+class dsubclassResource(resources.ModelResource):
     class Meta:
-        model = dsub_class
+        model = dsubclass
 
-class dsub_classAdmin(ImportExportModelAdmin):
-    resource_class = dsub_classResource
-admin.site.register(dsub_class,dsub_classAdmin)
+class dsubclassAdmin(ImportExportModelAdmin):
+    resource_class = dsubclassResource
+admin.site.register(dsubclass,dsubclassAdmin)
 from chargen.models import user_entry
 admin.site.register(user_entry)
 from chargen.models import dspell
