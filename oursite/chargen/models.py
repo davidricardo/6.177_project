@@ -5,7 +5,10 @@ See https://docs.djangoproject.com/en/1.6/intro/tutorial01/ ,
 https://docs.djangoproject.com/en/1.6/ref/models/instances/#django.db.models.Model , or
 https://docs.djangoproject.com/en/1.6/howto/custom-model-fields/ for more information.
 """
-
+import os, sys
+sys.path.append('../')
+import oursite.settings
+os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from django.db import models
 
 # Create your models here.
@@ -21,7 +24,8 @@ class dWeapon(models.Model):
     type_of_damage_die= models.IntegerField()
     range_close= models.IntegerField(default=0, blank=True)
     range_max=models.IntegerField(default=0,blank=True)
-    
+    versatile= models.BooleanField(default=False)
+    two_handed_damage= models.IntegerField(default=0, blank=True)
     
     
     def __unicode__(self):
@@ -84,7 +88,6 @@ class darmors(models.Model):
      disadvantage_stealth= models.BooleanField(default=False)
      very_expensive= models.BooleanField(default=False)
      moderatly_expensive= models.BooleanField(default=False)
-     hellodarling = models.IntegerField(default=0)
 
      def __unicode__(self):
         return self.name

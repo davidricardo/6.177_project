@@ -119,9 +119,9 @@ class Character:
         self.level = level
         self.name = name
         self.ability_scores = ability_scores
+        self.background = Background(self)
         self.my_class = Char_Class(self, char_class, self.level)
         self.my_race = Race(self, race)
-        self.background = Background(self)
         self.skills = {"acrobatics":0,"animal handling":0,"arcana":0,"athletics":0,"deception":0,"history":0,"insight":0,"intimidation":0,"investigation":0,"medicine":0,"nature":0,"perception":0,"performance":0,"persuasion":0,"religion":0,"sleight of hand":0,"stealth":0,"survival":0}
         self.saves = {"strength":0,"dexterity":0,"constitution":0,"intelligence":0,"wisdom":0,"charisma":0}
         [x.lower() for x in self.features]
@@ -181,6 +181,8 @@ class Character:
     
     #calculates skills from ruling abilities and proficiencies
     def calculate_skill(self,skill):
+        if self.my_race.name[0:4]=="Dwar" and skill=="history":
+            return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+2*self.get_proficiency_bonus()
         if skill in self.proficiencies["skill"]:
             return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+self.get_proficiency_bonus()
         else:
@@ -202,7 +204,19 @@ class Character:
             return level*(self.my_class.hit_die/2+1+self.get_modifier(self.ability_scores["constitution"]))
 
     def get_armor_class(self):
-        return 0
+        dex = self.get_modifier(self.ability_scores["dexterity"])
+        if self.armor=="":
+            return 10 + dex
+        armor = darmors.objects.get(name=self.armor)
+        if armor.armour_class=="light":
+            return armor.ac_mod + dex
+        if armor.armour_class=="medium":
+            if dex>=2:
+                return armor.ac_mod+2
+            else:
+                return armor.ac_mod+dex
+        return armor.ac_mod
+        
     
 class Char_Class:
     def __init__(self, character, name, level):
@@ -230,9 +244,8 @@ class Char_Class:
             if (random.randrange(0,2)==0):
                 character.weapons.append("greataxe")
             else:
-                pass
-                #x = len(dWeapon.objects.filter(martial_arts=True).filter(mele=True))
-                #character.weapons.append(dWeapon.objects.filter(martial_arts=True).filter(mele=True)[random.randrange(0,x)].weapon_name)
+                x = len(dWeapon.objects.filter(martial_arts=True).filter(mele=True))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=True).filter(mele=True)[random.randrange(0,x)].weapon_name)
                 
             if (random.randrange(0,2)==0):
                 character.weapons.extend(["handaxe","handaxe"])
@@ -374,28 +387,59 @@ class Char_Class:
                  self.equipment.append("dungeoneer's pack")
             else:
                  self.equipment.append("explorer's pack")
-            character.armor = "chain mail"
             character.weapons.append("longbow")
 
+        if self.class_name=="Rogue":
+            if (random.randrange(0,2)==0):
+                character.weapons.append("rapier")
+            else:
+                character.weapons.append("shortsword")
+            if (random.randrange(0,2)==0) and not("shortsword" in character.weapons):
+                character.weapons.append("shortsword")
+            else:
+                character.weapons.append("shortbow")
+            if (random.randrange(0,3)==0):
+                 self.equipment.append("dungeoneer's pack")
+            elif random.randrange(0,2)==0:
+                 self.equipment.append("explorer's pack")
+            else:
+                self.equipment.append("burglar's pack")
+            character.weapons.extend(["dagger","dagger"])
+            character.armor = "leather"
+            self.equipment.append("thieves' tools")
+
+        if self.class_name=="Sorceror":
+            if (random.randrange(0,2)==0):
+                character.weapons.append("light crossbow")
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+            if (random.randrange(0,2)==0):
+                self.equipment.append("component pouch")
+            else:
+                self.equipment.append("arcane focus")
+            if (random.randrange(0,2)==0):
+                 self.equipment.append("dungeoneer's pack")
+            else:
+                self.equipment.append("explorer's pack")
+            character.weapons.extend(["dagger","dagger"])
+
+        if self.class_name=="Warlock":
+            if (random.randrange(0,2)==0):
+                character.weapons.append("light crossbow")
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+            if (random.randrange(0,2)==0):
+                self.equipment.append("component pouch")
+            else:
+                self.equipment.append("arcane focus")
+            if (random.randrange(0,2)==0):
+                 self.equipment.append("dungeoneer's pack")
+            else:
+                self.equipment.append("explorer's pack")
+            character.weapons.extend(["dagger","dagger"])
 """
-Ranger
-scale mail or leather armor
-two shortswords or two simple melee weapons
-a dungeoneer's pack or an explorer's pack
-longbow
-
-Rogue
-rapier or shortsword
-shortbow or shortsword
-burglar's pack or dungeoneer's pack or explorer's pack
-leather armor, two daggers, thieves' tools
-
-Sorceror
-light crossbow or simple weapon
-component pouch or arcane focus
-dungeoneer's pack or explorer's pack
-two daggers
-
 Warlock
 light crossbow or simple weapon
 component pouch or arcane focus

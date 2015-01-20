@@ -8,157 +8,31 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting model 'spell'
-        db.delete_table(u'chargen_spell')
-
-        # Deleting model 'dsub_class'
-        db.delete_table(u'chargen_dsub_class')
-
-        # Adding model 'dspell'
-        db.create_table(u'chargen_dspell', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('char_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dChar_class'])),
-            ('sub_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dsubclass'])),
-            ('level', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level1', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('slots_or_prepered_spell_level2', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('slots_or_prepered_spell_level3', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('slots_or_prepered_spell_level4', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('slots_or_prepered_spell_level5', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('slots_or_prepered_spell_level6', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('slots_or_prepered_spell_level7', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('slots_or_prepered_spell_level8', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('slots_or_prepered_spell_level9', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('possible_spells_level1', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('possible_spells_level2', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('possible_spells_level3', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('possible_spells_level4', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('possible_spells_level5', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('possible_spells_level6', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('possible_spells_level7', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('possible_spells_level8', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('possible_spells_level9', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('cantrips_known', self.gf('django.db.models.fields.IntegerField')()),
-            ('total_spells', self.gf('django.db.models.fields.IntegerField')()),
-            ('minium_1st_level_spells', self.gf('django.db.models.fields.IntegerField')()),
-        ))
-        db.send_create_signal('chargen', ['dspell'])
-
-        # Adding model 'dsubclass'
-        db.create_table(u'chargen_dsubclass', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=40)),
-            ('char_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dChar_class'])),
-            ('level_1_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_2_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_3_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_4_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_5_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_6_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_7_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_8_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_9_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_10_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_11_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_12_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_13_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_14_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_15_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_16_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_17_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_18_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_19_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_20_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-        ))
-        db.send_create_signal('chargen', ['dsubclass'])
-
-
-        # Changing field 'user_entry.sub_class'
-        db.alter_column(u'chargen_user_entry', 'sub_class_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dsubclass']))
-        # Adding field 'dChar_class.hello'
-        db.add_column(u'chargen_dchar_class', 'hello',
+        # Adding field 'dWeapon.versatile'
+        db.add_column(u'chargen_dweapon', 'versatile',
                       self.gf('django.db.models.fields.BooleanField')(default=False),
                       keep_default=False)
 
+        # Adding field 'dWeapon.two_handed_damage'
+        db.add_column(u'chargen_dweapon', 'two_handed_damage',
+                      self.gf('django.db.models.fields.IntegerField')(default=0, blank=True),
+                      keep_default=False)
+
+        # Deleting field 'darmors.hellodarling'
+        db.delete_column(u'chargen_darmors', 'hellodarling')
+
 
     def backwards(self, orm):
-        # Adding model 'spell'
-        db.create_table(u'chargen_spell', (
-            ('known_spell_level5', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level4', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level7', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level6', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level1', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level6', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level3', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level2', self.gf('django.db.models.fields.IntegerField')()),
-            ('sub_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dsub_class'])),
-            ('slots_or_prepered_spell_level2', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level8', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level9', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level1', self.gf('django.db.models.fields.IntegerField')()),
-            ('total_spells', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level9', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level7', self.gf('django.db.models.fields.IntegerField')()),
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('possible_spells_level7', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_cantrips', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level5', self.gf('django.db.models.fields.IntegerField')()),
-            ('level', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level18', self.gf('django.db.models.fields.IntegerField')()),
-            ('minium_1st_level_spells', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level4', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level3', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level4', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level5', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level6', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level1', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level2', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level3', self.gf('django.db.models.fields.IntegerField')()),
-            ('char_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dChar_class'])),
-            ('possible_spells_level8', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level9', self.gf('django.db.models.fields.IntegerField')()),
-        ))
-        db.send_create_signal('chargen', ['spell'])
+        # Deleting field 'dWeapon.versatile'
+        db.delete_column(u'chargen_dweapon', 'versatile')
 
-        # Adding model 'dsub_class'
-        db.create_table(u'chargen_dsub_class', (
-            ('level_11_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_6_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_2_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_1_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('level_15_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_14_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_17_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_8_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_7_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_5_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_10_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_12_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_18_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_9_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_19_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_13_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_3_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_20_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=40)),
-            ('level_16_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-            ('level_4_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
-        ))
-        db.send_create_signal('chargen', ['dsub_class'])
+        # Deleting field 'dWeapon.two_handed_damage'
+        db.delete_column(u'chargen_dweapon', 'two_handed_damage')
 
-        # Deleting model 'dspell'
-        db.delete_table(u'chargen_dspell')
-
-        # Deleting model 'dsubclass'
-        db.delete_table(u'chargen_dsubclass')
-
-
-        # Changing field 'user_entry.sub_class'
-        db.alter_column(u'chargen_user_entry', 'sub_class_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dsub_class']))
-        # Deleting field 'dChar_class.hello'
-        db.delete_column(u'chargen_dchar_class', 'hello')
+        # Adding field 'darmors.hellodarling'
+        db.add_column(u'chargen_darmors', 'hellodarling',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
 
 
     models = {
@@ -189,7 +63,6 @@ class Migration(SchemaMigration):
             'armour_proficiencies': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'cantrips_known': ('django.db.models.fields.IntegerField', [], {}),
             'features': ('django.db.models.fields.CharField', [], {'max_length': '3000'}),
-            'hello': ('django.db.models.fields.BooleanField', [], {}),
             'hit_die': ('django.db.models.fields.IntegerField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
@@ -289,7 +162,9 @@ class Migration(SchemaMigration):
             'range_close': ('django.db.models.fields.IntegerField', [], {'default': '0', 'blank': 'True'}),
             'range_max': ('django.db.models.fields.IntegerField', [], {'default': '0', 'blank': 'True'}),
             'two_handed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'two_handed_damage': ('django.db.models.fields.IntegerField', [], {'default': '0', 'blank': 'True'}),
             'type_of_damage_die': ('django.db.models.fields.IntegerField', [], {}),
+            'versatile': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'weapon_name': ('django.db.models.fields.CharField', [], {'max_length': '30'})
         },
         'chargen.user_entry': {

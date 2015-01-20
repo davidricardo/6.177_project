@@ -77,6 +77,7 @@ class Migration(SchemaMigration):
             ('disadvantage_stealth', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('very_expensive', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('moderatly_expensive', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('hellodarling', self.gf('django.db.models.fields.IntegerField')(default=0)),
         ))
         db.send_create_signal('chargen', ['darmors'])
 
@@ -93,10 +94,11 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('chargen', ['dbackstory'])
 
-        # Adding model 'dsub_class'
-        db.create_table(u'chargen_dsub_class', (
+        # Adding model 'dsubclass'
+        db.create_table(u'chargen_dsubclass', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=40)),
+            ('char_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dChar_class'])),
             ('level_1_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
             ('level_2_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
             ('level_3_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
@@ -118,14 +120,14 @@ class Migration(SchemaMigration):
             ('level_19_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
             ('level_20_feature', self.gf('django.db.models.fields.CharField')(max_length=2000)),
         ))
-        db.send_create_signal('chargen', ['dsub_class'])
+        db.send_create_signal('chargen', ['dsubclass'])
 
         # Adding model 'user_entry'
         db.create_table(u'chargen_user_entry', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=40)),
             ('char_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dChar_class'])),
-            ('sub_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dsub_class'])),
+            ('sub_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dsubclass'])),
             ('race', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dRace'])),
             ('strgenth', self.gf('django.db.models.fields.IntegerField')()),
             ('dexterity', self.gf('django.db.models.fields.IntegerField')()),
@@ -138,44 +140,35 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('chargen', ['user_entry'])
 
-        # Adding model 'spell'
-        db.create_table(u'chargen_spell', (
+        # Adding model 'dspell'
+        db.create_table(u'chargen_dspell', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('char_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dChar_class'])),
-            ('sub_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dsub_class'])),
+            ('sub_class', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['chargen.dsubclass'])),
             ('level', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_cantrips', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level1', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level2', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level3', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level4', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level5', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level6', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level7', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level18', self.gf('django.db.models.fields.IntegerField')()),
-            ('known_spell_level9', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level1', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level2', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level3', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level4', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level5', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level6', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level7', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level8', self.gf('django.db.models.fields.IntegerField')()),
-            ('slots_or_prepered_spell_level9', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level1', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level2', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level3', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level4', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level5', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level6', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level7', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level8', self.gf('django.db.models.fields.IntegerField')()),
-            ('possible_spells_level9', self.gf('django.db.models.fields.IntegerField')()),
+            ('slots_or_prepered_spell_level1', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('slots_or_prepered_spell_level2', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('slots_or_prepered_spell_level3', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('slots_or_prepered_spell_level4', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('slots_or_prepered_spell_level5', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('slots_or_prepered_spell_level6', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('slots_or_prepered_spell_level7', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('slots_or_prepered_spell_level8', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('slots_or_prepered_spell_level9', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('possible_spells_level1', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('possible_spells_level2', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('possible_spells_level3', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('possible_spells_level4', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('possible_spells_level5', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('possible_spells_level6', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('possible_spells_level7', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('possible_spells_level8', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('possible_spells_level9', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('cantrips_known', self.gf('django.db.models.fields.IntegerField')()),
             ('total_spells', self.gf('django.db.models.fields.IntegerField')()),
             ('minium_1st_level_spells', self.gf('django.db.models.fields.IntegerField')()),
         ))
-        db.send_create_signal('chargen', ['spell'])
+        db.send_create_signal('chargen', ['dspell'])
 
 
     def backwards(self, orm):
@@ -194,14 +187,14 @@ class Migration(SchemaMigration):
         # Deleting model 'dbackstory'
         db.delete_table(u'chargen_dbackstory')
 
-        # Deleting model 'dsub_class'
-        db.delete_table(u'chargen_dsub_class')
+        # Deleting model 'dsubclass'
+        db.delete_table(u'chargen_dsubclass')
 
         # Deleting model 'user_entry'
         db.delete_table(u'chargen_user_entry')
 
-        # Deleting model 'spell'
-        db.delete_table(u'chargen_spell')
+        # Deleting model 'dspell'
+        db.delete_table(u'chargen_dspell')
 
 
     models = {
@@ -210,6 +203,7 @@ class Migration(SchemaMigration):
             'ac_mod': ('django.db.models.fields.IntegerField', [], {}),
             'armour_class': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'disadvantage_stealth': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'hellodarling': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'moderatly_expensive': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
@@ -266,8 +260,37 @@ class Migration(SchemaMigration):
             'weapon_proficiencies': ('django.db.models.fields.CharField', [], {'max_length': '400'}),
             'wis_mod': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         },
-        'chargen.dsub_class': {
-            'Meta': {'object_name': 'dsub_class'},
+        'chargen.dspell': {
+            'Meta': {'object_name': 'dspell'},
+            'cantrips_known': ('django.db.models.fields.IntegerField', [], {}),
+            'char_class': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['chargen.dChar_class']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'level': ('django.db.models.fields.IntegerField', [], {}),
+            'minium_1st_level_spells': ('django.db.models.fields.IntegerField', [], {}),
+            'possible_spells_level1': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'possible_spells_level2': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'possible_spells_level3': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'possible_spells_level4': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'possible_spells_level5': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'possible_spells_level6': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'possible_spells_level7': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'possible_spells_level8': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'possible_spells_level9': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'slots_or_prepered_spell_level1': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'slots_or_prepered_spell_level2': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'slots_or_prepered_spell_level3': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'slots_or_prepered_spell_level4': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'slots_or_prepered_spell_level5': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'slots_or_prepered_spell_level6': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'slots_or_prepered_spell_level7': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'slots_or_prepered_spell_level8': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'slots_or_prepered_spell_level9': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'sub_class': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['chargen.dsubclass']"}),
+            'total_spells': ('django.db.models.fields.IntegerField', [], {})
+        },
+        'chargen.dsubclass': {
+            'Meta': {'object_name': 'dsubclass'},
+            'char_class': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['chargen.dChar_class']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'level_10_feature': ('django.db.models.fields.CharField', [], {'max_length': '2000'}),
             'level_11_feature': ('django.db.models.fields.CharField', [], {'max_length': '2000'}),
@@ -305,43 +328,6 @@ class Migration(SchemaMigration):
             'type_of_damage_die': ('django.db.models.fields.IntegerField', [], {}),
             'weapon_name': ('django.db.models.fields.CharField', [], {'max_length': '30'})
         },
-        'chargen.spell': {
-            'Meta': {'object_name': 'spell'},
-            'char_class': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['chargen.dChar_class']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'known_cantrips': ('django.db.models.fields.IntegerField', [], {}),
-            'known_spell_level1': ('django.db.models.fields.IntegerField', [], {}),
-            'known_spell_level18': ('django.db.models.fields.IntegerField', [], {}),
-            'known_spell_level2': ('django.db.models.fields.IntegerField', [], {}),
-            'known_spell_level3': ('django.db.models.fields.IntegerField', [], {}),
-            'known_spell_level4': ('django.db.models.fields.IntegerField', [], {}),
-            'known_spell_level5': ('django.db.models.fields.IntegerField', [], {}),
-            'known_spell_level6': ('django.db.models.fields.IntegerField', [], {}),
-            'known_spell_level7': ('django.db.models.fields.IntegerField', [], {}),
-            'known_spell_level9': ('django.db.models.fields.IntegerField', [], {}),
-            'level': ('django.db.models.fields.IntegerField', [], {}),
-            'minium_1st_level_spells': ('django.db.models.fields.IntegerField', [], {}),
-            'possible_spells_level1': ('django.db.models.fields.IntegerField', [], {}),
-            'possible_spells_level2': ('django.db.models.fields.IntegerField', [], {}),
-            'possible_spells_level3': ('django.db.models.fields.IntegerField', [], {}),
-            'possible_spells_level4': ('django.db.models.fields.IntegerField', [], {}),
-            'possible_spells_level5': ('django.db.models.fields.IntegerField', [], {}),
-            'possible_spells_level6': ('django.db.models.fields.IntegerField', [], {}),
-            'possible_spells_level7': ('django.db.models.fields.IntegerField', [], {}),
-            'possible_spells_level8': ('django.db.models.fields.IntegerField', [], {}),
-            'possible_spells_level9': ('django.db.models.fields.IntegerField', [], {}),
-            'slots_or_prepered_spell_level1': ('django.db.models.fields.IntegerField', [], {}),
-            'slots_or_prepered_spell_level2': ('django.db.models.fields.IntegerField', [], {}),
-            'slots_or_prepered_spell_level3': ('django.db.models.fields.IntegerField', [], {}),
-            'slots_or_prepered_spell_level4': ('django.db.models.fields.IntegerField', [], {}),
-            'slots_or_prepered_spell_level5': ('django.db.models.fields.IntegerField', [], {}),
-            'slots_or_prepered_spell_level6': ('django.db.models.fields.IntegerField', [], {}),
-            'slots_or_prepered_spell_level7': ('django.db.models.fields.IntegerField', [], {}),
-            'slots_or_prepered_spell_level8': ('django.db.models.fields.IntegerField', [], {}),
-            'slots_or_prepered_spell_level9': ('django.db.models.fields.IntegerField', [], {}),
-            'sub_class': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['chargen.dsub_class']"}),
-            'total_spells': ('django.db.models.fields.IntegerField', [], {})
-        },
         'chargen.user_entry': {
             'Meta': {'object_name': 'user_entry'},
             'backround': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['chargen.dbackstory']"}),
@@ -355,7 +341,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'race': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['chargen.dRace']"}),
             'strgenth': ('django.db.models.fields.IntegerField', [], {}),
-            'sub_class': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['chargen.dsub_class']"}),
+            'sub_class': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['chargen.dsubclass']"}),
             'wisdom': ('django.db.models.fields.IntegerField', [], {})
         }
     }
