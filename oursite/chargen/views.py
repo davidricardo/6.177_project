@@ -7,11 +7,21 @@ HttpResponse object.
 More information at https://docs.djangoproject.com/en/1.6/intro/tutorial03/
 or at https://docs.djangoproject.com/en/1.6/topics/http/views/
 """
-
+import os, sys
+sys.path.append('../')
+import oursite.settings
+os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, RequestContext, loader
 from django import forms
+
+def pdf_view(request):
+    with open('myfile.pdf', 'r') as pdf:
+        response = HttpResponse(pdf.read(), mimetype='application/pdf')
+        response['Content-Disposition'] = 'filename=mycharacter.pdf'
+        return response
+    pdf.closed
 
 class AbilityScoreForm(forms.Form):
     strength     = forms.ChoiceField(
@@ -274,9 +284,9 @@ def index(request):
                 "<p>Charisma: " + str(int(charisma)) + "</p>"
                 )
 
-    else:
-        ab_score_form = AbilityScoreForm() # An unbound form
-
+        else:
+            ab_score_form = AbilityScoreForm() # An unbound form
+    
     return HttpResponse(
             template.render(
                 RequestContext( request, {

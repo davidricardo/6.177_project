@@ -102,20 +102,27 @@ class Character:
         self.equipment = []
         self.proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
         self.features = []
+        self.weapons = []
+        self.armor = ""
         self.level = level
         self.name = name
         self.ability_scores = ability_scores
         self.my_class = Char_Class(self, char_class, self.level)
         self.my_race = Race(self, race)
-        self.background = Background()
+        self.background = Background(self)
         self.skills = {"acrobatics":0,"animal handling":0,"arcana":0,"athletics":0,"deception":0,"history":0,"insight":0,"intimidation":0,"investigation":0,"medicine":0,"nature":0,"perception":0,"performance":0,"persuasion":0,"religion":0,"sleight of hand":0,"stealth":0,"survival":0}
         self.saves = {"strength":0,"dexterity":0,"constitution":0,"intelligence":0,"wisdom":0,"charisma":0}
-        
+        self.features = list(set(self.features))
+        self.equipment = list(set(self.equipment))
+        self.languages = list(set(self.languages))
+        for key in self.proficiencies.keys():
+            self.proficiencies[key] = list(set(self.proficiencies[key]))
+
         for s in self.skills.keys():
             self.skills[s] = self.calculate_skill(s)
         for v in self.saves.keys():
             self.saves[v] = self.calculate_save(v)
-
+            
     def get_final_dict(self):
         my_dict = OrderedDict()
         my_dict["Name"]=self.name,
@@ -185,22 +192,100 @@ class Character:
 class Char_Class:
     def __init__(self, character, name, level):
         self.class_name = name
-        self.hit_die = job.objects.get(name=name).hit_die
-        weapons = string_to_list(job.objects.get(name=name).weapon_proficiencies)
-        armor = string_to_list(job.objects.get(name=name).armour_proficiencies)
-        tools = string_to_list(job.objects.get(name=name).tool_proficiencies)
-        saves = string_to_list(job.objects.get(name=name).saving_throws_proficiencies)
-        skills = choose(string_to_list(job.objects.get(name=name).skill_proficiencies),job.objects.get(name=name).number_skill_proficiencies,character.proficiencies["skill"])
+        self.hit_die = dChar_class.objects.get(name=name).hit_die
+        weapons = string_to_list(dChar_class.objects.get(name=name).weapon_proficiencies.lower())
+        armor = string_to_list(dChar_class.objects.get(name=name).armour_proficiencies.lower())
+        tools = string_to_list(dChar_class.objects.get(name=name).tool_proficiencies.lower())
+        saves = string_to_list(dChar_class.objects.get(name=name).saving_throws_proficiencies.lower())
+        skills = choose(string_to_list(dChar_class.objects.get(name=name).skill_proficiencies),dChar_class.objects.get(name=name).number_skill_proficiencies,character.proficiencies["skill"])
         self.proficiencies = {"weapon":weapons,"armor":armor,"skill":skills,"saves":saves,"tools":tools}
         for key in self.proficiencies:
             character.proficiencies[key].extend(self.proficiencies[key])
         self.equipment = []
+        self.get_equipment(character)
         character.equipment.extend(self.equipment)
-        self.features = string_to_list(job.objects.get(name=name).features)
+        self.features = string_to_list(dChar_class.objects.get(name=name).features)
         character.features.extend(self.features)
         self.archetype = Archetype("",level)
         self.languages = []
         character.languages.extend(self.languages)
+
+    def get_equipment(self, character):
+        if name=="Barbarian":
+            if (random.randrange(0,1)==0):
+                character.weapons.append("greataxe")
+            else:
+                character.weapons.append(dWeapons.objects.get(martial=True,mele=True))
+"""
+Barbarian
+a greataxe or martial melee weapon
+two handaxes or simply weapon
+explorer's pack, four javelins
+
+Bard
+a rapier, longsword, or simple weapon
+a diplomat's pack or entertainer's pack
+a lute or any instrument
+leather armor and a dagger
+
+Cleric
+a mace or a warhammer(if proficient)
+scale mail, leather armor, or chain mail(if proficient)
+light crossbow or any simple weapon
+priest's pack or explorer's pack
+Shield and holy symbol
+
+Druid
+wooden shiled or simple weapon
+scimitar or simple melee weapon
+leather armor, explorer's pack, druidic focus
+
+Fighter
+chain mail or leather, longbow
+martial weapon and shield or two martial weapons
+light crossbow or two handaxes
+a dungeoneer's pack or explorer's pack
+
+Monk
+a shortsword or any simple weapon
+a dungeoneer's pack or explorer's pack
+10 darts
+
+Paladin
+martial weapon and shield or two martial weapons
+five javelins or an explorer's pack
+chain mail and holy symbol
+
+Ranger
+scale mail or leather armor
+two shortswords or two simple melee weapons
+a dungeoneer's pack or an explorer's pack
+longbow
+
+Rogue
+rapier or shortsword
+shortbow or shortsword
+burglar's pack or dungeoneer's pack or explorer's pack
+leather armor, two daggers, thieves' tools
+
+Sorceror
+light crossbow or simple weapon
+component pouch or arcane focus
+dungeoneer's pack or explorer's pack
+two daggers
+
+Warlock
+light crossbow or simple weapon
+component pouch or arcane focus
+scholar's pack or dungeoneer's pack
+leather armor, simple weapon, two daggers
+
+Wizard
+quarterstaff or dagger
+component pouch or arcane focus
+scholar's pack or explorer's pack
+spellbook
+"""
 
 class Archetype(Char_Class):
     def __init__(self, name, level):
@@ -209,32 +294,46 @@ class Archetype(Char_Class):
 class Race:
     def __init__(self, character, name):
         self.name = name
-        character.ability_scores["strength"]+=Char_Race.objects.get(name=name).str_mod
-        character.ability_scores["dexterity"]+=Char_Race.objects.get(name=name).dex_mod
-        character.ability_scores["constitution"]+=Char_Race.objects.get(name=name).con_mod
-        character.ability_scores["intelligence"]+=Char_Race.objects.get(name=name).int_mod
-        character.ability_scores["wisdom"]+=Char_Race.objects.get(name=name).wis_mod
-        character.ability_scores["charisma"]+=Char_Race.objects.get(name=name).char_mod
-        weapons = string_to_list(Char_Race.objects.get(name=name).weapon_proficiencies)
-        armor = string_to_list(Char_Race.objects.get(name=name).armour_proficiencies)
-        tools = string_to_list(Char_Race.objects.get(name=name).tool_proficiencies)
-        skills = string_to_list(Char_Race.objects.get(name=name).skill_proficiencies)+choose(SKILLS_TOTAL,Char_Race.objects.get(name=name).optional_skill_proficiencies,character.proficiencies["skill"])
+        character.ability_scores["strength"]+=dRace.objects.get(name=name).str_mod
+        character.ability_scores["dexterity"]+=dRace.objects.get(name=name).dex_mod
+        character.ability_scores["constitution"]+=dRace.objects.get(name=name).con_mod
+        character.ability_scores["intelligence"]+=dRace.objects.get(name=name).int_mod
+        character.ability_scores["wisdom"]+=dRace.objects.get(name=name).wis_mod
+        character.ability_scores["charisma"]+=dRace.objects.get(name=name).char_mod
+        weapons = string_to_list(dRace.objects.get(name=name).weapon_proficiencies.lower())
+        armor = string_to_list(dRace.objects.get(name=name).armour_proficiencies.lower())
+        tools = string_to_list(dRace.objects.get(name=name).tool_proficiencies.lower())
+        skills = string_to_list(dRace.objects.get(name=name).skill_proficiencies.lower())+choose(SKILLS_TOTAL,dRace.objects.get(name=name).optional_skill_proficiencies,character.proficiencies["skill"])
         self.proficiencies = {"weapon":weapons,"armor":armor,"skill":skills,"saves":[],"tools":tools}
         for key in self.proficiencies:
             character.proficiencies[key].extend(self.proficiencies[key])
-        self.languages = string_to_list(Char_Race.objects.get(name=name).language)+choose(LANGUAGES,Char_Race.objects.get(name=name).optional_lang_proficiencies,character.languages)
+        self.languages = string_to_list(dRace.objects.get(name=name).language.lower())+choose(LANGUAGES,dRace.objects.get(name=name).optional_lang_proficiencies,character.languages)
         character.languages.extend(self.languages)
-        self.base_speed = Char_Race.objects.get(name=name).speed
-        self.features = string_to_list(Char_Race.objects.get(name=name).features)
+        self.base_speed = dRace.objects.get(name=name).speed
+        self.features = string_to_list(dRace.objects.get(name=name).features.lower())
         character.features.extend(self.features)
 
 class Background:
-    def __init__(self):
-        self.name = ""
-        self.equipment = []
-        self.proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
-        self.features = []
-        self.languages = []
+    def __init__(self, character,name=""):
+        if name=="":
+            number_of_records = dbackstory.objects.count()
+            random_index = random.randrange(number_of_records)
+            background = dbackstory.objects.all()[random_index:random_index+1][0]
+            self.name = background.name
+        else:
+            self.name = name
+            background = dbackstory.objects.get(name = self.name)
+        self.equipment = string_to_list(background.equipment)
+        character.equipment.extend(self.equipment)
+        tools = string_to_list(background.tool_proficiencies.lower())
+        skills = string_to_list(background.skill_proficiencies.lower())
+        self.proficiencies = {"weapon":[],"armor":[],"skill":skills,"saves":[],"tools":tools}
+        for key in self.proficiencies:
+            character.proficiencies[key].extend(self.proficiencies[key])
+        self.features = string_to_list(background.feature.lower())
+        character.features.extend(self.features)
+        self.languages = string_to_list(background.language.lower())+choose(LANGUAGES,background.optional_lang_proficiencies,character.languages)
+        character.languages.extend(self.languages)
         self.personality_traits = ""
         self.ideals = ""
         self.bonds = ""
