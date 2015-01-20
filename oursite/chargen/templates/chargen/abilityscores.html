@@ -4,7 +4,12 @@
 You are currently inputting ability scores.
 {% endblock %}
 
+{% block nameform %}
+<!-- Text here for whatever the name was -->
+{% endblock %}
+
 {% block classrace %}
+<p>You chose {{ classform }} for your class and {{ raceform }} for your race.</p>
 {% endblock classrace %}
 
 {% block abilityscores %}
@@ -25,8 +30,10 @@ You are currently inputting ability scores.
             </td>
         </tr>
     </table>
-<input type="submit" value="Submit" />
+<input id="submitbutton" type="submit" value="Next step" />
 </form>
+
+<!-- on submit, pass views.py a parameter saying the progress -->
 
 <script type="text/javascript">
     function updateAbilityScores() {
@@ -63,6 +70,17 @@ You are currently inputting ability scores.
         to_return = Math.floor(to_return);
         return to_return        
     }
+
+    $('#submitbutton').submit(function(){ //listen for submit event
+        $.each(params, function(i,param){
+            $('<input />').attr('type', 'hidden')
+                .attr('name', param.name)
+                .attr('value', param.value)
+                .appendTo('#submitbutton');
+        });
+
+    return true;
+});
 </script>
 
 <script type="text/javascript">updateAbilityScores();</script>

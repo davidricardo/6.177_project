@@ -198,7 +198,6 @@ class spell(models.Model):
     total_spells= models.IntegerField()
     minium_1st_level_spells= models.IntegerField()
 
-<<<<<<< HEAD
 
     def __unicode__(self):
         return self.sub_class
