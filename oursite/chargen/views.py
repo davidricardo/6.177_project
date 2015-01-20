@@ -226,13 +226,3 @@ def index(request):
             return HttpResponse("Name form not valid")
 
 
-
-
-
-
-
-
-
-
-
-
