@@ -17,7 +17,7 @@ class dWeaponResource(resources.ModelResource):
 
 class dWeaponAdmin(ImportExportModelAdmin):
     resource_class = dWeaponResource
-admin.site.register(dWeapon, dWeaponAdmin)
+admin.site.register(dWeapon)
 
 from chargen.models import dRace
 from chargen.models import dChar_class
@@ -29,7 +29,7 @@ class dChar_classResource(resources.ModelResource):
 class dChar_classAdmin(ImportExportModelAdmin):
     resource_class = dChar_classResource
     
-admin.site.register(dChar_class,dChar_classAdmin)
+admin.site.register(dChar_class)
 
 from chargen.models import darmors
 
@@ -40,7 +40,7 @@ class darmorsResource(resources.ModelResource):
 class darmorsAdmin(ImportExportModelAdmin):
     resource_class = darmorsResource
     
-admin.site.register(darmors,darmorsAdmin)
+admin.site.register(darmors)
 
 from chargen.models import dbackstory
 
@@ -51,7 +51,7 @@ class dbackstoryResource(resources.ModelResource):
 class dbackstoryAdmin(ImportExportModelAdmin):
     resource_class = dbackstoryResource
     
-admin.site.register(dbackstory,dbackstoryAdmin)
+admin.site.register(dbackstory)
 from chargen.models import dsubclass
 
 class dsubclassResource(resources.ModelResource):
@@ -60,7 +60,7 @@ class dsubclassResource(resources.ModelResource):
 
 class dsubclassAdmin(ImportExportModelAdmin):
     resource_class = dsubclassResource
-admin.site.register(dsubclass,dsubclassAdmin)
+admin.site.register(dsubclass)
 from chargen.models import user_entry
 admin.site.register(user_entry)
 from chargen.models import dspell
@@ -75,4 +75,4 @@ class dRaceAdmin(ImportExportModelAdmin):
     resource_class = dRaceResource
     
 
-admin.site.register(dRace, dRaceAdmin)
+admin.site.register(dRace)

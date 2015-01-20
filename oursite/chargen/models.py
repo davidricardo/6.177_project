@@ -84,6 +84,7 @@ class darmors(models.Model):
      disadvantage_stealth= models.BooleanField(default=False)
      very_expensive= models.BooleanField(default=False)
      moderatly_expensive= models.BooleanField(default=False)
+     hellodarling = models.IntegerField(default=0)
 
      def __unicode__(self):
         return self.name
@@ -427,21 +428,3 @@ spells= {'aid':2,
          'nondetection':3,
          }
          
-         
-         
-         
-
-         
-    
-    
-
-
-
-
-
-
-
-
-
-    
-    
