@@ -4,9 +4,16 @@
 	<p>You are currently inputting your class and race.</p>
 {% endblock tracker %}
 
+{% block nameform %}
+<!-- Text here for whatever the name was -->
+{% endblock %}
+
 
 {% block classrace %}
 
-	<p>{{ task.foo }}</p>
+{{ classraceform }}
+
+<!-- add a submit button -->
+<!-- on submit, pass views.py a parameter saying the progress -->
 
 {% endblock classrace %}
