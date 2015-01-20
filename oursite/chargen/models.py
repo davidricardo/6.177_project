@@ -50,7 +50,7 @@ class dRace(models.Model):
 
     def __unicode__(self):
         return self.name
-
+        
     class Meta:
         app_label= 'chargen'
 class dChar_class(models.Model):

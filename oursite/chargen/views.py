@@ -7,13 +7,131 @@ HttpResponse object.
 More information at https://docs.djangoproject.com/en/1.6/intro/tutorial03/
 or at https://docs.djangoproject.com/en/1.6/topics/http/views/
 """
-
+import os, sys
+sys.path.append('../')
+import oursite.settings
+os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, RequestContext, loader
 from django import forms
 
-from character import VARS_TO_PASS
+def pdf_view(request):
+    with open('myfile.pdf', 'r') as pdf:
+        response = HttpResponse(pdf.read(), mimetype='application/pdf')
+        response['Content-Disposition'] = 'filename=mycharacter.pdf'
+        return response
+    pdf.closed
+
+class AbilityScoreForm(forms.Form):
+    strength     = forms.ChoiceField(
+        [
+            (8, 8),
+            (9, 9),
+            (10, 10),
+            (11, 11),
+            (12, 12),
+            (13, 13),
+            (14, 14),
+            (15, 15),
+            (16, 16),
+            (17, 17),
+            (18, 18)
+            ],
+        widget = forms.Select(attrs = {
+            "onChange": 'updateAbilityScores()'
+            })
+        )
+    dexterity    = forms.ChoiceField(
+        [
+            (8, 8),
+            (9, 9),
+            (10, 10),
+            (11, 11),
+            (12, 12),
+            (13, 13),
+            (14, 14),
+            (15, 15),
+            (16, 16),
+            (17, 17),
+            (18, 18)
+        ],
+        widget = forms.Select(attrs = {
+            "onChange": 'updateAbilityScores()'
+            })
+        )
+    constitution = forms.ChoiceField(
+        [
+            (8, 8),
+            (9, 9),
+            (10, 10),
+            (11, 11),
+            (12, 12),
+            (13, 13),
+            (14, 14),
+            (15, 15),
+            (16, 16),
+            (17, 17),
+            (18, 18)
+        ],
+        widget = forms.Select(attrs = {
+            "onChange": 'updateAbilityScores()'
+            })
+        )
+    intelligence = forms.ChoiceField(
+        [
+            (8, 8),
+            (9, 9),
+            (10, 10),
+            (11, 11),
+            (12, 12),
+            (13, 13),
+            (14, 14),
+            (15, 15),
+            (16, 16),
+            (17, 17),
+            (18, 18)
+        ],
+        widget = forms.Select(attrs = {
+            "onChange": 'updateAbilityScores()'
+            })
+        )
+    wisdom       = forms.ChoiceField(
+        [
+            (8, 8),
+            (9, 9),
+            (10, 10),
+            (11, 11),
+            (12, 12),
+            (13, 13),
+            (14, 14),
+            (15, 15),
+            (16, 16),
+            (17, 17),
+            (18, 18)
+        ],
+        widget = forms.Select(attrs = {
+            "onChange": 'updateAbilityScores()'
+            })
+        )
+    charisma     = forms.ChoiceField(
+        [
+            (8, 8),
+            (9, 9),
+            (10, 10),
+            (11, 11),
+            (12, 12),
+            (13, 13),
+            (14, 14),
+            (15, 15),
+            (16, 16),
+            (17, 17),
+            (18, 18)
+        ],
+        widget = forms.Select(attrs = {
+            "onChange": 'updateAbilityScores()'
+            })
+        )
 
 class AbilityScoreForm(forms.Form):
     strength     = forms.ChoiceField(
@@ -132,9 +250,21 @@ class AbilityScoreForm(forms.Form):
 #     return HttpResponse(template.render(context))
 
 def index(request):
-    template = loader.get_template('chargen/index.html')
+    index = loader.get_template('chargen/index.html')
+    classrace = loader.get_template('chargen/classrace.html')
+    abilityscores = loader.get_template('chargen/abilityscores.html')
 
-    if request.method == 'POST': # If the form has been submitted...
+    if request.method != 'POST': # If a form has not been submitted yet, i.e, it is the first part
+        return HttpResponse(
+                classrace.render(
+                    RequestContext( request, {
+                        #variable : value pairs would go here
+                    } )
+                )
+            )        
+
+
+    else: # If the form has been submitted...
         ab_score_form = AbilityScoreForm(request.POST) # A form bound to the POST data
 
         if ab_score_form.is_valid(): # All validation rules pass
@@ -153,10 +283,10 @@ def index(request):
                 "<p>Wisdom: " + str(int(wisdom)) + "</p>" +
                 "<p>Charisma: " + str(int(charisma)) + "</p>"
                 )
-    
-    else:
-        ab_score_form = AbilityScoreForm() # An unbound form
 
+        else:
+            ab_score_form = AbilityScoreForm() # An unbound form
+    
     return HttpResponse(
             template.render(
                 RequestContext( request, {
@@ -164,3 +294,4 @@ def index(request):
                 } )
             )
         )
+
