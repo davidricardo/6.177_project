@@ -3,7 +3,7 @@ from fdfgen import forge_fdf
 from character import Character
 import os
 
-def fill_pdf(c = Character("Rachel","Barbarian","Dwarf - Hill",{"strength":8,"dexterity":12,"constitution":10,"intelligence":18,"wisdom":14,"charisma":10})):
+def fill_pdf(c = Character("Rachel","Barbarian","Halfelf",{"strength":8,"dexterity":12,"constitution":10,"intelligence":16,"wisdom":14,"charisma":10})):
     fields = [('ClassLevel',c.my_class.class_name+" "+str(c.level)),
               ('CharacterName',c.name),
               ('Background',c.background.name),
@@ -17,7 +17,7 @@ def fill_pdf(c = Character("Rachel","Barbarian","Dwarf - Hill",{"strength":8,"de
               ('STRmod',pre(c.get_modifier(c.ability_scores["strength"]))),
               ('HPMax',c.get_max_hit_points()),
               ('ST Strength',pre(c.saves["strength"])),
-              ('DEX',c.ability_scores["dexterity"]),=
+              ('DEX',c.ability_scores["dexterity"]),
               ('DEXmod ',pre(c.get_modifier(c.ability_scores["dexterity"]))),
               ('ST Dexterity',pre(c.saves["dexterity"])),
               ('CON',c.ability_scores["constitution"]),
@@ -29,7 +29,7 @@ def fill_pdf(c = Character("Rachel","Barbarian","Dwarf - Hill",{"strength":8,"de
               ('WIS',c.ability_scores["wisdom"]),
               ('WISmod',pre(c.get_modifier(c.ability_scores["wisdom"]))),
               ('ST Wisdom',pre(c.saves["wisdom"])),
-              ('CHA',c.ability_scores["charisma"]),=
+              ('CHA',c.ability_scores["charisma"]),
               ('CHamod',pre(c.get_modifier(c.ability_scores["charisma"]))),
               ('ST Charisma',pre(c.saves["charisma"])),
               ('Ideals',c.background.ideals),
@@ -55,9 +55,9 @@ def fill_pdf(c = Character("Rachel","Barbarian","Dwarf - Hill",{"strength":8,"de
               ('SleightofHand',pre(c.skills["sleight of hand"])),
               ('Survival',pre(c.skills["survival"])),
               ('Passive',c.get_passive_perception()),
-              ('ProficienciesLang',c.languages),
-              ('Equipment',c.equipment),
-              ('Features and Traits',c.features)
+              ('ProficienciesLang',list_to_string(c.languages)),
+              ('Equipment',list_to_string(c.equipment)),
+              ('Features and Traits',list_to_string(c.features))
               ]
     fdf = forge_fdf("",fields,[],[],[])
     fdf_file = open("data.fdf","wb")
@@ -73,3 +73,10 @@ def pre(x):
         return "+" + str(x)
     else:
         return str(x)
+
+def list_to_string(list):
+    string = ""
+    for x in list:
+        string+=x[0].upper()+x[1:len(x)].lower()+", "
+    return string[0:len(string)-2]
+    
