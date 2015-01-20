@@ -4,14 +4,15 @@
 	<p>You are currently inputting your class and race.</p>
 {% endblock tracker %}
 
-{% block nameform %}
-<!-- Text here for whatever the name was -->
+{% block name %}
+<p>Your name is {{ name_form }}</p>
 {% endblock %}
 
 
 {% block classrace %}
 
-{{ classraceform }}
+{{ class_race_form }}
+<input id="submitbutton" type="submit" value="Next step" />
 
 <!-- add a submit button -->
 <!-- on submit, pass views.py a parameter saying the progress -->

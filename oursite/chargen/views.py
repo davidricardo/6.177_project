@@ -55,6 +55,16 @@ def pdf_view(request):
         return response
     pdf.closed
 
+class NameInputForm(forms.Form):
+    nameinput = forms.CharField()
+    progress = forms.CharField(
+        initial="entering name",
+        widget = forms.TextInput(attrs = {
+            "type": "hidden"
+            }
+        )
+    )
+
 class AbilityScoreForm(forms.Form):
     strength     = forms.ChoiceField(
         [
@@ -167,11 +177,11 @@ class AbilityScoreForm(forms.Form):
 
 class ClassRaceForm(forms.Form):
     character_class = forms.ModelMultipleChoiceField(
-        queryset=dChar_class.objects.all(), 
+        queryset = dChar_class.objects.all(), 
         widget = forms.Select()
         )
     race = forms.ModelMultipleChoiceField(
-        queryset=dRace.objects.all(), 
+        queryset = dRace.objects.all(), 
         widget = forms.Select()
         )
 
@@ -179,55 +189,50 @@ class ClassRaceForm(forms.Form):
 
 def index(request):
     index = loader.get_template('chargen/index.html')
+    nameentry = loader.get_template('chargen/nameentry.html')
     classrace = loader.get_template('chargen/classrace.html')
     abilityscores = loader.get_template('chargen/abilityscores.html')
 
+    name_form = NameInputForm()
+    class_race_form = ClassRaceForm()
     ab_score_form = AbilityScoreForm()
-    classraceform = ClassRaceForm()
-
+    
 
     if request.method != 'POST': # If a form has not been submitted yet, i.e, it is the first part
-        return HttpResponse(
-                classrace.render(
+        return HttpResponse( #name entry 
+                nameentry.render(
                     RequestContext( request, {
-                        "classraceform" : classraceform,
+                        "name_form" : name_form,
                     } )
                 )
             )        
 
-
-    else: # If the form has been submitted...
-        ab_score_form = AbilityScoreForm(request.POST) # A form bound to the POST data
-
-        if ab_score_form.is_valid(): # All validation rules pass
-            strength = ab_score_form.cleaned_data["strength"]
-            dexterity = ab_score_form.cleaned_data["dexterity"]
-            constitution = ab_score_form.cleaned_data["constitution"]
-            intelligence = ab_score_form.cleaned_data["intelligence"]
-            wisdom = ab_score_form.cleaned_data["wisdom"]
-            charisma = ab_score_form.cleaned_data["charisma"]
-            return HttpResponse(
-                "<p> You have submitted the form. Your ability scores are:</p>" + 
-                "<p>Strength: " + str(int(strength)) + "</p>" +
-                "<p>Dexterity: " + str(int(dexterity)) + "</p>" +
-                "<p>Constitution: " + str(int(constitution)) + "</p>" +
-                "<p>Intelligence: " + str(int(intelligence)) + "</p>" +
-                "<p>Wisdom: " + str(int(wisdom)) + "</p>" +
-                "<p>Charisma: " + str(int(charisma)) + "</p>"
+    else: #not first step
+        name_form = NameInputForm(request.POST)
+        if name_form.is_valid():
+            character_in_progress = user_entry(name = name_form.cleaned_data['nameinput'])
+            character_in_progress.save()
+            if name_form.cleaned_data['progress'] == "entering name":
+                return HttpResponse(
+                    classrace.render(
+                            RequestContext( request, {
+                                "name_form": name_form.cleaned_data['nameinput'],
+                                "class_race_form": class_race_form
+                            } )
+                        )
                 )
 
         else:
-            ab_score_form = AbilityScoreForm() # An unbound form
-<<<<<<< HEAD
+            return HttpResponse("Name form not valid")
 
-=======
-    
->>>>>>> origin/Rachael-shmer-shmer
-    return HttpResponse(
-            template.render(
-                RequestContext( request, {
-                'ab_score_form': ab_score_form
-                } )
-            )
-        )
+
+
+
+
+
+
+
+
+
+
 

@@ -1,15 +1,15 @@
 {% extends "chargen/index.html" %}
 
 {% block tracker %}
-You are currently inputting ability scores.
+<p>You are currently inputting ability scores.</p>
 {% endblock %}
 
-{% block nameform %}
-<!-- Text here for whatever the name was -->
+{% block name %}
+<p>Your name was {{ nameform }}</p>
 {% endblock %}
 
 {% block classrace %}
-<p>You chose {{ classform }} for your class and {{ raceform }} for your race.</p>
+<p>You chose {{ class_race_form }} for your class and race.</p>
 {% endblock classrace %}
 
 {% block abilityscores %}
@@ -24,8 +24,8 @@ You are currently inputting ability scores.
             <td>
                 <div>
                     <p class="total_ability_score_title"> 
-                        <span id="total_ability_score_box"></span> 
-                    points spent</p>
+                        <span id="total_ability_score_box"></span> points spent
+                    </p>
                 </div>
             </td>
         </tr>
