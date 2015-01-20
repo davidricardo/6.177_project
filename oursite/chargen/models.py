@@ -146,17 +146,17 @@ class dsubclass(models.Model):
 
 class user_entry(models.Model):
     name = models.CharField(max_length=40)
-    char_class= models.ForeignKey('dChar_class')
-    sub_class= models.ForeignKey('dsubclass')
-    race= models.ForeignKey('dRace')
-    strgenth=models.IntegerField()
-    dexterity=models.IntegerField()
-    constitution=models.IntegerField()
-    intelegence=models.IntegerField()
-    wisdom=models.IntegerField()
-    charisma=models.IntegerField()
+    char_class= models.ForeignKey('dChar_class', default=1)
+    sub_class= models.ForeignKey('dsubclass', default=1)
+    race= models.ForeignKey('dRace', default=1)
+    strgenth=models.IntegerField(default=8)
+    dexterity=models.IntegerField(default=8)
+    constitution=models.IntegerField(default=8)
+    intelegence=models.IntegerField(default=8)
+    wisdom=models.IntegerField(default=8)
+    charisma=models.IntegerField(default=8)
     level=models.IntegerField(default=1)
-    backround= models.ForeignKey('dbackstory')
+    backround= models.ForeignKey('dbackstory', default=1)
     
 
 
