@@ -8,35 +8,8 @@
 
 <form id="name_form" method="POST">{% csrf_token %}
 {{ name_form.as_p }}
-<input id="submitbutton" type="submit" value="Next step" />
+<input class="submitbutton" name="name_submit_button" type="submit" value="Next step" />
 
 </form>
-
-
-<script type="text/javascript">
-
-// var params = [
-//                {
-//                  name: "progress",
-//                  value: "entering name"
-//                }
-//              ];
-
-// //passes everything in params as parameters on a hidden input?
-// $('#name_form').submit(function(){ //listen for submit event
-//     $.each(params, function(i,param){
-//         $('<input />').attr('type', 'hidden')
-//             .attr('name', param.name)
-//             .attr('value', param.value)
-
-//             .appendTo('#name_form');
-//     });
-
-//     return true;
-// });
-</script>
-<!-- Text entry here for a name input, return it with a submit button labeled "continue" -->
-<!-- Be sure to let user know that this is just a temporary name and they can change it later -->
-<!-- Pass views.py a parameter saying the progress -->
 
 {% endblock %}

@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block name %}
-<p>Your name was {{ nameform }}</p>
+<p>Your name is {{ class_race_form.name }}</p>
 {% endblock %}
 
 {% block classrace %}
-<p>You chose {{ class_race_form }} for your class and race.</p>
+<p>You chose {{ class_race_form.class }} for your class and {{ class_race_form.race }} for your race.</p>
 {% endblock classrace %}
 
 {% block abilityscores %}
@@ -30,10 +30,9 @@
             </td>
         </tr>
     </table>
-<input id="submitbutton" type="submit" value="Next step" />
+<input type="hidden" name="character_name" value="{{ name_form }}" >
+<input id="submitbutton" name="ability_scores_submit_button" type="submit" value="Next step" />
 </form>
-
-<!-- on submit, pass views.py a parameter saying the progress -->
 
 <script type="text/javascript">
     function updateAbilityScores() {
