@@ -56,14 +56,8 @@ def pdf_view(request):
     pdf.closed
 
 class NameInputForm(forms.Form):
-    nameinput = forms.CharField()
-    progress = forms.CharField(
-        initial="entering name",
-        widget = forms.TextInput(attrs = {
-            "type": "hidden"
-            }
-        )
-    )
+    name = forms.CharField()
+
 
 class AbilityScoreForm(forms.Form):
     strength     = forms.ChoiceField(
@@ -174,17 +168,26 @@ class AbilityScoreForm(forms.Form):
             "onChange": 'updateAbilityScores()'
             })
         )
+    name = forms.CharField(
+        widget = forms.TextInput(attrs = {
+            "type": "hidden"
+        })
+    )
 
 class ClassRaceForm(forms.Form):
-    character_class = forms.ModelMultipleChoiceField(
+    character_class = forms.ModelChoiceField(
         queryset = dChar_class.objects.all(), 
         widget = forms.Select()
         )
-    race = forms.ModelMultipleChoiceField(
+    race = forms.ModelChoiceField(
         queryset = dRace.objects.all(), 
         widget = forms.Select()
         )
-
+    name = forms.CharField(
+        widget = forms.TextInput(attrs = {
+            "type": "hidden"
+        })
+    )
 
 
 def index(request):
@@ -208,31 +211,58 @@ def index(request):
             )        
 
     else: #not first step
-        name_form = NameInputForm(request.POST)
-        if name_form.is_valid():
-            character_in_progress = user_entry(name = name_form.cleaned_data['nameinput'])
-            character_in_progress.save()
-            if name_form.cleaned_data['progress'] == "entering name":
+        if "name_submit_button" in request.POST: #if the last thing submitted was the name
+            name_form = NameInputForm(request.POST)
+            if name_form.is_valid(): #name input form has been filled out
+
+                #create a new row in the user_entry table
+                character_in_progress = user_entry( name = name_form.cleaned_data['name'] )
+                character_in_progress.save()
+                character_in_progress = user_entry.objects.get(name__iexact = name_form.cleaned_data['name'] )
+
+                #create a class_race_form and populate it with the initial data of the name
+                class_race_form = ClassRaceForm(initial={'name': character_in_progress.name})
+
                 return HttpResponse(
                     classrace.render(
                             RequestContext( request, {
-                                "name_form": name_form.cleaned_data['nameinput'],
+                                "name_form": character_in_progress.name, 
                                 "class_race_form": class_race_form
                             } )
                         )
                 )
 
+            else:
+                return HttpResponse("You just submitted the name form, but it's not valid.")
+
+        elif "class_race_submit_button" in request.POST: #if the last thing submitted was class and race
+            class_race_form = ClassRaceForm(request.POST)
+            if class_race_form.is_valid():
+
+                character_in_progress = user_entry.objects.get(name__iexact = class_race_form.cleaned_data['name'] )
+                character_in_progress.char_class = class_race_form.cleaned_data["character_class"]
+                character_in_progress.race = class_race_form.cleaned_data["race"]
+
+
+
+                return HttpResponse(
+                    abilityscores.render(
+                        RequestContext( request, {
+                                "class_race_form": {
+                                    "name" : character_in_progress.name,
+                                    "class": character_in_progress.char_class,
+                                    "race" : character_in_progress.race
+                                },
+                                "ab_score_form": ab_score_form
+                            } )
+                        )
+                )
+            else:
+                return HttpResponse("<p>You just submitted the class/race form, but it's not valid.</p>" + 
+                    "<p>The errors were</p>" + str(class_race_form.errors) )
+
+
         else:
-            return HttpResponse("Name form not valid")
-
-
-
-
-
-
-
-
-
-
+            return HttpResponse("Something broke!")
 
 

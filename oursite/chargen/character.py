@@ -239,7 +239,9 @@ class Char_Class:
             else:
                 x = len(dWeapon.objects.filter(martial_arts=False))
                 character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
-            self.equipment.extend(["explorer's pack", "four javelins"])
+            self.equipment.extend(["explorer's pack", "4 javelins"])
+            character.weapons.append("javelin")
+            
         if self.class_name=="Bard":
             if (random.randrange(0,3)==0):
                 character.weapons.append("rapier")
@@ -259,6 +261,7 @@ class Char_Class:
                 self.equipment.append(INSTRUMENTS[random.randrange(0,len(INSTRUMENTS))])
             character.armor = "leather"
             character.weapons.append("dagger")
+            
         if self.class_name=="Cleric":
             if (random.randrange(0,2)==0):
                 character.weapons.append("mace")
@@ -284,36 +287,97 @@ class Char_Class:
             else:
                 self.equipment.append("explorer's pack")
             self.equipment.extend(["shield","holy symbol"])
-            
+
+               
+        if self.class_name=="Druid":
+            if (random.randrange(0,2)==0):
+                self.equipment.append("wooden shield")
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+            if (random.randrange(0,2)==0):
+                character.weapons.append("scimitar")
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False).filter(mele=True))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False).filter(mele=True)[random.randrange(0,x)].weapon_name)
+            self.equipment.append(["explorer's pack","druidic focus"])
+            self.armor = "leather"
+
+        if self.class_name=="Fighter":
+            if (random.randrange(0,2)==0):
+                character.armor = "chain mail"
+            else:
+                character.armor = "leather"
+                character.weapons.append("longbow")
+            if (random.randrange(0,2)==0):
+                x = len(dWeapon.objects.filter(martial_arts=True))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=True)[random.randrange(0,x)].weapon_name)
+                self.equipment.append("shield")
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+            if (random.randrange(0,2)==0):
+                 character.weapon.append("light crossbow")
+            else:
+                character.weapon.extend(["handaxe","handaxe"])
+            if (random.randrange(0,2)==0):
+                 self.equipment.append("dungeoneer's pack")
+            else:
+                 self.equipment.append("explorer's pack")
+
+        if self.class_name=="Monk":
+            if (random.randrange(0,2)==0):
+                character.weapons.append("shortsword")
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+            if (random.randrange(0,2)==0):
+                 self.equipment.append("dungeoneer's pack")
+            else:
+                 self.equipment.append("explorer's pack")
+            self.equipment.append("ten darts")
+            self.weapons.append("dart")
+
+        if self.class_name=="Paladin":
+            if (random.randrange(0,2)==0):
+                x = len(dWeapon.objects.filter(martial_arts=True))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=True)[random.randrange(0,x)].weapon_name)
+                self.equipment.append("shield")
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
+            if (random.randrange(0,2)==0):
+                 character.weapon.append("javelin")
+                 self.equipment.append("5 javelins")
+            else:
+                self.equipment.append("explorer's pack")
+            character.armor = "chain mail"
+            self.equipment.append("holy symbol")
+
+        if self.class_name=="Ranger":
+            if (random.randrange(0,2)==0):
+                character.armor = "scale mail"
+            else:
+                character.armor = "leather"
+            if (random.randrange(0,2)==0):
+                character.weapons.extend(["shortsword","shortsword"])
+            else:
+                x = len(dWeapon.objects.filter(martial_arts=False).filter(mele=True))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False).filter(mele=True)[random.randrange(0,x)].weapon_name)
+                x = len(dWeapon.objects.filter(martial_arts=False))
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False).filter(mele=True)[random.randrange(0,x)].weapon_name)
+            if (random.randrange(0,2)==0):
+                 self.equipment.append("dungeoneer's pack")
+            else:
+                 self.equipment.append("explorer's pack")
+            character.armor = "chain mail"
+            character.weapons.append("longbow")
+
 """
-Cleric
-a mace or a warhammer(if proficient)
-scale mail, leather armor, or chain mail(if proficient)
-light crossbow or any simple weapon
-priest's pack or explorer's pack
-Shield and holy symbol
-
-Druid
-wooden shiled or simple weapon
-scimitar or simple melee weapon
-leather armor, explorer's pack, druidic focus
-
-Fighter
-chain mail or leather, longbow
-martial weapon and shield or two martial weapons
-light crossbow or two handaxes
-a dungeoneer's pack or explorer's pack
-
-Monk
-a shortsword or any simple weapon
-a dungeoneer's pack or explorer's pack
-10 darts
-
-Paladin
-martial weapon and shield or two martial weapons
-five javelins or an explorer's pack
-chain mail and holy symbol
-
 Ranger
 scale mail or leather armor
 two shortswords or two simple melee weapons

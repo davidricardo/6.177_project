@@ -10,11 +10,9 @@
 
 
 {% block classrace %}
-
+<form id="name_form" method="POST">{% csrf_token %}
 {{ class_race_form }}
-<input id="submitbutton" type="submit" value="Next step" />
-
-<!-- add a submit button -->
-<!-- on submit, pass views.py a parameter saying the progress -->
+<input class="submitbutton" name="class_race_submit_button" type="submit" value="Next step" />
+</form>
 
 {% endblock classrace %}
