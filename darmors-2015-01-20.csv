@@ -1,8 +1,13 @@
 id,name,armour_class,ac_mod,strgenth_requirement,disadvantage_stealth,very_expensive,moderatly_expensive
 7,Breastplate,medium,14,0,0,0,1
-6,Scale Mail,14,14,0,1,0,0
+6,Scale Mail,medium,14,0,1,0,0
 5,Chain Shirt,medium,13,0,0,0,0
 4,Hide,medium,12,0,0,0,0
 3,Studded Leather,light,12,0,0,0,0
 2,Leather,light,11,0,0,0,0
 1,Padded,light,11,0,1,0,0
+8,half palte,medium,15,0,1,1,0
+9,ring mail,heavy,14,0,1,0,0
+10,chain mail,heavy,16,13,1,0,0
+11,splint,heavy,17,15,1,0,1
+12,Plate,heavy,18,15,1,1,0
