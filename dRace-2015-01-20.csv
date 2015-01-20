@@ -1,0 +1,15 @@
+id,name,dex_mod,char_mod,str_mod,int_mod,wis_mod,con_mod,speed,skill_proficiencies,optional_skill_proficiencies,language,optional_lang_proficiencies,weapon_proficiencies,armour_proficiencies,tool_proficiencies,features
+15,Tiefling,0,2,0,1,0,0,30, ,0,Common; Infernal,0, , , ,Darkvision; Hellish Resistance
+14,Half-Orc,0,0,2,0,0,1,30,intimidation,0,Common; Orc,0, , , ,Darkvision; Relentless Endurance; Savage Attack
+13,Halfelf,0,2,0,0,0,0,30, ,2,Common; Elvish,1, , , ,Darkvision; Fey Ancestry
+12,Gnome - Rock,0,0,0,2,0,1,25,history,0,Common; Gnomish,0, , , ,Darkvision; Gnome Cunning; Tinkering
+11,Gnome - Forrest,1,0,0,2,0,0,25, ,0,Common; Gnomish,0, , , ,Darkvision; Gnome Cunning; Speak with Small Beasts
+10,Dragonborn,0,1,2,0,0,0,30, ,0,Common; Draconic,0, , , ,Breath Weapon; Damage Resistance
+9,Human,1,1,1,1,1,1,30, ,0,Common,1, , , , 
+7,Halfling - Stout,2,0,0,0,0,1,25, ,0,Common; Halfling,0, , , ,Lucky; Brave; Halfling Nimbleness; Stout Resiliance
+6,Halfling - Lightfoot,2,1,0,0,0,0,25, ,0,Common; Halfling,0, , , ,Lucky; Brave; Halfling Nimbleness; Naturally Stealthy
+5,Elf - Dark (Drow),2,1,0,0,0,0,30,perception,0,Common; Elvish,0,rapier; shortsword; hand crossbow, , ,Superior Darkvision; Fey Ancestry; Trance
+4,Elf - Wood,2,0,0,0,1,0,35,perception,0,Common; Elvish,0,longsword; shortsword; shortbow; longbow, , ,Darkvision; Fey Ancestry; Trance; Mask of the Wild
+3,Elf- High,2,0,0,1,0,0,30,perception,0,Common; Elvish,1,longsword; shortsword; shortbow; longbow, , ,Darkvision; Fey Ancestry; Trance
+2,Dwarf - Mountain,0,0,2,0,0,2,25,history,0,Common; Dwarvish,0,battleaxe; handaxe; throwing hammer; warhammer,light; medium,smith's tools; brewer's supplies; mason's tools,Darkvision; Dwarven Resilanace
+1,Dwarf - Hill,0,0,0,0,1,2,25,history,0,Common; Dwarvish,0,battleaxe; handaxe; throwing hammer; warhammer, ,smith's tools; brewer's supplies; mason's tools,Darkvision; Dwarven Resilanace

@@ -1,0 +1,3 @@
+id,name,skill_proficiencies,language,optional_lang_proficiencies,tool_proficiencies,equipment,feature
+2,Charlatan,deception; sleight of hand, ,0,disguise kit; forgery kit,set of fine clothes; disguise kit; tools of the con of your choice,False Identy
+1,Acolyte,insight; religion, ,2, ,A holy symbol; prayer book or prayer wheel; 5 sticks of incense; vestments; common clothes,Shelter of the Faithful

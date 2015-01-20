@@ -1,0 +1,8 @@
+id,name,armour_class,ac_mod,strgenth_requirement,disadvantage_stealth,very_expensive,moderatly_expensive
+7,Breastplate,medium,14,0,0,0,1
+6,Scale Mail,14,14,0,1,0,0
+5,Chain Shirt,medium,13,0,0,0,0
+4,Hide,medium,12,0,0,0,0
+3,Studded Leather,light,12,0,0,0,0
+2,Leather,light,11,0,0,0,0
+1,Padded,light,11,0,1,0,0
