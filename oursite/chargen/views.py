@@ -46,7 +46,7 @@ from django import forms
 from django.db import models
 from django.forms import ModelForm
 
-from models import dChar_class, dRace, user_entry
+from models import dChar_class, dRace, user_entry, dbackstory
 
 def pdf_view(request):
     with open('myfile.pdf', 'r') as pdf:
@@ -58,6 +58,16 @@ def pdf_view(request):
 class NameInputForm(forms.Form):
     name = forms.CharField()
 
+class ClassRaceForm(forms.Form):
+    character_class = forms.ModelChoiceField(
+        queryset = dChar_class.objects.all()
+    )
+    race = forms.ModelChoiceField(
+        queryset = dRace.objects.all()
+    )
+    name = forms.CharField(
+        widget = forms.HiddenInput()
+    )
 
 class AbilityScoreForm(forms.Form):
     strength     = forms.ChoiceField(
@@ -169,36 +179,31 @@ class AbilityScoreForm(forms.Form):
             })
         )
     name = forms.CharField(
-        widget = forms.TextInput(attrs = {
-            "type": "hidden"
-        })
+        widget = forms.HiddenInput()
     )
 
-class ClassRaceForm(forms.Form):
-    character_class = forms.ModelChoiceField(
-        queryset = dChar_class.objects.all(), 
-        widget = forms.Select()
-        )
-    race = forms.ModelChoiceField(
-        queryset = dRace.objects.all(), 
-        widget = forms.Select()
-        )
-    name = forms.CharField(
-        widget = forms.TextInput(attrs = {
-            "type": "hidden"
-        })
+class BackgroundForm(forms.Form):
+    background = forms.ModelChoiceField(
+        queryset = dbackstory.objects.all()
     )
+    name = forms.CharField(
+        widget = forms.HiddenInput()
+    )
+
 
 
 def index(request):
     index = loader.get_template('chargen/index.html')
+
     nameentry = loader.get_template('chargen/nameentry.html')
     classrace = loader.get_template('chargen/classrace.html')
     abilityscores = loader.get_template('chargen/abilityscores.html')
+    background = loader.get_template('chargen/background.html')
 
     name_form = NameInputForm()
     class_race_form = ClassRaceForm()
     ab_score_form = AbilityScoreForm()
+    background_form = BackgroundForm()
     
 
     if request.method != 'POST': # If a form has not been submitted yet, i.e, it is the first part
@@ -242,17 +247,13 @@ def index(request):
                 character_in_progress = user_entry.objects.get(name__iexact = class_race_form.cleaned_data['name'] )
                 character_in_progress.char_class = class_race_form.cleaned_data["character_class"]
                 character_in_progress.race = class_race_form.cleaned_data["race"]
+                character_in_progress.save()
 
-
+                ab_score_form = AbilityScoreForm(initial={'name': character_in_progress.name})
 
                 return HttpResponse(
                     abilityscores.render(
                         RequestContext( request, {
-                                "class_race_form": {
-                                    "name" : character_in_progress.name,
-                                    "class": character_in_progress.char_class,
-                                    "race" : character_in_progress.race
-                                },
                                 "ab_score_form": ab_score_form
                             } )
                         )
@@ -261,6 +262,44 @@ def index(request):
                 return HttpResponse("<p>You just submitted the class/race form, but it's not valid.</p>" + 
                     "<p>The errors were</p>" + str(class_race_form.errors) )
 
+        elif "ability_scores_submit_button" in request.POST:
+            ab_score_form = AbilityScoreForm(request.POST)
+            if ab_score_form.is_valid():
+
+                character_in_progress = user_entry.objects.get(name__iexact = ab_score_form.cleaned_data['name'] )
+                character_in_progress.strength = ab_score_form.cleaned_data['strength']
+                character_in_progress.dexterity = ab_score_form.cleaned_data['dexterity']
+                character_in_progress.constitution = ab_score_form.cleaned_data['constitution']
+                character_in_progress.intelegence = ab_score_form.cleaned_data['intelligence'] 
+                #this is not a typo, it's misspelled in the models.py
+                character_in_progress.wisdom = ab_score_form.cleaned_data['wisdom']
+                character_in_progress.charisma = ab_score_form.cleaned_data['charisma']
+                character_in_progress.save()
+
+
+                background_form = BackgroundForm(initial={'name': character_in_progress.name})
+
+
+
+
+# ============== do pdf stuff here ===========================================================================
+
+
+                return HttpResponse("Your pdf is generating now...")
+
+                # return HttpResponse(
+                #     background.render(
+                #         RequestContext( request, {
+                #             "background_form": background_form
+                #         })
+                #     )
+                # )
+
+
+
+            else:
+                return HttpResponse("You had errors in your ability score form." + 
+                    "They were: " + str(ab_score_form.errors))
 
         else:
             return HttpResponse("Something broke!")
