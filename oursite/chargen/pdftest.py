@@ -1,10 +1,11 @@
 #!python
 from fdfgen import forge_fdf
 from character import Character
-from models import dWeapon
+from models import dWeapon,dpersonalities,dideals,dbonds,dflaws
 import os
+import random
 
-def fill_pdf(c = Character("Rachel Thorn","Barbarian","Human",{"strength":16,"dexterity":10,"constitution":14,"intelligence":8,"wisdom":12,"charisma":8})):
+def fill_pdf(c = Character("Rachel Thorn","Bard","Human",{"strength":16,"dexterity":10,"constitution":14,"intelligence":8,"wisdom":12,"charisma":8})):
     wpn1 = ""
     wpn1a = ""
     wpn1d = ""
@@ -38,6 +39,67 @@ def fill_pdf(c = Character("Rachel Thorn","Barbarian","Human",{"strength":16,"de
             wpn3a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
             wpn3d = str(dWeapon.objects.get(weapon_name=wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn3).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn3).damage_type[0] + "."
 
+    a = random.randrange(1,9)
+    personality = ""
+    if a==1:
+        personality = dpersonalities.objects.get(background=c.background.name).one
+    elif a==2:
+        personality = dpersonalities.objects.get(background=c.background.name).two
+    elif a==3:
+        personality = dpersonalities.objects.get(background=c.background.name).three
+    elif a==4:
+        personality = dpersonalities.objects.get(background=c.background.name).four
+    elif a==5:
+        personality = dpersonalities.objects.get(background=c.background.name).five
+    elif a==6:
+        personality = dpersonalities.objects.get(background=c.background.name).six
+    elif a==7:
+        personality = dpersonalities.objects.get(background=c.background.name).seven
+    elif a==8:
+        personality = dpersonalities.objects.get(background=c.background.name).eight
+    a = random.randrange(1,9)
+    ideal = ""
+    if a==1:
+        ideal = dideals.objects.get(background=c.background.name).one
+    elif a==2:
+        ideal = dideals.objects.get(background=c.background.name).two
+    elif a==3:
+        ideal = dideals.objects.get(background=c.background.name).three
+    elif a==4:
+        ideal = dideals.objects.get(background=c.background.name).four
+    elif a==5:
+        ideal = dideals.objects.get(background=c.background.name).five
+    elif a==6:
+        ideal = dideals.objects.get(background=c.background.name).six
+    print ideal
+    a = random.randrange(1,9)
+    bond = ""
+    if a==1:
+        bond = dbonds.objects.get(background=c.background.name).one
+    elif a==2:
+        bond = dbonds.objects.get(background=c.background.name).two
+    elif a==3:
+        bond = dbonds.objects.get(background=c.background.name).three
+    elif a==4:
+        bond = dbonds.objects.get(background=c.background.name).four
+    elif a==5:
+        bond = dbonds.objects.get(background=c.background.name).five
+    elif a==6:
+        bond = dideals.objects.get(background=c.background.name).six
+    a = random.randrange(1,9)
+    flaw = ""
+    if a==1:
+        flaw = dbonds.objects.get(background=c.background.name).one
+    elif a==2:
+        flaw = dbonds.objects.get(background=c.background.name).two
+    elif a==3:
+        flaw = dbonds.objects.get(background=c.background.name).three
+    elif a==4:
+        flaw = dbonds.objects.get(background=c.background.name).four
+    elif a==5:
+        flaw = dbonds.objects.get(background=c.background.name).five
+    elif a==6:
+        flaw = dideals.objects.get(background=c.background.name).six
     fields = [('ClassLevel',c.my_class.class_name+" "+str(c.level)),
               ('CharacterName',c.name),
               ('Background',c.background.name),
@@ -101,6 +163,10 @@ def fill_pdf(c = Character("Rachel Thorn","Barbarian","Human",{"strength":16,"de
               ('Wpn Name 3',wpn3),
               ('Wpn3 AtkBonus  ',wpn3a),
               ('Wpn3 Damage ',wpn3d),
+              ('PersonalityTraits ',personality),
+              ('Bonds',bond),
+              ('Flaws',flaw),
+              ('Ideals',ideal),
               ]
     fdf = forge_fdf("",fields,[],[],[])
     fdf_file = open("data.fdf","wb")

@@ -66,7 +66,6 @@ class dChar_class(models.Model):
     saving_throws_proficiencies=models.CharField(max_length=400)
     skill_proficiencies= models.CharField(max_length=400)
     number_skill_proficiencies= models.IntegerField()
-    features=models.CharField(max_length=3000)
     cantrips_known= models.IntegerField()
     spells_known= models.IntegerField()
     spell_slots_1st_level= models.IntegerField()
@@ -142,7 +141,77 @@ class dsubclass(models.Model):
 
     class Meta:
         app_label= 'chargen'
-        
+
+class dpersonalities(models.Model):
+    background = models.CharField(max_length=1000)
+    one= models.CharField(max_length=2000)
+    two= models.CharField(max_length=2000)
+    three= models.CharField(max_length=2000)
+    four=models.CharField(max_length=2000)
+    five=models.CharField(max_length=2000)
+    six=models.CharField(max_length=2000)
+    seven=models.CharField(max_length=2000)
+    eight=models.CharField(max_length=2000)
+    
+    
+    def __unicode__(self):
+        return self.background
+    
+    
+    class Meta:
+        app_label= 'chargen'
+
+class dideals(models.Model):
+    background = models.CharField(max_length=40)
+    one= models.CharField(max_length=600)
+    two= models.CharField(max_length=600)
+    three= models.CharField(max_length=600)
+    four=models.CharField(max_length=600)
+    five=models.CharField(max_length=600)
+    six=models.CharField(max_length=600)
+    
+    
+    def __unicode__(self):
+        return self.background
+    
+    
+    class Meta:
+        app_label= 'chargen'
+
+class dbonds(models.Model):
+    background = models.CharField(max_length=40)
+    one= models.CharField(max_length=600)
+    two= models.CharField(max_length=600)
+    three= models.CharField(max_length=600)
+    four=models.CharField(max_length=600)
+    five=models.CharField(max_length=600)
+    six=models.CharField(max_length=600)
+    
+    
+    def __unicode__(self):
+        return self.background
+    
+    
+    class Meta:
+        app_label= 'chargen'
+
+
+class dflaws(models.Model):
+    background = models.CharField(max_length=40)
+    one= models.CharField(max_length=600)
+    two= models.CharField(max_length=600)
+    three= models.CharField(max_length=600)
+    four=models.CharField(max_length=600)
+    five=models.CharField(max_length=600)
+    six=models.CharField(max_length=600)
+    
+    
+    def __unicode__(self):
+        return self.background
+    
+    
+    class Meta:
+        app_label= 'chargen'
 
 class user_entry(models.Model):
     name = models.CharField(max_length=40)
