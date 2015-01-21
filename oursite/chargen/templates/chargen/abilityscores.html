@@ -47,18 +47,20 @@
 
     function getCost(ability) {
         //returns the point-buy cost for an ability
-        var to_return = ability - 8;
-        if (ability ==14) {
-            to_return = 7;
-        }
-        if (ability == 16) {
-            to_return -= 1
-        }
-        if (ability > 14) {
-            to_return += ability-15+ ((ability-13)^2) / (2*Math.floor( (ability-13)/2 ));
-        }
-        to_return = Math.floor(to_return);
-        return to_return        
+        var cost_table = new Array();
+        cost_table [8] = 0;
+        cost_table [9] = 1;
+        cost_table [10] = 2;
+        cost_table [11] = 3;
+        cost_table [12] = 4;
+        cost_table [13] = 5;
+        cost_table [14] = 7;
+        cost_table [15] = 9;
+        cost_table [16] = 12;
+        cost_table [17] = 15;
+        cost_table [18] = 19;
+
+        return cost_table[ability]        
     }
 
     $('#submitbutton').submit(function(){ //listen for submit event
