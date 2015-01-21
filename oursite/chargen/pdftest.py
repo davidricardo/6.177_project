@@ -1,10 +1,11 @@
 #!python
 from fdfgen import forge_fdf
 from character import Character
-from models import dWeapon
+from models import dWeapon#,dpersonalities,dideals,dbonds,dflaws
 import os
+import random
 
-def fill_pdf(c = Character("Rachel Thorn","Barbarian","Human",{"strength":16,"dexterity":10,"constitution":14,"intelligence":8,"wisdom":12,"charisma":8})):
+def fill_pdf(c = Character("Rachel Thorn","Bard","Human","Acolyte",{"strength":16,"dexterity":10,"constitution":14,"intelligence":8,"wisdom":12,"charisma":8})):
     wpn1 = ""
     wpn1a = ""
     wpn1d = ""
@@ -14,31 +15,32 @@ def fill_pdf(c = Character("Rachel Thorn","Barbarian","Human",{"strength":16,"de
     wpn3 = ""
     wpn3a = ""
     wpn3d = ""
-    wpn1 = c.weapons[0]
-    if dWeapon.objects.get(weapon_name=wpn1).mele==True and not(dWeapon.objects.get(weapon_name=wpn1).finesse==True and c.get_modifier(c.ability_scores["strength"])<c.get_modifier(c.ability_scores["dexterity"])):
-        wpn1a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["strength"]))
-        wpn1d = str(dWeapon.objects.get(weapon_name=wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn1).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=wpn1).damage_type[0] + "."
-    else:
-        wpn1a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
-        wpn1d = str(dWeapon.objects.get(weapon_name=wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn1).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn1).damage_type[0] + "."
-    if len(c.weapons)>1:
-        wpn2 = c.weapons[1]
-        if dWeapon.objects.get(weapon_name=wpn2).mele==True and not(dWeapon.objects.get(weapon_name=wpn2).finesse==True and c.get_modifier(c.ability_scores["strength"])<c.get_modifier(c.ability_scores["dexterity"])):
-            wpn2a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["strength"]))
-            wpn2d = str(dWeapon.objects.get(weapon_name=wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn2).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=wpn2).damage_type[0] + "."
+    if len(c.weapons)>0:
+        wpn1 = c.weapons[0]
+        if dWeapon.objects.get(weapon_name=wpn1).mele==True and not(dWeapon.objects.get(weapon_name=wpn1).finesse==True and c.get_modifier(c.ability_scores["strength"])<c.get_modifier(c.ability_scores["dexterity"])):
+            wpn1a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["strength"]))
+            wpn1d = str(dWeapon.objects.get(weapon_name=wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn1).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=wpn1).damage_type[0] + "."
         else:
-            wpn2a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
-            wpn2d = str(dWeapon.objects.get(weapon_name=wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn2).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn2).damage_type[0] + "."
-    if len(c.weapons)>2:
-        wpn3 = c.weapons[2]
-        if dWeapon.objects.get(weapon_name=wpn3).mele==True and not(dWeapon.objects.get(weapon_name=wpn3).finesse==True and c.get_modifier(c.ability_scores["strength"])<c.get_modifier(c.ability_scores["dexterity"])):
-            wpn3a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["strength"]))
-            wpn3d = str(dWeapon.objects.get(weapon_name=wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn3).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=wpn3).damage_type[0] + "."
-        else:
-            wpn3a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
-            wpn3d = str(dWeapon.objects.get(weapon_name=wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn3).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn3).damage_type[0] + "."
+            wpn1a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
+            wpn1d = str(dWeapon.objects.get(weapon_name=wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn1).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn1).damage_type[0] + "."
+        if len(c.weapons)>1:
+            wpn2 = c.weapons[1]
+            if dWeapon.objects.get(weapon_name=wpn2).mele==True and not(dWeapon.objects.get(weapon_name=wpn2).finesse==True and c.get_modifier(c.ability_scores["strength"])<c.get_modifier(c.ability_scores["dexterity"])):
+                wpn2a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["strength"]))
+                wpn2d = str(dWeapon.objects.get(weapon_name=wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn2).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=wpn2).damage_type[0] + "."
+            else:
+                wpn2a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
+                wpn2d = str(dWeapon.objects.get(weapon_name=wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn2).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn2).damage_type[0] + "."
+        if len(c.weapons)>2:
+            wpn3 = c.weapons[2]
+            if dWeapon.objects.get(weapon_name=wpn3).mele==True and not(dWeapon.objects.get(weapon_name=wpn3).finesse==True and c.get_modifier(c.ability_scores["strength"])<c.get_modifier(c.ability_scores["dexterity"])):
+                wpn3a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["strength"]))
+                wpn3d = str(dWeapon.objects.get(weapon_name=wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn3).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=wpn3).damage_type[0] + "."
+            else:
+                wpn3a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
+                wpn3d = str(dWeapon.objects.get(weapon_name=wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn3).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn3).damage_type[0] + "."
 
-    fields = [('ClassLevel',c.my_class.class_name+" "+str(c.level)),
+    fields = [('ClassLevel',str(c.my_class.class_name)+" "+str(c.level)),
               ('CharacterName',c.name),
               ('Background',c.background.name),
               ('Race ',c.my_race.name),
@@ -101,6 +103,10 @@ def fill_pdf(c = Character("Rachel Thorn","Barbarian","Human",{"strength":16,"de
               ('Wpn Name 3',wpn3),
               ('Wpn3 AtkBonus  ',wpn3a),
               ('Wpn3 Damage ',wpn3d),
+              #('PersonalityTraits ',personality),
+              #('Bonds',bond),
+              #('Flaws',flaw),
+              #('Ideals',ideal),
               ]
     fdf = forge_fdf("",fields,[],[],[])
     fdf_file = open("data.fdf","wb")
@@ -109,7 +115,8 @@ def fill_pdf(c = Character("Rachel Thorn","Barbarian","Human",{"strength":16,"de
     path = os.path.abspath('..')+'/chargen/myfile.pdf'
     path2 = os.path.abspath('..')+'/chargen/data.fdf'
     path3 = os.path.abspath('..')+'/chargen/charactergen.pdf'
-    os.system('/usr/local/bin/pdftk ' + path + ' fill_form ' + path2 + ' output '+path3)
+    path4 = os.path.abspath('..')+'/chargen/pdftk'
+    os.system('pdftk' + path + ' fill_form ' + path2 + ' output '+path3)
     
 def pre(x):
     if x>0:

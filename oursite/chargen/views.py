@@ -45,6 +45,8 @@ from django.template import Context, RequestContext, loader
 from django import forms
 from django.db import models
 from django.forms import ModelForm
+import pdftest
+from character import Character
 
 from models import dChar_class, dRace, user_entry, dbackstory
 
@@ -279,35 +281,41 @@ def index(request):
 
                 background_form = BackgroundForm(initial={'name': character_in_progress.name})
 
-                return HttpResponse(
-                    background.render(
-                        RequestContext( request, {
-                            "background_form": background_form
-                        })
-                    )
-                )
+
+
+
+# ============== do pdf stuff here ===========================================================================
+                c = Character(character_in_progress.name,
+                              character_in_progress.char_class,
+                              character_in_progress.race,
+                              character_in_progress.backround,
+                              {"strength":int(character_in_progress.strength),
+                               "dexterity":int(character_in_progress.dexterity),
+                               "constitution":int(character_in_progress.constitution),
+                               "intelligence":int(character_in_progress.intelegence),
+                               "wisdom":int(character_in_progress.wisdom),
+                               "charisma":int(character_in_progress.charisma)})
+                pdftest.fill_pdf(c)
+                path = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
+                with open(path, 'r') as pdf:
+                    response = HttpResponse(pdf.read(), mimetype='application/pdf')
+                    response['Content-Disposition'] = 'inline;filename=mycharacter.pdf'
+                    return response
+                pdf.closed
+
+                # return HttpResponse(
+                #     background.render(
+                #         RequestContext( request, {
+                #             "background_form": background_form
+                #         })
+                #     )
+                # )
+
+
 
             else:
-                return HttpResponse(
-                    "You had errors in your ability score form." + 
-                    "They were: " + str(ab_score_form.errors)
-                )
-
-        elif "background_submit_button" in request.POST:
-            background_form = BackgroundForm(request.POST)
-            if background_form.is_valid():
-                character_in_progress = user_entry.objects.get(name__iexact = background_form.cleaned_data['name'] )
-                #"backround" is not a typo, it's misspelled in models.py
-                character_in_progress.backround = background_form.cleaned_data["background"]
-
-                #PDF stuff goes here instead
-                return HttpResponse("pdf generating")
-
-            else:
-                return HttpResponse(
-                    "<p>You had errors in your background form.</p>" + 
-                    "<p>They were: </p>" + str(background_form.errors)
-                )
+                return HttpResponse("You had errors in your ability score form." + 
+                    "They were: " + str(ab_score_form.errors))
 
         else:
             return HttpResponse("Something broke!")
