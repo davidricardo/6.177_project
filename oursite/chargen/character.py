@@ -535,7 +535,7 @@ class Race:
         character.features.extend(self.features)
 
 class Background:
-    def __init__(self, character,name="Acolyte"):
+    def __init__(self, character,name=""):
         if name=="":
             number_of_records = dbackstory.objects.count()
             random_index = random.randrange(number_of_records)

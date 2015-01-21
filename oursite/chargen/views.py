@@ -302,7 +302,7 @@ def index(request):
                     response['Content-Disposition'] = 'inline;filename=mycharacter.pdf'
                     return response
                 pdf.closed
-
+"""
                 # return HttpResponse(
                 #     background.render(
                 #         RequestContext( request, {
@@ -321,3 +321,4 @@ def index(request):
             return HttpResponse("Something broke!")
 
 
+"""
