@@ -4,16 +4,8 @@
 <p>You are currently inputting ability scores.</p>
 {% endblock %}
 
-{% block name %}
-<p>Your name is {{ class_race_form.name }}</p>
-{% endblock %}
-
-{% block classrace %}
-<p>You chose {{ class_race_form.class }} for your class and {{ class_race_form.race }} for your race.</p>
-{% endblock classrace %}
-
 {% block abilityscores %}
-<form method="post">{% csrf_token %}
+<form method="POST">{% csrf_token %}
     <table>
         <tr>
             <td>
@@ -30,7 +22,6 @@
             </td>
         </tr>
     </table>
-<input type="hidden" name="character_name" value="{{ name_form }}" >
 <input id="submitbutton" name="ability_scores_submit_button" type="submit" value="Next step" />
 </form>
 

@@ -279,27 +279,35 @@ def index(request):
 
                 background_form = BackgroundForm(initial={'name': character_in_progress.name})
 
-
-
-
-# ============== do pdf stuff here ===========================================================================
-
-
-                return HttpResponse("Your pdf is generating now...")
-
-                # return HttpResponse(
-                #     background.render(
-                #         RequestContext( request, {
-                #             "background_form": background_form
-                #         })
-                #     )
-                # )
-
-
+                return HttpResponse(
+                    background.render(
+                        RequestContext( request, {
+                            "background_form": background_form
+                        })
+                    )
+                )
 
             else:
-                return HttpResponse("You had errors in your ability score form." + 
-                    "They were: " + str(ab_score_form.errors))
+                return HttpResponse(
+                    "You had errors in your ability score form." + 
+                    "They were: " + str(ab_score_form.errors)
+                )
+
+        elif "background_submit_button" in request.POST:
+            background_form = BackgroundForm(request.POST)
+            if background_form.is_valid():
+                character_in_progress = user_entry.objects.get(name__iexact = background_form.cleaned_data['name'] )
+                #"backround" is not a typo, it's misspelled in models.py
+                character_in_progress.backround = background_form.cleaned_data["background"]
+
+                #PDF stuff goes here instead
+                return HttpResponse("pdf generating")
+
+            else:
+                return HttpResponse(
+                    "<p>You had errors in your background form.</p>" + 
+                    "<p>They were: </p>" + str(background_form.errors)
+                )
 
         else:
             return HttpResponse("Something broke!")
