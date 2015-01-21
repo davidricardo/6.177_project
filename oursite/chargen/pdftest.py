@@ -5,6 +5,9 @@ from models import *
 import os, subprocess
 import random
 from django.conf import settings
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template import Context, RequestContext, loader
 
 def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",{"strength":16,"dexterity":10,"constitution":14,"intelligence":8,"wisdom":12,"charisma":8})):
     wpn1 = ""
@@ -110,14 +113,22 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",{"strength":16,"dext
               #('Ideals',ideal),
               ]
     fdf = forge_fdf("",fields,[],[],[])
-    fdf_file = open("data.fdf","w")
+    path2 = os.path.abspath('..')+'/oursite/chargen/data.fdf'
+    fdf_file = open(path2,"w")
     fdf_file.write(fdf)
     fdf_file.close()
-    path = os.path.abspath('..')+'/chargen/myfile.pdf'
-    path2 = os.path.abspath('..')+'/data.fdf'
-    path3 = os.path.abspath('..')+'/chargen/charactergen.pdf'
-    path4 = os.path.abspath('..')+'/chargen/pdftk/bin/pdftk'
-    print os.popen(path4+' ' + path + ' fill_form ' + path2 + ' output '+path3)
+    path = os.path.abspath('..')+'/oursite/chargen/myfile.pdf'
+    path2 = os.path.abspath('..')+'/oursite/chargen/data.fdf'
+    path3 = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
+    path4 = os.path.abspath('..')+'/oursite/chargen/pdftk/bin/pdftk'
+    os.system(path4+' ' + path + ' fill_form ' + path2 + ' output '+path3)
+    path = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
+    with open(path, 'r') as pdf:
+        response = HttpResponse(pdf.read(), mimetype='application/pdf')
+        response['Content-Disposition'] = 'inline;filename=mycharacter.pdf'
+        return response
+    pdf.closed
+
     """
     pdftk_bin = None
     if pdftk_bin is None:
