@@ -92,6 +92,43 @@ LANGUAGES = [
     "Undercommon"
 ]
 
+DRUID_SPELLS1 = [
+    "animal friendship",
+    "charm person",
+    "create or destroy water",
+    "cure wounds",
+    "detect magic",
+    "detect poison and disease",
+    "entangle",
+    "faerie fire",
+    "fog cloud",
+    "goodberry",
+    "healing word",
+    "jump",
+    "longstrider",
+    "purify food and drink",
+    "speak with animals",
+    "thunderwave"
+    ]
+
+CLERIC_SPELLS1 = [
+    "bane",
+    "bless",
+    "command",
+    "create or destroy water",
+    "cure wounds",
+    "detect evil and good",
+    "detect magic",
+    "detect poison and disease",
+    "guiding bolt",
+    "healing word",
+    "inflict wounds",
+    "protection from evil and good",
+    "purify food and drink",
+    "sanctuary",
+    "shield of faith"
+    ]
+
 #this dictionary includes everything that will be passed to the user.
 # its entries should take the form of "<variable name>": <varible value>.
 VARS_TO_PASS = {
@@ -132,6 +169,13 @@ class Character:
         self.equipment = list(set(self.equipment))
         [x.lower() for x in self.languages]
         self.languages = list(set(self.languages))
+        if self.my_class.class_name=="Rogue":
+            self.expertise = []
+            x = random.randrange(0,len(self.proficiencies["skill"]))
+            y = random.randrange(0,len(self.proficiencies["skill"]))
+            while y==x:
+                y = random.randrange(0,len(self.proficiencies["skill"]))
+            self.expertise.extend([self.proficiencies["skill"][x],self.proficiencies["skill"][y]])
         for key in self.proficiencies.keys():
             self.proficiencies[key] = list(set(self.proficiencies[key]))
         for s in self.skills.keys():
@@ -139,7 +183,8 @@ class Character:
         for v in self.saves.keys():
             self.saves[v] = self.calculate_save(v)
         self.equipment.extend(self.weapons)
-        self.equipment.append(self.armor + " armor")
+        if self.armor !="":
+            self.equipment.append(self.armor + " armor")
         if "javelin" in self.equipment:
             self.equipment.remove("javelin")
         if "dart" in self.equipment:
@@ -203,32 +248,6 @@ class Character:
                     self.wpn3d = str(dWeapon.objects.get(weapon_name=self.wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn3).type_of_damage_die) + " " + bonus +dWeapon.objects.get(weapon_name=self.wpn3).damage_type[0] + "."
 
 
-    def get_final_dict(self):
-        my_dict = OrderedDict()
-        my_dict["Name"]=self.name,
-        my_dict["Level"]=self.level,
-        my_dict["Race"]=self.my_race.name,
-        my_dict["Class"]=self.my_class.class_name,
-        my_dict["Background"]=self.background.name,
-        my_dict["Proficiency Bonus"]=self.get_proficiency_bonus(),
-        
-        for key in self.ability_scores.keys():
-            #capitalizes ability scores, i.e, "Strength" and "Strength modifier"
-            my_dict[key[0].upper()+key[1:len(key)]]=self.ability_scores[key]
-            my_dict[key[0].upper()+key[1:len(key)]+" Modifier"]=self.get_modifier(self.ability_scores[key])
-        my_dict["Initiative"] = self.get_initiative()
-        my_dict["Max Hit Points"] = self.get_max_hit_points()
-        my_dict["Hit Die"] = str(self.level)+"d"+str(self.my_class.hit_die)
-        my_dict["Speed"] = self.my_race.base_speed
-        for key in self.saves.keys():
-            my_dict[key[0].upper()+key[1:len(key)]+" Save"]=self.saves[key]
-        for key in self.skills.keys():
-            my_dict[key[0].upper()+key[1:len(key)]]=self.skills[key]
-        my_dict["Equipment"]=', '.join(self.get_equipment())
-        my_dict["Languages"]=', '.join(self.get_languages())
-        my_dict["Features"]=', '.join(self.get_features())
-        return my_dict
-
     def get_passive_perception(self):
         return 10+self.skills["perception"]
     
@@ -249,6 +268,9 @@ class Character:
         if (self.my_race.name[0:4]=="Dwar" or self.my_race.name=="Gnome - Rock") and skill=="history":
             return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+2*self.get_proficiency_bonus()
         if skill in self.proficiencies["skill"]:
+            if self.my_class.class_name=="Rogue":
+                if skill in self.expertise:
+                    return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+2*self.get_proficiency_bonus()
             return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+self.get_proficiency_bonus()
         else:
             return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])
@@ -313,7 +335,9 @@ class Char_Class:
         self.archetype = Archetype("",level)
         self.languages = []
         if self.class_name == "Druid":
-            self.languages.append["druidic"]
+            self.languages.append("druidic")
+        if self.class_name == "Rogue":
+            self.languages.append("thieves' cant")
         character.languages.extend(self.languages)
         spellcastingclasses = ["Druid","Cleric","Bard","Wizard","Sorcerer","Warlock"]
         if (character.level==1):
@@ -324,12 +348,33 @@ class Char_Class:
                 self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
                 self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
                 self.spell_slots1 = dclass.spell_slots_1st_level
-                character.spells1.extend(string_to_list(dclass.sugested_1st_level_spells))
+                if self.class_name=="Druid":
+                    q = character.get_modifier(character.ability_scores["wisdom"])+character.level
+                    print q
+                    if q<1:
+                        q = 1
+                    for i in range(q):
+                        y = random.randrange(0,len(DRUID_SPELLS1))
+                        while DRUID_SPELLS1[y] in character.spells1:
+                            y = random.randrange(0,len(DRUID_SPELLS1))
+                        character.spells1.append(DRUID_SPELLS1[y])
+                        print DRUID_SPELLS1[y]
+                elif self.class_name=="Cleric":
+                    q = character.get_modifier(character.ability_scores["wisdom"])+character.level
+                    if q<1:
+                        q = 1
+                    for i in range(q):
+                        y = random.randrange(0,len(CLERIC_SPELLS1))
+                        while DRUID_SPELLS1[y] in character.spells1:
+                            y = random.randrange(0,len(CLERIC_SPELLS1))
+                        character.spells1.append(CLERIC_SPELLS1[y])
+                else:
+                    character.spells1.extend(string_to_list(dclass.sugested_1st_level_spells))
+                while len(character.spells1)<12:
+                    character.spells1.append("")
                 character.cantrips.extend(string_to_list(dclass.sugested_cantrips))
                 while len(character.cantrips)<8:
                     character.cantrips.append("")
-                while len(character.spells1)<12:
-                    character.spells1.append("")
 
     def get_features(self,character):
         features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_1_feature)
@@ -431,7 +476,7 @@ class Char_Class:
                 x = len(dWeapon.objects.filter(martial_arts=False))
                 character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
             if (random.randrange(0,2)==0):
-                character.weapons.append("priest's pack")
+                character.equipment.append("priest's pack")
             else:
                 self.equipment.append("explorer's pack")
             self.equipment.extend(["shield","holy symbol"])
@@ -589,13 +634,6 @@ class Char_Class:
             else:
                 self.equipment.append("explorer's pack")
             character.equipment.append("spellbook")
-"""
-Wizard
-quarterstaff or dagger
-component pouch or arcane focus
-scholar's pack or explorer's pack
-spellbook
-"""
 
 class Archetype(Char_Class):
     def __init__(self, name, level):
