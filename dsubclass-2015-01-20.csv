@@ -23,28 +23,28 @@ id,name,char_class,level_1_feature,level_2_feature,level_3_feature,level_4_featu
 22,Oath of Vengeance,7,Divine Sense; Lay Hands,Fighting Style; Divine Smite,Divine Health; Channel Divinity,Feat,Extra Attack,Aura of Protection,Relentless Avenger,Feat, ,Aura of Protection,Improved Divine Smite,Feat, ,Cleansing Touch,Soul of Vengeanse,Feat, ,Aura Improvement,Feat,Avenging Angel
 23,Hunter,8,Favored Enemy; Natural Explorer,Fighting Style,Primeval Awareness; Hunter's Prey,Feat,Extra Attack,Favored Enemy and Natural Explorer Improvemets,Defensive Tactics,Feat; Land's Stride, ,Hide in Plain Sight; Natural Explorer Improvement,Multiattack,Feat, ,Favored Enemy Improvement; Vanish,Superior Hunter's Defense,Feat, ,Freal Sense,Feat,Foe Slayer
 24,Beast Master,8,Favored Enemy; Natural Explorer,Fighting Style,Primeval Awareness; Ranger's Companion,Feat,Extra Attack,Favored Enemy and Natural Explorer Improvemets,Exceptiional Training,Feat; Land's Stride, ,Hide in Plain Sight; Natural Explorer Improvement,Bestial Fury,Feat, ,Favored Enemy Improvement; Vanish,Share Spells,Feat, ,Freal Sense,Feat,Foe Slayer
-25,Theif,9,Expertice; Sneak Attack,Cunning Action,,Feat,Uncanny Dodge,Expertise,Evasion,Feat,,Feat,Reliable Talent,Feat,,Blindsense,Slippery Mind,Feat,,Elusive,Feat,Stroke of Luck
-26,Assassin,9,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-27,Arcane Trickster,9,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-28,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-30,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-31,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-32,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-33,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-34,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-35,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-36,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-37,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-38,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-39,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-40,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-41,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-42,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-43,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-44,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-45,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-46,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+25,Theif,9,Expertice; Sneak Attack,Cunning Action,Fast Hands; Second-Story Work,Feat,Uncanny Dodge,Expertise,Evasion,Feat,Supreme Sneak,Feat,Reliable Talent,Feat,Use Magic Device,Blindsense,Slippery Mind,Feat,Theif's Reflexes,Elusive,Feat,Stroke of Luck
+26,Assassin,9,Expertice; Sneak Attack,Cunning Action,Assisnate,Feat,Uncanny Dodge,Expertise,Evasion,Feat,Infiltration Expertice,Feat,Reliable Talent,Feat,Imposter,Blindsense,Slippery Mind,Feat,Death Strike,Elusive,Feat,Stroke of Luck
+27,Arcane Trickster,9,Expertice; Sneak Attack,Cunning Action,Mage Hand Legerdemain,Feat,Uncanny Dodge,Expertise,Evasion,Feat,Magical Ambush,Feat,Reliable Talent,Feat,Versitale Trickster,Blindsense,Slippery Mind,Feat,Spell Theif,Elusive,Feat,Stroke of Luck
+28,Dragon Bloodline,10,Dragon Ancestor,Font of Magic,Metamagic,Feat, ,Elemental Affinity, ,Feat, ,Metamagic, ,Feat, ,Dragon Wings, ,Feat,Metamagic,Dragon Presence,Feat,Sorcerous Restoration
+30,Wild Magic,10,Wild Magic Surge; Tides of Chaos,Font of Magic,Metamagic,Feat, ,Bend Luck, ,Feat, ,Metamagic, ,Feat, ,Controlled Chaos, ,Feat,Metamagic,Spell Bonbardment,Feat,Sorcerous Restoration
+31,Archfey,11,Fey Presence,Eldritch Invocation,,Feat, ,Misty Escape, ,Feat, ,Beguiling Defenses,Mystic Arcanum,Feat,Mystic Arcanum,Dark Delirium,Mystic Arcanum,Feat,Mystic Arcanum, ,Feat,Eldritch Master
+32,The Fiend,11,Dark One's Blessing,Eldritch Invocation,,Feat, ,Dark One's Own Luck, ,Feat, ,Fiendish Resilience ,Mystic Arcanum,Feat,Mystic Arcanum,Hurl Through Hell,Mystic Arcanum,Feat,Mystic Arcanum, ,Feat,Eldritch Master
+33,The Great Old One,11,Awakened Mind,Eldritch Invocation,,Feat, ,Entropic Ward, ,Feat, ,Thought Shield,Mystic Arcanum,Feat,Mystic Arcanum,Create Thrall,Mystic Arcanum,Feat,Mystic Arcanum, ,Feat,Eldritch Master
+34,School of Abjuration,12,Arcane Recovery,Abjuration Savant; Arcane Ward,,Feat,,Projected Ward,,Feat,,Improved Abjuration,,Feat,,Spell Resistance,,Feat,,Spell Mastery,Feat,Signature Spells
+35,School of Conjuration,12,Arcane Recovery,Conjuration Savant; Minor Conjuration,,Feat,,Benign Transposition,,Feat,,Focused Conjuration,,Feat,,Durable Summons,,Feat,,Spell Mastery,Feat,Signature Spells
+36,School of Divination,12,Arcane Recovery,Diviniation Savant; Portent,,Feat,,Expert Divination,,Feat,,The Third Eye,,Feat,,Great Portent,,Feat,,Spell Mastery,Feat,Signature Spells
+37,School of Enchantment,12,Arcane Recovery,Enchantment Savant; Hypnotic Gaze,,Feat,,Instinctive Charm,,Feat,,Split Enchantment,,Feat,,Alter Memories,,Feat,,Spell Mastery,Feat,Signature Spells
+38,School of Evocation,12,Arcane Recovery,Ecvocation Savant; Sculpt Spells,,Feat,,Potent Cantrip,,Feat,,Empowered Evocation,,Feat,,Overchannel,,Feat,,Spell Mastery,Feat,Signature Spells
+39,School of Illusion,12,Arcane Recovery,Illusion Savant; Improved Minor Illusion,,Feat,,Malleable Illusion,,Feat,,Illusory Self,,Feat,,Illusory Reality,,Feat,,Spell Mastery,Feat,Signature Spells
+40,School of Necromancy,12,Arcane Recovery,Necormancy Savant; Grim Harest,,Feat,,Undead Thralls,,Feat,,Injured to Undeath,,Feat,,Command Undead,,Feat,,Spell Mastery,Feat,Signature Spells
+41,School of Transmutation,12,Arcane Recovery,Transmutation Savant; Minor Alchemy,,Feat,,Transmutter's Stone,,Feat,,Shapechanger,,Feat,,Master Transmuter,,Feat,,Spell Mastery,Feat,Signature Spells
+42,,12,Arcane Recovery,,,Feat,,,,Feat,,,,Feat,,,,Feat,,Spell Mastery,Feat,Signature Spells
+43,,12,Arcane Recovery,,,Feat,,,,Feat,,,,Feat,,,,Feat,,Spell Mastery,Feat,Signature Spells
+44,,12,Arcane Recovery,,,Feat,,,,Feat,,,,Feat,,,,Feat,,Spell Mastery,Feat,Signature Spells
+45,,12,Arcane Recovery,,,Feat,,,,Feat,,,,Feat,,,,Feat,,Spell Mastery,Feat,Signature Spells
+46,,12,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+,,12,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
 ,,,,,,,,,,Feat,,,,Feat,,,,Feat,,,Feat,
 ,,,,,,,,,,,,,,,,,,Feat,,,Feat,
 ,,,,,,,,,,,,,,,,,,,,,Feat,
