@@ -1,0 +1,251 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+        function getTotalAbilityScores(){
+            var strength_total_box = document.getElementById("total_strength_score");
+                var dexterity_total_box = document.getElementById("total_dexterity_score");
+                var constitution_total_box = document.getElementById("total_constitution_score");
+                var intelligence_total_box = document.getElementById("total_intelligence_score");
+                var wisdom_total_box = document.getElementById("total_wisdom_score");
+                var charisma_total_box = document.getElementById("total_charisma_score");
+
+            var strength_mod_box = document.getElementById("total_strength_mod");
+            var dexterity_mod_box = document.getElementById("total_dexterity_mod");
+            var constitution_mod_box = document.getElementById("total_constitution_mod");
+            var intelligence_mod_box = document.getElementById("total_intelligence_mod");
+            var wisdom_mod_box = document.getElementById("total_wisdom_mod");
+            var charisma_mod_box = document.getElementById("total_charisma_mod");
+
+            var strength_from_pb_box = document.getElementById("id_ab_score_form-strength");
+                var dexterity_from_pb_box = document.getElementById("id_ab_score_form-dexterity");
+                var constitution_from_pb_box = document.getElementById("id_ab_score_form-constitution");
+                var intelligence_from_pb_box = document.getElementById("id_ab_score_form-intelligence");
+                var wisdom_from_pb_box = document.getElementById("id_ab_score_form-wisdom");
+                var charisma_from_pb_box = document.getElementById("id_ab_score_form-charisma");
+
+            var strength_from_pb = strength_from_pb_box.options[strength_from_pb_box.selectedIndex].value;
+                var dexterity_from_pb = dexterity_from_pb_box.options[dexterity_from_pb_box.selectedIndex].value;
+                var constitution_from_pb = constitution_from_pb_box.options[constitution_from_pb_box.selectedIndex].value;
+                var intelligence_from_pb = intelligence_from_pb_box.options[intelligence_from_pb_box.selectedIndex].value;
+                var wisdom_from_pb = wisdom_from_pb_box.options[wisdom_from_pb_box.selectedIndex].value;
+                var charisma_from_pb = charisma_from_pb_box.options[charisma_from_pb_box.selectedIndex].value;
+
+            var strength_from_race = document.getElementById("race_mod_strength").innerHTML;
+                var dexterity_from_race = document.getElementById("race_mod_dexterity").innerHTML;
+                var constitution_from_race = document.getElementById("race_mod_constitution").innerHTML;
+                var intelligence_from_race = document.getElementById("race_mod_intelligence").innerHTML;
+                var wisdom_from_race = document.getElementById("race_mod_wisdom").innerHTML;
+                var charisma_from_race = document.getElementById("race_mod_charisma").innerHTML;
+
+            strength_total_box.innerHTML = (parseInt(strength_from_pb)+parseInt(strength_from_race)).toString();
+                dexterity_total_box.innerHTML = (parseInt(dexterity_from_pb) + parseInt(dexterity_from_race)).toString();
+                constitution_total_box.innerHTML = (parseInt(constitution_from_pb) + parseInt(constitution_from_race)).toString();
+                intelligence_total_box.innerHTML = (parseInt(intelligence_from_pb) + parseInt(intelligence_from_race)).toString();
+                wisdom_total_box.innerHTML = (parseInt(wisdom_from_pb) + parseInt(wisdom_from_race)).toString();
+                charisma_total_box.innerHTML = (parseInt(charisma_from_pb) + parseInt(charisma_from_race)).toString();
+
+            strength_mod_box.innerHTML=getModifier(parseInt(strength_from_pb)+parseInt(strength_from_race)).toString();
+                dexterity_mod_box.innerHTML = getModifier(parseInt(dexterity_from_pb) + parseInt(dexterity_from_race)).toString();
+                constitution_mod_box.innerHTML = getModifier(parseInt(constitution_from_pb) + parseInt(constitution_from_race)).toString();
+                intelligence_mod_box.innerHTML = getModifier(parseInt(intelligence_from_pb) + parseInt(intelligence_from_race)).toString();
+                wisdom_mod_box.innerHTML = getModifier(parseInt(wisdom_from_pb) + parseInt(wisdom_from_race)).toString();
+                charisma_mod_box.innerHTML = getModifier(parseInt(charisma_from_pb) + parseInt(charisma_from_race)).toString();
+        }
+
+        function updateAbilityScores() {
+            var strength_box = document.getElementById("id_ab_score_form-strength");
+                var dexterity_box = document.getElementById("id_ab_score_form-dexterity");
+                var constitution_box = document.getElementById("id_ab_score_form-constitution");
+                var intelligence_box = document.getElementById("id_ab_score_form-intelligence");
+                var wisdom_box = document.getElementById("id_ab_score_form-wisdom");
+                var charisma_box = document.getElementById("id_ab_score_form-charisma");
+
+            var strength = strength_box.options[strength_box.selectedIndex].value;
+                var dexterity = dexterity_box.options[dexterity_box.selectedIndex].value;
+                var constitution = constitution_box.options[constitution_box.selectedIndex].value;
+                var intelligence = intelligence_box.options[intelligence_box.selectedIndex].value;
+                var wisdom = wisdom_box.options[wisdom_box.selectedIndex].value;
+                var charisma = charisma_box.options[charisma_box.selectedIndex].value;
+
+            var total_cost = getCost(strength) + getCost(dexterity) + getCost(constitution) + getCost(intelligence) + getCost(wisdom) + getCost(charisma);
+
+            console.log("updating ability scores");
+
+            document.getElementById("total_ability_score_box").innerHTML = total_cost.toString();
+
+            getTotalAbilityScores();
+        }
+
+        function getCost(ability) {
+            //returns the point-buy cost for an ability
+            var cost_table = new Array();
+            cost_table [8] = 0;
+            cost_table [9] = 1;
+            cost_table [10] = 2;
+            cost_table [11] = 3;
+            cost_table [12] = 4;
+            cost_table [13] = 5;
+            cost_table [14] = 7;
+            cost_table [15] = 9;
+            cost_table [16] = 12;
+            cost_table [17] = 15;
+            cost_table [18] = 19;
+
+            return cost_table[ability]        
+        }
+
+        function getModifier(ability) {
+            return Math.floor( 0.5 * (ability - 10) );
+        }
+
+        function updateRaceMods(race){  
+
+            var race_box = document.getElementById("id_class_race_form-race");
+            var race = race_box.options[race_box.selectedIndex].text;
+
+            var strength_box = document.getElementById("race_mod_strength");
+            var dexterity_box = document.getElementById("race_mod_dexterity");
+            var constitution_box = document.getElementById("race_mod_constitution");
+            var intelligence_box = document.getElementById("race_mod_intelligence");
+            var wisdom_box = document.getElementById("race_mod_wisdom");
+            var charisma_box = document.getElementById("race_mod_charisma");
+
+            console.log("Your race is now" + race);
+
+            var race_mods = [];
+
+            switch (race) {  
+                case "Human":
+                    race_mods["strength"] = "+1";
+                    race_mods["dexterity"] = "+1";
+                    race_mods["constitution"] = "+1";
+                    race_mods["intelligence"] = "+1";
+                    race_mods["wisdom"] = "+1";
+                    race_mods["charisma"] = "+1";
+                    console.log("Updating race modifiers to Human");
+                    break;
+            } 
+
+            strength_box.innerHTML = race_mods["strength"];
+            dexterity_box.innerHTML = race_mods["dexterity"];
+            constitution_box.innerHTML = race_mods["constitution"];
+            intelligence_box.innerHTML = race_mods["intelligence"];
+            wisdom_box.innerHTML = race_mods["wisdom"];
+            charisma_box.innerHTML = race_mods["charisma"]; 
+
+            getTotalAbilityScores();
+        }
+    </script>
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'chargen/style.css' %}">
+</head>
+
+
+
+
+<body>
+
+<form method="POST">{% csrf_token %}
+
+    {{ name_form }}
+
+    {{ class_race_form }}
+
+    <table>
+        <tr>
+
+        </tr>
+        <tr>
+            <td>
+                <table class="ability_score_table">
+                {{ ab_score_form.as_table }}
+                </table>
+            </td>
+            <td>
+                <table class="ab_score_race_mod_table">
+                    <tr>
+                        <td>
+                            <p class="static_box" id="race_mod_strength">+0</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_box" id="total_strength_score">8</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_mod" id="total_strength_mod">-1</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="static_box" id="race_mod_dexterity">+0</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_box" id="total_dexterity_score">8</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_mod" id="total_dexterity_mod">-1</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="static_box" id="race_mod_constitution">+0</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_box" id="total_constitution_score">8</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_mod" id="total_constitution_mod">-1</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="static_box" id="race_mod_intelligence">+0</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_box" id="total_intelligence_score">8</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_mod" id="total_intelligence_mod">-1</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="static_box" id="race_mod_wisdom">+0</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_box" id="total_wisdom_score">8</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_mod" id="total_wisdom_mod">-1</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="static_box" id="race_mod_charisma">+0</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_box" id="total_charisma_score">8</p>
+                        </td>
+                        <td>
+                            <p class="static_box total_mod" id="total_charisma_mod">-1</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        <p class="total_ability_score_title"> 
+            <span id="total_ability_score_box">0</span> points spent
+        </p>
+    </div>
+
+    {{ background_form }}
+
+<input class="submitbutton" name="all_submit_button" type="submit"/>
+</form>
+
+</body>
+</html>

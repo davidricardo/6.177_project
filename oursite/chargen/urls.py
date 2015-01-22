@@ -15,5 +15,5 @@ from chargen import views
 
 urlpatterns = patterns('',
     #not sure why this regex only matches the empty string?
-    url(r'^$', views.index, name='index')
-    )
+    url(r'^$', views.index, name='index'),
+   )

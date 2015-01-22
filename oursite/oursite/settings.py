@@ -84,6 +84,8 @@ STATIC_URL = '/chargen/static/chargen/'
 
 STATIC_ROOT = '/chargen/static/chargen/'
 
+STATICFILES_DIRS = [ os.path.join( BASE_DIR, 'static') ]
+
 TEMPLATE_DIRS = [ os.path.join( BASE_DIR, 'templates' ) ]
 
 PDFTK_BIN = '/chargen/pdftk/bin/pdftk'
