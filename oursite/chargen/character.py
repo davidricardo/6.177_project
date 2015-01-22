@@ -386,7 +386,7 @@ class Char_Class:
                 character.weapons.append("light crossbow")
             else:
                 x = len(dWeapon.objects.filter(martial_arts=False))
-                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].name)
+                character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
             if (random.randrange(0,2)==0):
                 character.weapons.append("priest's pack")
             else:

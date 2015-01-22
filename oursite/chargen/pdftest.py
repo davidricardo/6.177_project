@@ -197,14 +197,14 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
     myfile = os.path.abspath('..')+'/oursite/chargen/myfile.pdf'
     data = os.path.abspath('..')+'/oursite/chargen/data.fdf'
     character1 = os.path.abspath('..')+'/oursite/chargen/character1.pdf'
-    pdftk = os.path.abspath('..')+'/oursite/chargen/pdftk/bin/pdftk'
+    pdftk = os.path.abspath('..')+'/oursite/chargen/pdftkserver/bin/pdftk.exe'
     myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
     charactergen = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
     myfile3 = os.path.abspath('..')+'/oursite/chargen/myfile3.pdf'
 
     os.system(pdftk+' ' + myfile + ' fill_form ' + data + ' output '+character1)
     os.system(pdftk + ' ' + character1 + ' ' + myfile3 + ' ' + character2 + ' cat output ' + charactergen)
-    with open(charactergen, 'r') as pdf:
+    with open(charactergen, 'rb') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         filename = c.name+"_character_sheet.pdf"
         response['Content-Disposition'] = 'inline; filename='+filename
