@@ -15,17 +15,17 @@ id,name,char_class,level_1_feature,level_2_feature,level_3_feature,level_4_featu
 14,Champion,5,Fighting Style; Second Wind,Action Surge,Improved Critical,Feat,Extra Attack,Feat,Remarkable Athlete,Feat,Indomitable,Additional Fighting Style,Extra Attack(2),Feat,Indomitable(2),Feat,Superior Critical,Feat,Action Surge(2); Indomitable(3),Surivor,Feat,Extra Attack(3)
 15,Battle Master,5,Fighting Style; Second Wind,Action Surge,Combat Superority; Student of War,Feat,Extra Attack,Feat,Know Your Enemy,Feat,Indomitable,Improved Combat Superority,Extra Attack(2),Feat,Indomitable(2),Feat,Relentless,Feat,Action Surge(2); Indomitable(3), ,Feat,Extra Attack(3)
 16,Eldtritch Knight,5,Fighting Style; Second Wind,Action Surge,Weapon Bond,Feat,Extra Attack,Feat,War Magic,Feat,Indomitable,Eldritch Strike,Extra Attack(2),Feat,Indomitable(2),Feat,Arcane Charge,Feat,Action Surge(2); Indomitable(3),Improved War Magic,Feat,Extra Attack(3)
-17,Way of the Open  Hand,6,Martial Arts,Ki,Deflect Missles,Feat; Slow Fall,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-18,Way of the Shaddow,6,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-19,Way of the Four Elements,6,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-20,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-21,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-22,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-23,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-24,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-25,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-26,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
-27,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+17,Way of the Open  Hand,6,Martial Arts,Ki,Deflect Missles; Open Hand Tenique,Feat; Slow Fall,Extra Attack; Stunning Attak,Ki-Empowered Strikes; Wholeness of Body,Evasion; Stillness of Mind,Feat,Unarmored Movement Improvement ,Purity of Body,Tranquility,Feat,Tounge of Sun and Moon,Diamond Soul,Timeless Body,Feat,Quivering Plam,Empty Body,Feat,Perfect Self
+18,Way of the Shaddow,6,Martial Arts,Ki,Deflect Missles;Shadow Arts,Feat; Slow Fall,Extra Attack; Stunning Attak,Ki-Empowered Strikes; Shadow Step,Evasion; Stillness of Mind,Feat,Unarmored Movement Improvement ,Purity of Body,Cloak Of Shadows,Feat,Tounge of Sun and Moon,Diamond Soul,Timeless Body,Feat,Oppertuinist,Empty Body,Feat,Perfect Self
+19,Way of the Four Elements,6,Martial Arts,Ki,Deflect Missles; Disciple of the Elements,Feat; Slow Fall,Extra Attack; Stunning Attak,Ki-Empowered Strikes; Disciple of the Elements,Evasion; Stillness of Mind,Feat,Unarmored Movement Improvement ,Purity of Body,Disciple of the Elements,Feat,Tounge of Sun and Moon,Diamond Soul,Timeless Body,Feat,Disciple of the Elements,Empty Body,Feat,Perfect Self
+20,Oath of Devotion,7,Divine Sense; Lay Hands,Fighting Style; Divine Smite,Divine Health; Channel Divinity,Feat,Extra Attack,Aura of Protection,Aura of Devotion,Feat, ,Aura of Protection,Improved Divine Smite,Feat, ,Cleansing Touch,Purity of Spirit,Feat, ,Aura Improvement,Feat,Holy Nimbus
+21,Oath of Ancients,7,Divine Sense; Lay Hands,Fighting Style; Divine Smite,Divine Health;  Channel Divinity,Feat,Extra Attack,Aura of Protection,Aura of Warding,Feat, ,Aura of Protection,Improved Divine Smite,Feat, ,Cleansing Touch,Undying Sentinel,Feat, ,Aura Improvement,Feat,Elder Champion
+22,Oath of Vengeance,7,Divine Sense; Lay Hands,Fighting Style; Divine Smite,Divine Health; Channel Divinity,Feat,Extra Attack,Aura of Protection,Relentless Avenger,Feat, ,Aura of Protection,Improved Divine Smite,Feat, ,Cleansing Touch,Soul of Vengeanse,Feat, ,Aura Improvement,Feat,Avenging Angel
+23,Hunter,8,Favored Enemy; Natural Explorer,Fighting Style,Primeval Awareness; Hunter's Prey,Feat,Extra Attack,Favored Enemy and Natural Explorer Improvemets,Defensive Tactics,Feat; Land's Stride, ,Hide in Plain Sight; Natural Explorer Improvement,Multiattack,Feat, ,Favored Enemy Improvement; Vanish,Superior Hunter's Defense,Feat, ,Freal Sense,Feat,Foe Slayer
+24,Beast Master,8,Favored Enemy; Natural Explorer,Fighting Style,Primeval Awareness; Ranger's Companion,Feat,Extra Attack,Favored Enemy and Natural Explorer Improvemets,Exceptiional Training,Feat; Land's Stride, ,Hide in Plain Sight; Natural Explorer Improvement,Bestial Fury,Feat, ,Favored Enemy Improvement; Vanish,Share Spells,Feat, ,Freal Sense,Feat,Foe Slayer
+25,Theif,9,Expertice; Sneak Attack,Cunning Action,,Feat,Uncanny Dodge,Expertise,Evasion,Feat,,Feat,Reliable Talent,Feat,,Blindsense,Slippery Mind,Feat,,Elusive,Feat,Stroke of Luck
+26,Assassin,9,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+27,Arcane Trickster,9,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
 28,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
 30,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
 31,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
