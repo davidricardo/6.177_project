@@ -1,7 +1,7 @@
 #!python
 from fdfgen import forge_fdf
 from character import Character
-import os, subprocess
+import os, subprocess, platform
 import random
 from django.conf import settings
 from django.shortcuts import render
@@ -170,6 +170,9 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
               ('Check Box 22',c22),
               ]
     character2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
+    pdftk = os.path.abspath('..')+'/oursite/chargen/pdftk/bin/pdftk'
+    if platform.system()=='Windows':
+        pdftk = os.path.abspath('..')+'/oursite/chargen/pdftkserver/bin/pdftk.exe'
     spellcastingclasses = ["Druid","Cleric","Bard","Wizard","Sorcerer","Warlock"]
     if (c.level==1):
         if c.my_class.class_name in spellcastingclasses:
@@ -181,7 +184,6 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
             fdf_file = open(path,"w")
             fdf_file.write(fdf)
             fdf_file.close()
-            pdftk = os.path.abspath('..')+'/oursite/chargen/pdftk/bin/pdftk'
             data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
             character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
             myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
