@@ -215,7 +215,7 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
 
     
 def pre(x):
-    if x>0:
+    if x>=0:
         return "+" + str(x)
     else:
         return str(x)
