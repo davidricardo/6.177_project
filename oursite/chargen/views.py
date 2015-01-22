@@ -199,32 +199,22 @@ def index(request):
                         class_race_form.cleaned_data["character_class"].name,
                         class_race_form.cleaned_data["race"].name,
                         background_form.cleaned_data["background"].name,
-                        {"strength" : int(ab_score_form.cleaned_data["strength"]),
-                            "dexterity" : int(ab_score_form.cleaned_data["dexterity"]),
-                            "constitution" : int(ab_score_form.cleaned_data["constitution"]),
-                            "intelligence" : int(ab_score_form.cleaned_data["intelligence"]),
-                            "wisdom" : int(ab_score_form.cleaned_data["wisdom"]),
-                            "charisma" : int(ab_score_form.cleaned_data["charisma"]),
-                        }
+                        int(ab_score_form.cleaned_data["strength"]),
+                        int(ab_score_form.cleaned_data["dexterity"]),
+                        int(ab_score_form.cleaned_data["constitution"]),
+                        int(ab_score_form.cleaned_data["intelligence"]),
+                        int(ab_score_form.cleaned_data["wisdom"]),
+                        int(ab_score_form.cleaned_data["charisma"]),
                         )
 
             return pdftest.fill_pdf(c)
 
 
-            # return HttpResponse( "<ul>" + 
-            #     "<li> Name: " + name_form.cleaned_data["name"] + 
-            #     "<li> Class: " + class_race_form.cleaned_data["character_class"].name +
-            #     "<li> Race: " + class_race_form.cleaned_data["race"].name + 
-            #     "<li> Strength: " + str(ab_score_form.cleaned_data["strength"]) + 
-            #     "<li> Dexterity: " + str(ab_score_form.cleaned_data["dexterity"]) + 
-            #     "<li> Constitution: " + str(ab_score_form.cleaned_data["constitution"]) + 
-            #     "<li> Intelligence: " + str(ab_score_form.cleaned_data["intelligence"]) + 
-            #     "<li> Wisdom: " + str(ab_score_form.cleaned_data["wisdom"]) + 
-            #     "<li> Charisma: " + str(ab_score_form.cleaned_data["charisma"]) + 
-            #     "</ul>"
-            # )
-
-
-
-
+        else:
+            return HttpResponse("<p>Sorry, something went wrong. Our system found errors in your form.</p>" + 
+                "<p>Those errors were: </p>" + 
+                name_form.errors + 
+                class_race_form.errors + 
+                ab_score_form.errors + 
+                background_form.errors)
 

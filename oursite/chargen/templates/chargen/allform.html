@@ -70,7 +70,7 @@
 
             var total_cost = getCost(strength) + getCost(dexterity) + getCost(constitution) + getCost(intelligence) + getCost(wisdom) + getCost(charisma);
 
-            console.log("updating ability scores");
+            // console.log("updating ability scores");
 
             document.getElementById("total_ability_score_box").innerHTML = total_cost.toString();
 
@@ -111,7 +111,7 @@
             var wisdom_box = document.getElementById("race_mod_wisdom");
             var charisma_box = document.getElementById("race_mod_charisma");
 
-            console.log("Your race is now" + race);
+            // console.log("Your race is now" + race);
 
             var race_mods = [];
 
@@ -123,7 +123,110 @@
                     race_mods["intelligence"] = "+1";
                     race_mods["wisdom"] = "+1";
                     race_mods["charisma"] = "+1";
-                    console.log("Updating race modifiers to Human");
+                    break;
+                case "Tiefling":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+0";
+                    race_mods["constitution"] = "+0";
+                    race_mods["intelligence"] = "+1";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+2";
+                    break;
+                case "Half-Orc":
+                    race_mods["strength"] = "+2";
+                    race_mods["dexterity"] = "+0";
+                    race_mods["constitution"] = "+1";
+                    race_mods["intelligence"] = "+0";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+0";
+                    break;
+                case "Half-Elf":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+0";
+                    race_mods["constitution"] = "+0";
+                    race_mods["intelligence"] = "+0";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+2";
+                    break;
+                case "Gnome - Rock":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+0";
+                    race_mods["constitution"] = "+1";
+                    race_mods["intelligence"] = "+2";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+0";
+                    break;
+                case "Gnome - Rock":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+1";
+                    race_mods["constitution"] = "+0";
+                    race_mods["intelligence"] = "+2";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+0";
+                    break;
+                case "Dragonborn":
+                    race_mods["strength"] = "+2";
+                    race_mods["dexterity"] = "+0";
+                    race_mods["constitution"] = "+0";
+                    race_mods["intelligence"] = "+0";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+1";
+                    break;
+                case "Halfling - Stout":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+2";
+                    race_mods["constitution"] = "+1";
+                    race_mods["intelligence"] = "+0";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+0";
+                    break;
+                case "Halfling - Lightfoot":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+2";
+                    race_mods["constitution"] = "+0";
+                    race_mods["intelligence"] = "+0";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+1";
+                    break;
+                case "Elf - Dark (Drow)":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+2";
+                    race_mods["constitution"] = "+0";
+                    race_mods["intelligence"] = "+0";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+1";
+                    break;
+                case "Elf - Wood":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+2";
+                    race_mods["constitution"] = "+0";
+                    race_mods["intelligence"] = "+0";
+                    race_mods["wisdom"] = "+1";
+                    race_mods["charisma"] = "+0";
+                    break;
+                case "Elf - High":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+2";
+                    race_mods["constitution"] = "+0";
+                    race_mods["intelligence"] = "+1";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+0";
+                    break;
+                case "Dwarf - Mountain":
+                    race_mods["strength"] = "+2";
+                    race_mods["dexterity"] = "+0";
+                    race_mods["constitution"] = "+2";
+                    race_mods["intelligence"] = "+0";
+                    race_mods["wisdom"] = "+0";
+                    race_mods["charisma"] = "+0";
+                    break;
+                case "Dwarf - Hill":
+                    race_mods["strength"] = "+0";
+                    race_mods["dexterity"] = "+0";
+                    race_mods["constitution"] = "+0";
+                    race_mods["intelligence"] = "+0";
+                    race_mods["wisdom"] = "+1";
+                    race_mods["charisma"] = "+2";
                     break;
             } 
 
