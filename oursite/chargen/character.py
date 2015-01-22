@@ -115,6 +115,8 @@ class Character:
         self.proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
         self.features = []
         self.weapons = []
+        self.cantrips = []
+        self.spells1 = []
         self.armor = ""
         self.level = level
         self.name = name
@@ -136,7 +138,12 @@ class Character:
             self.skills[s] = self.calculate_skill(s)
         for v in self.saves.keys():
             self.saves[v] = self.calculate_save(v)
-
+        self.equipment.extend(self.weapons)
+        self.equipment.append(self.armor + " armor")
+        if "javelin" in self.equipment:
+            self.equipment.remove("javelin")
+        if "dart" in self.equipment:
+            self.equipment.remove("dart")
         self.wpn1 = ""
         self.wpn1a = ""
         self.wpn1d = ""
@@ -150,26 +157,50 @@ class Character:
             self.wpn1 = self.weapons[0]
             if dWeapon.objects.get(weapon_name=self.wpn1).mele==True and not(dWeapon.objects.get(weapon_name=self.wpn1).finesse==True and self.get_modifier(self.ability_scores["strength"])<self.get_modifier(self.ability_scores["dexterity"])):
                 self.wpn1a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["strength"]))
-                self.wpn1d = str(dWeapon.objects.get(weapon_name=self.wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn1).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=self.wpn1).damage_type[0] + "."
+                if self.get_modifier(self.ability_scores["strength"])==0:
+                    bonus = ""
+                else:
+                    bonus = pre(self.get_modifier(self.ability_scores["strength"])) +" "
+                self.wpn1d = str(dWeapon.objects.get(weapon_name=self.wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn1).type_of_damage_die) + " " + bonus +dWeapon.objects.get(weapon_name=self.wpn1).damage_type[0] + "."
             else:
                 self.wpn1a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["dexterity"]))
-                self.wpn1d = str(dWeapon.objects.get(weapon_name=self.wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn1).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=self.wpn1).damage_type[0] + "."
+                if self.get_modifier(self.ability_scores["dexterity"])==0:
+                    bonus = ""
+                else:
+                    bonus = pre(self.get_modifier(self.ability_scores["dexterity"])) +" "
+                self.wpn1d = str(dWeapon.objects.get(weapon_name=self.wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn1).type_of_damage_die) + " " + bonus +dWeapon.objects.get(weapon_name=self.wpn1).damage_type[0] + "."
             if len(self.weapons)>1:
                 self.wpn2 = self.weapons[1]
                 if dWeapon.objects.get(weapon_name=self.wpn2).mele==True and not(dWeapon.objects.get(weapon_name=self.wpn2).finesse==True and self.get_modifier(self.ability_scores["strength"])<self.get_modifier(self.ability_scores["dexterity"])):
                     self.wpn2a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["strength"]))
-                    self.wpn2d = str(dWeapon.objects.get(weapon_name=self.wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn2).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=self.wpn2).damage_type[0] + "."
+                    if self.get_modifier(self.ability_scores["strength"])==0:
+                        bonus = ""
+                    else:
+                        bonus = pre(self.get_modifier(self.ability_scores["strength"])) +" "
+                    self.wpn2d = str(dWeapon.objects.get(weapon_name=self.wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn2).type_of_damage_die)  +" "+ bonus +dWeapon.objects.get(weapon_name=self.wpn2).damage_type[0] + "."
                 else:
                     self.wpn2a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["dexterity"]))
-                    self.wpn2d = str(dWeapon.objects.get(weapon_name=self.wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn2).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=self.wpn2).damage_type[0] + "."
+                    if self.get_modifier(self.ability_scores["dexterity"])==0:
+                        bonus = ""
+                    else:
+                        bonus = pre(self.get_modifier(self.ability_scores["dexterity"])) +" "
+                    self.wpn2d = str(dWeapon.objects.get(weapon_name=self.wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn2).type_of_damage_die) + " " + bonus +dWeapon.objects.get(weapon_name=self.wpn2).damage_type[0] + "."
             if len(self.weapons)>2:
                 self.wpn3 = self.weapons[2]
                 if dWeapon.objects.get(weapon_name=self.wpn3).mele==True and not(dWeapon.objects.get(weapon_name=self.wpn3).finesse==True and self.get_modifier(self.ability_scores["strength"])<self.get_modifier(self.ability_scores["dexterity"])):
                     self.wpn3a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["strength"]))
-                    self.wpn3d = str(dWeapon.objects.get(weapon_name=self.wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn3).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=self.wpn3).damage_type[0] + "."
+                    if self.get_modifier(self.ability_scores["strength"])==0:
+                        bonus = ""
+                    else:
+                        bonus = pre(self.get_modifier(self.ability_scores["strength"])) +" "
+                    self.wpn3d = str(dWeapon.objects.get(weapon_name=self.wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn3).type_of_damage_die) + " " + bonus +dWeapon.objects.get(weapon_name=self.wpn3).damage_type[0] + "."
                 else:
                     self.wpn3a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["dexterity"]))
-                    self.wpn3d = str(dWeapon.objects.get(weapon_name=self.wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn3).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=self.wpn3).damage_type[0] + "."
+                    if self.get_modifier(self.ability_scores["dexterity"])==0:
+                        bonus = ""
+                    else:
+                        bonus = pre(self.get_modifier(self.ability_scores["dexterity"])) +" "
+                    self.wpn3d = str(dWeapon.objects.get(weapon_name=self.wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn3).type_of_damage_die) + " " + bonus +dWeapon.objects.get(weapon_name=self.wpn3).damage_type[0] + "."
 
 
     def get_final_dict(self):
@@ -215,8 +246,8 @@ class Character:
     
     #calculates skills from ruling abilities and proficiencies
     def calculate_skill(self,skill):
-        #if (self.my_race.name[0:4]=="Dwar" or self.my_race.name=="Gnome - Rock") and skill=="history":
-            #return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+2*self.get_proficiency_bonus()
+        if (self.my_race.name[0:4]=="Dwar" or self.my_race.name=="Gnome - Rock") and skill=="history":
+            return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+2*self.get_proficiency_bonus()
         if skill in self.proficiencies["skill"]:
             return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+self.get_proficiency_bonus()
         else:
@@ -281,12 +312,24 @@ class Char_Class:
         character.features.extend(self.features)
         self.archetype = Archetype("",level)
         self.languages = []
+        if self.class_name == "Druid":
+            self.languages.append["druidic"]
         character.languages.extend(self.languages)
-        self.spell_casting_ability = ""        
-        for key in ABILITY_KEYS.keys():
-            if ABILITY_KEYS[key]==dclass.spell_casting_ability:
-                self.spell_casting_ability = key
-        #self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+        spellcastingclasses = ["Druid","Cleric","Bard","Wizard","Sorcerer","Warlock"]
+        if (character.level==1):
+            if self.class_name in spellcastingclasses:   
+                for key in ABILITY_KEYS.keys():
+                    if ABILITY_KEYS[key]==dclass.spell_casting_ability.lower():
+                        self.spell_casting_ability = key
+                self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+                self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+                self.spell_slots1 = dclass.spell_slots_1st_level
+                character.spells1.extend(string_to_list(dclass.sugested_1st_level_spells))
+                character.cantrips.extend(string_to_list(dclass.sugested_cantrips))
+                while len(character.cantrips)<8:
+                    character.cantrips.append("")
+                while len(character.spells1)<12:
+                    character.spells1.append("")
 
     def get_features(self,character):
         features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_1_feature)
@@ -473,7 +516,7 @@ class Char_Class:
             else:
                 x = len(dWeapon.objects.filter(martial_arts=False).filter(mele=True))
                 character.weapons.append(dWeapon.objects.filter(martial_arts=False).filter(mele=True)[random.randrange(0,x)].weapon_name)
-                x = len(dWeapon.objects.filter(martial_arts=False))
+                x = len(dWeapon.objects.filter(martial_arts=False).filter(mele=True))
                 character.weapons.append(dWeapon.objects.filter(martial_arts=False).filter(mele=True)[random.randrange(0,x)].weapon_name)
             if (random.randrange(0,2)==0):
                  self.equipment.append("dungeoneer's pack")
@@ -563,7 +606,7 @@ class Race:
         tools = string_to_list(dRace.objects.get(name=name).tool_proficiencies.lower())
         if self.name == "Dwarf - Hill":
             x = random.randrange(0,len(tools))
-            tools = [tools[x:x+1]]
+            tools = tools[x:x+1]
         skills = string_to_list(dRace.objects.get(name=name).skill_proficiencies.lower())+choose(SKILLS_TOTAL,dRace.objects.get(name=name).optional_skill_proficiencies,character.proficiencies["skill"])
         self.proficiencies = {"weapon":weapons,"armor":armor,"skill":skills,"saves":[],"tools":tools}
         for key in self.proficiencies:
@@ -573,6 +616,7 @@ class Race:
         self.base_speed = dRace.objects.get(name=name).speed
         self.features = string_to_list(dRace.objects.get(name=name).features.lower())
         character.features.extend(self.features)
+
 
 class Background:
     def __init__(self, character,name=""):

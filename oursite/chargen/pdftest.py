@@ -177,35 +177,61 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
     if (c.level==1):
         if c.my_class.class_name in spellcastingclasses:
             fields2 = [('Spellcasting Class 2',c.my_class.class_name),
-                       ('SpellcastingAbility 2',c.my_class.spell_casting_ability),
+                       ('SpellcastingAbility 2',cap(c.my_class.spell_casting_ability)),
+                       ('SpellSaveDC  2',c.my_class.spell_save_dc),
+                       ('SpellAtkBonus 2',pre(c.my_class.spell_atk_bonus)),
+                       ('SlotsTotal 19',c.my_class.spell_slots1),
+                       ('Spells 1014',c.cantrips[0]),
+                       ('Spells 1016',c.cantrips[1]),
+                       ('Spells 1017',c.cantrips[2]),
+                       ('Spells 1018',c.cantrips[3]),
+                       ('Spells 1019',c.cantrips[4]),
+                       ('Spells 1020',c.cantrips[5]),
+                       ('Spells 1021',c.cantrips[6]),
+                       ('Spells 1022',c.cantrips[7]),
+                       ('Spells 1015',c.spells1[0]),
+                       ('Spells 1023',c.spells1[1]),
+                       ('Spells 1024',c.spells1[2]),
+                       ('Spells 1025',c.spells1[3]),
+                       ('Spells 1026',c.spells1[4]),
+                       ('Spells 1027',c.spells1[5]),
+                       ('Spells 1028',c.spells1[6]),
+                       ('Spells 1029',c.spells1[7]),
+                       ('Spells 1030',c.spells1[8]),
+                       ('Spells 1031',c.spells1[9]),
+                       ('Spells 1032',c.spells1[10]),
+                       ('Spells 1033',c.spells1[11]),
                        ]
             fdf = forge_fdf("",fields2,[],[],[])
-            path = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
-            fdf_file = open(path,"w")
+            data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
+            fdf_file = open(data2,"w")
             fdf_file.write(fdf)
             fdf_file.close()
-            data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
             character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
             myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
             os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
     fdf = forge_fdf("",fields,[],[],[])
-    path = os.path.abspath('..')+'/oursite/chargen/data.fdf'
-    fdf_file = open(path,"w")
+    data = os.path.abspath('..')+'/oursite/chargen/data.fdf'
+    fdf_file = open(data,"w")
     fdf_file.write(fdf)
     fdf_file.close()
-
-    
-    
     myfile = os.path.abspath('..')+'/oursite/chargen/myfile.pdf'
-    data = os.path.abspath('..')+'/oursite/chargen/data.fdf'
     character1 = os.path.abspath('..')+'/oursite/chargen/character1.pdf'
-    pdftk = os.path.abspath('..')+'/oursite/chargen/pdftkserver/bin/pdftk.exe'
-    myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
-    charactergen = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
-    myfile3 = os.path.abspath('..')+'/oursite/chargen/myfile3.pdf'
-
     os.system(pdftk+' ' + myfile + ' fill_form ' + data + ' output '+character1)
-    os.system(pdftk + ' ' + character1 + ' ' + myfile3 + ' ' + character2 + ' cat output ' + charactergen)
+    
+    fdf = forge_fdf("",[('CharacterName 2',c.name)],[],[],[])
+    data3 = os.path.abspath('..')+'/oursite/chargen/data3.fdf'
+    fdf_file = open(data3,"w")
+    fdf_file.write(fdf)
+    fdf_file.close()
+    myfile3 = os.path.abspath('..')+'/oursite/chargen/myfile3.pdf'
+    character3 = os.path.abspath('..')+'/oursite/chargen/character3.pdf'
+    os.system(pdftk+' ' + myfile3 + ' fill_form ' + data3 + ' output '+character3)    
+
+    charactergen = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
+
+    
+    os.system(pdftk + ' ' + character1 + ' ' + character3 + ' ' + character2 + ' cat output ' + charactergen)
     with open(charactergen, 'rb') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         filename = c.name+"_character_sheet.pdf"
@@ -225,4 +251,10 @@ def list_to_string(list):
     for x in list:
         string+=x[0].upper()+x[1:len(x)].lower()+", "
     return string[0:len(string)-2]
+
+def cap(string):
+    if string=="":
+        return string
+    else:
+        return string[0].upper()+string[1:len(string)].lower()
     
