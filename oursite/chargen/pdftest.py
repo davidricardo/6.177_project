@@ -1,4 +1,7 @@
 #!python
+#called by views.py, generates pdf filled in with character data,
+#returns HttpResponse with pdf to views.py
+#uses outside packages fdfgen and PDFtk
 from fdfgen import forge_fdf
 from character import Character
 import os, subprocess, platform
@@ -9,6 +12,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, RequestContext, loader
 
 def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
+    #c__ fields are checkboxes; checked off if character is proficient in that skill/save
     c11 = "Off"
     c18 = "Off"
     c19 = "Off"
@@ -81,6 +85,8 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
         c39 = "Yes"
     if "survival" in c.proficiencies["skill"]:
         c40 = "Yes"
+    #fields contains values for the empty fillable fields in the pdf
+    #field names were set by the makers of the pdf (not us - it is an offical D&D pdf form)
     fields = [('ClassLevel',str(c.my_class.class_name)+" "+str(c.level)),
               ('CharacterName',c.name),
               ('Background',c.background.name),
@@ -169,12 +175,12 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
               ('Check Box 21',c21),
               ('Check Box 22',c22),
               ]
-    character2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
+    character2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf' #path for empty spell sheet- if not a spellcasting class, remains blank
     pdftk = os.path.abspath('..')+'/oursite/chargen/pdftk/bin/pdftk'
-    if platform.system()=='Windows':
+    if platform.system()=='Windows': #windows and mac use respective pdftk files
         pdftk = os.path.abspath('..')+'/oursite/chargen/pdftkserver/bin/pdftk.exe'
     spellcastingclasses = ["Druid","Cleric","Bard","Wizard","Sorcerer","Warlock"]
-    if (c.level==1):
+    if (c.level==1): #only generates spell file for classes that get spells at level 1
         if c.my_class.class_name in spellcastingclasses:
             fields2 = [('Spellcasting Class 2',c.my_class.class_name),
                        ('SpellcastingAbility 2',cap(c.my_class.spell_casting_ability)),
@@ -202,6 +208,7 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
                        ('Spells 1032',cap(c.spells1[10])),
                        ('Spells 1033',cap(c.spells1[11])),
                        ]
+            #use fdfgen to write .fdf file with spell form data
             fdf = forge_fdf("",fields2,[],[],[])
             data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
             fdf_file = open(data2,"w")
@@ -209,7 +216,9 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
             fdf_file.close()
             character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
             myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
+            #use pdftk to write .fdf form data to blank spell pdf and save as character2.pdf
             os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
+    #use fdfgen to write .fdf file with character form data
     fdf = forge_fdf("",fields,[],[],[])
     data = os.path.abspath('..')+'/oursite/chargen/data.fdf'
     fdf_file = open(data,"w")
@@ -217,8 +226,12 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
     fdf_file.close()
     myfile = os.path.abspath('..')+'/oursite/chargen/myfile.pdf'
     character1 = os.path.abspath('..')+'/oursite/chargen/character1.pdf'
+    #use pdftk to write .fdf form data to blank character sheet and save as character1.pdf
     os.system(pdftk+' ' + myfile + ' fill_form ' + data + ' output '+character1)
-    
+
+    #the middle sheet of the final pdf has backstory and other fields that can not be calculated,
+    #and should be thought up by the player
+    #this following chunk of code just fills in the character name in the corner
     fdf = forge_fdf("",[('CharacterName 2',c.name)],[],[],[])
     data3 = os.path.abspath('..')+'/oursite/chargen/data3.fdf'
     fdf_file = open(data3,"w")
@@ -228,18 +241,20 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
     character3 = os.path.abspath('..')+'/oursite/chargen/character3.pdf'
     os.system(pdftk+' ' + myfile3 + ' fill_form ' + data3 + ' output '+character3)    
 
+    #file path for final pdf
     charactergen = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
 
-    
+    #merges all three filled in pages into one 3-page pdf file
     os.system(pdftk + ' ' + character1 + ' ' + character3 + ' ' + character2 + ' cat output ' + charactergen)
-    with open(charactergen, 'rb') as pdf:
-        response = HttpResponse(pdf.read(), content_type='application/pdf')
-        filename = c.name+"_character_sheet.pdf"
-        response['Content-Disposition'] = 'inline; filename='+filename
-        return response
+    
+    pdf = open(charactergen, 'rb')
+    response = HttpResponse(pdf.read(), content_type='application/pdf')
+    filename = c.name+"_character_sheet.pdf"
+    response['Content-Disposition'] = 'inline; filename='+filename
+    return response
     
 
-    
+#
 def pre(x):
     if x>=0:
         return "+" + str(x)
