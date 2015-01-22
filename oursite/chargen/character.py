@@ -424,9 +424,9 @@ class Char_Class:
                 x = len(dWeapon.objects.filter(martial_arts=False))
                 character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
             if (random.randrange(0,2)==0):
-                 character.weapon.append("light crossbow")
+                 character.weapons.append("light crossbow")
             else:
-                character.weapon.extend(["handaxe","handaxe"])
+                character.weapons.extend(["handaxe","handaxe"])
             if (random.randrange(0,2)==0):
                  self.equipment.append("dungeoneer's pack")
             else:
