@@ -1,3 +1,50 @@
 id,name,char_class,level_1_feature,level_2_feature,level_3_feature,level_4_feature,level_5_feature,level_6_feature,level_7_feature,level_8_feature,level_9_feature,level_10_feature,level_11_feature,level_12_feature,level_13_feature,level_14_feature,level_15_feature,level_16_feature,level_17_feature,level_18_feature,level_19_feature,level_20_feature
 2,College of Valor,2,Bardic Inspiration,Song of Rest; Jack of All Trades,Expertise; Combat Inspiration,Feat,Font of Inspiration; Bardic Inspiration(d8),Countercharm; Extra Attack, ,Feat,Song of Rest(d8),Bardic Inspiration(d10); Expertise; Magical Secrets, ,Feat,Song of rest(d10),Magical Secrets; Battle Magic,Bardic Inspiration (d12),Feat,Song of Rest(12),Magical Secrets,Feat,Superior Inspiration
 1,College of Lore,2,Bardic Inspiration,Song of Rest; Jack of All Trades,Expertise; Cutting words,Feat,Font of Inspiration; Bardic Inspiration(d8),Countercharm, ,Feat,Song of Rest(d8),Bardic Inspiration(d10); Expertise; Magical Secrets, ,Feat,Song of rest(d10),Magical Secrets; Peerless Skill,Bardic Inspiration (d12),Feat,Song of Rest(12),Magical Secrets,Feat,Superior Inspiration
+3,Path of the Berserker,1,Rage,Reckless Attack; Danger Sense,Frenzy,Feat,Extra Attack,Mindless Rage,Feral instinct,Feat,Brutal Critical,Intimidating Presence,Relentless Rage,Feat,Brutal Crital (2 die),Retaliation,Persistant Rage,Feat,Brutal Critial(3 die),Indomitiable Might,Feat,Primal Champion
+4,Path of the Totem Warrior,1,Rage,Reckless Attack; Danger Sense,Spirit Seeker; Totem Spirit,Feat,Extra Attack,Aspect of the Beast,Feral instinct,Feat,Brutal Critical,Spirit Walker,Relentless Rage,Feat,Brutal Crital (2 die),Totemic Attunment,Persistant Rage,Feat,Brutal Critial(3 die),Indomitiable Might,Feat,Primal Champion
+5,Knowlage Domain,3,  ,Channel Divinity- Turn Undead; Channel Divinity-  Knowelage of the Ages, ,Feat,Destroy Undead,Channel Divinity(2/rest); Channel Divinity- Read Thoughts,,Feat; Destroy Undead(1); Potent Spellcasting, ,Divine Intervention,Destroy Undead(2),Feat, ,Destroy Undead(3), ,Feat,Destroy Undead(4); Visions of the Past,Channel Divinity(3/rest),Feat,Divine Intervention Improvement
+6,Life Domain,3,Diciple of Life,Channel Divinity- Turn Undead; Channel Divinity- Read Thoughts; Perserve Life, ,Feat,Destroy Undead,Channel Divinity(2/rest); Blessed Healer,,Feat; Destroy Undead(1); Divine Strike, ,Divine Intervention,Destroy Undead(2),Feat, ,Destroy Undead(3); divine strike increase, ,Feat,Destroy Undead(4); Supreme Healing,Channel Divinity(3/rest),Feat,Divine Intervention Improvement
+7,Light Domain,3,Warding Flame,Channel Divinity- Turn Undead; Channel Divinity- Radience of the Dawn, ,Feat,Destroy Undead,Channel Divinity(2/rest); Improved Flame,,Feat; Destroy Undead(1); Potent Spellcasting, ,Divine Intervention,Destroy Undead(2),Feat, ,Destroy Undead(3), ,Feat,Destroy Undead(4); Corona of Light,Channel Divinity(3/rest),Feat,Divine Intervention Improvement
+8,Nature Domain,3, ,Channel Divinity- Turn Undead; Chanel Divinity- Charm Animals and Plants, ,Feat,Destroy Undead,Channel Divinity(2/rest); Dampen Elements ,,Feat; Destroy Undead(1); DIvine Strike, ,Divine Intervention,Destroy Undead(2),Feat, ,Destroy Undead(3), ,Feat,Destroy Undead(4);; Master of Nature,Channel Divinity(3/rest),Feat,Divine Intervention Improvement
+9,Trickery Domain,3,Blessing of the Trickster,Channel Divinity- Turn Undead; Channel Divinity- Invoke Duplicity, ,Feat,Destroy Undead,Channel Divinity(2/rest); Channel Divinity- Cloak of Shadows,,Feat; Destroy Undead(1); Divine Strike, ,Divine Intervention,Destroy Undead(2),Feat, ,Destroy Undead(3), ,Feat,Destroy Undead(4); Improved Duplicity,Channel Divinity(3/rest),Feat,Divine Intervention Improvement
+10,Tempest Domain,3,Wrath of the Storm,Channel Divinity- Turn Undead; Channel Divinity- Destructive Wrath, ,Feat,Destroy Undead,Channel Divinity(2/rest); Thunderbolt Strike,,Feat; Destroy Undead(1); Divine Strike, ,Divine Intervention,Destroy Undead(2),Feat, ,Destroy Undead(3), ,Feat,Destroy Undead(4); Stormborn,Channel Divinity(3/rest),Feat,Divine Intervention Improvement
+11,War Domain,3,War Preist,Channel Divinity- Turn Undead; Channel of Divinity- Guided Strike, ,Feat,Destroy Undead,Channel Divinity(2/rest); Channel Divinity - War God's Blessing,,Feat; Destroy Undead(1); Divine Strike, ,Divine Intervention,Destroy Undead(2),Feat, ,Destroy Undead(3), ,Feat,Destroy Undead(4); Avatar of Battle,Channel Divinity(3/rest),Feat,Divine Intervention Improvement
+12,Circle of Land,4, ,Wild Shape; Natural Recovery,Circle Spells,Feat; Wild Shape Improvement,,Land Stride,,Feat; Wild Shpe Improvement, ,Nature's Ward,,Feat, ,Nature's Sanctuary,,Feat,,Timeless Body; Beast Spells,Feat,Archdruid
+13,Circle of the Moon,4,,Wild Shape; Combat Wild Shape; Circle Forms,,Feat; Wild Shape Improvement,,Primal Strike,,Feat; Wild Shpe Improvement, ,Primal Strike,,Feat, ,Thousand Forms,,Feat,,Timeless Body; Beast Spells,Feat,Archdruid
+14,Champion,5,Fighting Style; Second Wind,Action Surge,Improved Critical,Feat,Extra Attack,Feat,Remarkable Athlete,Feat,Indomitable,Additional Fighting Style,Extra Attack(2),Feat,Indomitable(2),Feat,Superior Critical,Feat,Action Surge(2); Indomitable(3),Surivor,Feat,Extra Attack(3)
+15,Battle Master,5,Fighting Style; Second Wind,Action Surge,Combat Superority; Student of War,Feat,Extra Attack,Feat,Know Your Enemy,Feat,Indomitable,Improved Combat Superority,Extra Attack(2),Feat,Indomitable(2),Feat,Relentless,Feat,Action Surge(2); Indomitable(3), ,Feat,Extra Attack(3)
+16,Eldtritch Knight,5,Fighting Style; Second Wind,Action Surge,Weapon Bond,Feat,Extra Attack,Feat,War Magic,Feat,Indomitable,Eldritch Strike,Extra Attack(2),Feat,Indomitable(2),Feat,Arcane Charge,Feat,Action Surge(2); Indomitable(3),Improved War Magic,Feat,Extra Attack(3)
+17,Way of the Open  Hand,6,Martial Arts,Ki,Deflect Missles,Feat; Slow Fall,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+18,Way of the Shaddow,6,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+19,Way of the Four Elements,6,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+20,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+21,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+22,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+23,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+24,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+25,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+26,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+27,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+28,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+30,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+31,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+32,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+33,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+34,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+35,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+36,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+37,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+38,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+39,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+40,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+41,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+42,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+43,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+44,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+45,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+46,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+,,,,,,Feat,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+,,,,,,,,,,Feat,,,,Feat,,,,Feat,,,Feat,
+,,,,,,,,,,,,,,,,,,Feat,,,Feat,
+,,,,,,,,,,,,,,,,,,,,,Feat,
