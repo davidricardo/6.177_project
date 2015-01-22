@@ -109,7 +109,7 @@ VARS_TO_PASS = {
 
 
 class Character:
-    def __init__(self, name, char_class, race, background, ability_scores={"strength":10,"dexterity":10,"constitution":10,"intelligence":10,"wisdom":10,"charisma":10}, level=1):
+    def __init__(self, name, char_class, race, background, strength = 10,dexterity = 10, constitution = 10, intelligence = 10, wisdom = 10, charisma = 10, level=1):
         self.languages = []
         self.equipment = []
         self.proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
@@ -118,7 +118,7 @@ class Character:
         self.armor = ""
         self.level = level
         self.name = name
-        self.ability_scores = ability_scores
+        self.ability_scores = ability_scores={"strength":strength,"dexterity":dexterity,"constitution":constitution,"intelligence":intelligence,"wisdom":wisdom,"charisma":charisma}
         self.background = Background(self,background)
         self.my_class = Char_Class(self, char_class, self.level)
         self.my_race = Race(self, race)
@@ -132,12 +132,46 @@ class Character:
         self.languages = list(set(self.languages))
         for key in self.proficiencies.keys():
             self.proficiencies[key] = list(set(self.proficiencies[key]))
-
         for s in self.skills.keys():
             self.skills[s] = self.calculate_skill(s)
         for v in self.saves.keys():
             self.saves[v] = self.calculate_save(v)
-            
+
+        self.wpn1 = ""
+        self.wpn1a = ""
+        self.wpn1d = ""
+        self.wpn2 = ""
+        self.wpn2a = ""
+        self.wpn2d = ""
+        self.wpn3 = ""
+        self.wpn3a = ""
+        self.wpn3d = ""
+        if len(self.weapons)>0:
+            self.wpn1 = self.weapons[0]
+            if dWeapon.objects.get(weapon_name=self.wpn1).mele==True and not(dWeapon.objects.get(weapon_name=self.wpn1).finesse==True and self.get_modifier(self.ability_scores["strength"])<self.get_modifier(self.ability_scores["dexterity"])):
+                self.wpn1a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["strength"]))
+                self.wpn1d = str(dWeapon.objects.get(weapon_name=self.wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn1).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=self.wpn1).damage_type[0] + "."
+            else:
+                self.wpn1a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["dexterity"]))
+                self.wpn1d = str(dWeapon.objects.get(weapon_name=self.wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn1).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=self.wpn1).damage_type[0] + "."
+            if len(self.weapons)>1:
+                self.wpn2 = self.weapons[1]
+                if dWeapon.objects.get(weapon_name=self.wpn2).mele==True and not(dWeapon.objects.get(weapon_name=self.wpn2).finesse==True and self.get_modifier(self.ability_scores["strength"])<self.get_modifier(self.ability_scores["dexterity"])):
+                    self.wpn2a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["strength"]))
+                    self.wpn2d = str(dWeapon.objects.get(weapon_name=self.wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn2).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=self.wpn2).damage_type[0] + "."
+                else:
+                    self.wpn2a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["dexterity"]))
+                    self.wpn2d = str(dWeapon.objects.get(weapon_name=self.wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn2).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=self.wpn2).damage_type[0] + "."
+            if len(self.weapons)>2:
+                self.wpn3 = self.weapons[2]
+                if dWeapon.objects.get(weapon_name=self.wpn3).mele==True and not(dWeapon.objects.get(weapon_name=self.wpn3).finesse==True and self.get_modifier(self.ability_scores["strength"])<self.get_modifier(self.ability_scores["dexterity"])):
+                    self.wpn3a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["strength"]))
+                    self.wpn3d = str(dWeapon.objects.get(weapon_name=self.wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn3).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=self.wpn3).damage_type[0] + "."
+                else:
+                    self.wpn3a = pre(self.get_proficiency_bonus()+self.get_modifier(self.ability_scores["dexterity"]))
+                    self.wpn3d = str(dWeapon.objects.get(weapon_name=self.wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=self.wpn3).type_of_damage_die) + " " + pre(self.get_modifier(self.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=self.wpn3).damage_type[0] + "."
+
+
     def get_final_dict(self):
         my_dict = OrderedDict()
         my_dict["Name"]=self.name,
@@ -228,13 +262,14 @@ class Character:
 class Char_Class:
     def __init__(self, character, name, level):
         self.class_name = name
-        self.subclass = dsubclass.objects.filter(char_class = dChar_class.objects.get(name=self.class_name))[0]
-        self.hit_die = dChar_class.objects.get(name=name).hit_die
-        weapons = string_to_list(dChar_class.objects.get(name=name).weapon_proficiencies.lower())
-        armor = string_to_list(dChar_class.objects.get(name=name).armour_proficiencies.lower())
-        tools = string_to_list(dChar_class.objects.get(name=name).tool_proficiencies.lower())
-        saves = string_to_list(dChar_class.objects.get(name=name).saving_throws_proficiencies.lower())
-        skills = choose(string_to_list(dChar_class.objects.get(name=name).skill_proficiencies),dChar_class.objects.get(name=name).number_skill_proficiencies,character.proficiencies["skill"])
+        dclass = dChar_class.objects.get(name=name)
+        self.subclass = dsubclass.objects.filter(char_class = dChar_class.objects.get(name="Bard"))[0]
+        self.hit_die = dclass.hit_die
+        weapons = string_to_list(dclass.weapon_proficiencies.lower())
+        armor = string_to_list(dclass.armour_proficiencies.lower())
+        tools = string_to_list(dclass.tool_proficiencies.lower())
+        saves = string_to_list(dclass.saving_throws_proficiencies.lower())
+        skills = choose(string_to_list(dclass.skill_proficiencies),dclass.number_skill_proficiencies,character.proficiencies["skill"])
         self.proficiencies = {"weapon":weapons,"armor":armor,"skill":skills,"saves":saves,"tools":tools}
         for key in self.proficiencies:
             character.proficiencies[key].extend(self.proficiencies[key])
@@ -247,6 +282,11 @@ class Char_Class:
         self.archetype = Archetype("",level)
         self.languages = []
         character.languages.extend(self.languages)
+        self.spell_casting_ability = ""        
+        for key in ABILITY_KEYS.keys():
+            if ABILITY_KEYS[key]==dclass.spell_casting_ability:
+                self.spell_casting_ability = key
+        #self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
 
     def get_features(self,character):
         features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_1_feature)
@@ -365,7 +405,7 @@ class Char_Class:
             else:
                 x = len(dWeapon.objects.filter(martial_arts=False).filter(mele=True))
                 character.weapons.append(dWeapon.objects.filter(martial_arts=False).filter(mele=True)[random.randrange(0,x)].weapon_name)
-            self.equipment.append(["explorer's pack","druidic focus"])
+            self.equipment.extend(["explorer's pack","druidic focus"])
             self.armor = "leather"
 
         if self.class_name=="Fighter":
@@ -403,7 +443,7 @@ class Char_Class:
             else:
                  self.equipment.append("explorer's pack")
             self.equipment.append("ten darts")
-            self.weapons.append("dart")
+            character.weapons.append("dart")
 
         if self.class_name=="Paladin":
             if (random.randrange(0,2)==0):
@@ -416,7 +456,7 @@ class Char_Class:
                 x = len(dWeapon.objects.filter(martial_arts=False))
                 character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
             if (random.randrange(0,2)==0):
-                 character.weapon.append("javelin")
+                 character.weapons.append("javelin")
                  self.equipment.append("5 javelins")
             else:
                 self.equipment.append("explorer's pack")
@@ -460,7 +500,7 @@ class Char_Class:
             character.armor = "leather"
             self.equipment.append("thieves' tools")
 
-        if self.class_name=="Sorceror":
+        if self.class_name=="Sorcerer":
             if (random.randrange(0,2)==0):
                 character.weapons.append("light crossbow")
             else:
@@ -539,7 +579,7 @@ class Background:
         if name=="":
             number_of_records = dbackstory.objects.count()
             random_index = random.randrange(number_of_records)
-            background = dbackstory.objects.all()[random_index:random_index+1][0]
+            background = dbackstory.objects.all()[random_index]
             self.name = background.name
         else:
             self.name = name
@@ -555,10 +595,73 @@ class Background:
         character.features.extend(self.features)
         self.languages = string_to_list(background.language.lower())+choose(LANGUAGES,background.optional_lang_proficiencies,character.languages)
         character.languages.extend(self.languages)
-        self.personality_traits = ""
+        self.personality = ""
         self.ideals = ""
         self.bonds = ""
         self.flaws = ""
+        self.get_personalities()
+
+    def get_personalities(self):
+        personality = dpersonalities.objects.get(background=self.name)
+        bonds = dbonds.objects.get(background=self.name)
+        ideals = dideals.objects.get(background=self.name)
+        flaws = dflaws.objects.get(background=self.name)
+        a = random.randrange(1,9)
+        if a==1:
+            self.personality = personality.one
+        if a==2:
+            self.personality = personality.two
+        if a==3:
+            self.personality = personality.three
+        if a==4:
+            self.personality = personality.four
+        if a==5:
+            self.personality = personality.five
+        if a==6:
+            self.personality = personality.six
+        if a==7:
+            self.personality = personality.seven
+        if a==8:
+            self.personality = personality.eight
+        a = random.randrange(1,7)
+        if a==1:
+            self.bonds = bonds.one
+        if a==2:
+            self.bonds = bonds.two
+        if a==3:
+            self.bonds = bonds.three
+        if a==4:
+            self.bonds = bonds.four
+        if a==5:
+            self.bonds = bonds.five
+        if a==6:
+            self.bonds = bonds.six
+        a = random.randrange(1,7)
+        if a==1:
+            self.ideals = ideals.one
+        if a==2:
+            self.ideals = ideals.two
+        if a==3:
+            self.ideals = ideals.three
+        if a==4:
+            self.ideals = ideals.four
+        if a==5:
+            self.ideals = ideals.five
+        if a==6:
+            self.ideals = ideals.six
+        a = random.randrange(1,7)
+        if a==1:
+            self.flaws = flaws.one
+        if a==2:
+            self.flaws = flaws.two
+        if a==3:
+            self.flaws = flaws.three
+        if a==4:
+            self.flaws = flaws.four
+        if a==5:
+            self.flaws = flaws.five
+        if a==6:
+            self.flaws = flaws.six
 
 def string_to_list(string):
     if string==" " or string=="" or string==None:
@@ -586,5 +689,10 @@ def choose(l,n,l2):
         return_array.append(l[x])
     return return_array
 
+def pre(x):
+    if x>0:
+        return "+" + str(x)
+    else:
+        return str(x)
 
         

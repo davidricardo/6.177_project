@@ -1,7 +1,6 @@
 #!python
 from fdfgen import forge_fdf
 from character import Character
-from models import *
 import os, subprocess
 import random
 from django.conf import settings
@@ -9,41 +8,79 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, RequestContext, loader
 
-def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",{"strength":16,"dexterity":10,"constitution":14,"intelligence":8,"wisdom":12,"charisma":8})):
-    wpn1 = ""
-    wpn1a = ""
-    wpn1d = ""
-    wpn2 = ""
-    wpn2a = ""
-    wpn2d = ""
-    wpn3 = ""
-    wpn3a = ""
-    wpn3d = ""
-    if len(c.weapons)>0:
-        wpn1 = c.weapons[0]
-        if dWeapon.objects.get(weapon_name=wpn1).mele==True and not(dWeapon.objects.get(weapon_name=wpn1).finesse==True and c.get_modifier(c.ability_scores["strength"])<c.get_modifier(c.ability_scores["dexterity"])):
-            wpn1a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["strength"]))
-            wpn1d = str(dWeapon.objects.get(weapon_name=wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn1).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=wpn1).damage_type[0] + "."
-        else:
-            wpn1a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
-            wpn1d = str(dWeapon.objects.get(weapon_name=wpn1).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn1).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn1).damage_type[0] + "."
-        if len(c.weapons)>1:
-            wpn2 = c.weapons[1]
-            if dWeapon.objects.get(weapon_name=wpn2).mele==True and not(dWeapon.objects.get(weapon_name=wpn2).finesse==True and c.get_modifier(c.ability_scores["strength"])<c.get_modifier(c.ability_scores["dexterity"])):
-                wpn2a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["strength"]))
-                wpn2d = str(dWeapon.objects.get(weapon_name=wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn2).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=wpn2).damage_type[0] + "."
-            else:
-                wpn2a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
-                wpn2d = str(dWeapon.objects.get(weapon_name=wpn2).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn2).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn2).damage_type[0] + "."
-        if len(c.weapons)>2:
-            wpn3 = c.weapons[2]
-            if dWeapon.objects.get(weapon_name=wpn3).mele==True and not(dWeapon.objects.get(weapon_name=wpn3).finesse==True and c.get_modifier(c.ability_scores["strength"])<c.get_modifier(c.ability_scores["dexterity"])):
-                wpn3a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["strength"]))
-                wpn3d = str(dWeapon.objects.get(weapon_name=wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn3).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["strength"])) +" " +dWeapon.objects.get(weapon_name=wpn3).damage_type[0] + "."
-            else:
-                wpn3a = pre(c.get_proficiency_bonus()+c.get_modifier(c.ability_scores["dexterity"]))
-                wpn3d = str(dWeapon.objects.get(weapon_name=wpn3).number_of_damage_die) + "d" + str(dWeapon.objects.get(weapon_name=wpn3).type_of_damage_die) + " " + pre(c.get_modifier(c.ability_scores["dexterity"])) +" " +dWeapon.objects.get(weapon_name=wpn3).damage_type[0] + "."
-
+def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
+    c11 = "Off"
+    c18 = "Off"
+    c19 = "Off"
+    c20 = "Off"
+    c21 = "Off"
+    c22 = "Off"
+    if "str" in c.proficiencies["saves"]:
+        c11 = "Yes" 
+    if "dex" in c.proficiencies["saves"]:
+        c18 = "Yes" 
+    if "con" in c.proficiencies["saves"]:
+        c19 = "Yes" 
+    if "int" in c.proficiencies["saves"]:
+        c20 = "Yes" 
+    if "wis" in c.proficiencies["saves"]:
+        c21 = "Yes" 
+    if "char" in c.proficiencies["saves"]:
+        c22 = "Yes" 
+    c23 = "Off"
+    c24 = "Off"
+    c25 = "Off"
+    c26 = "Off"
+    c27 = "Off"
+    c28 = "Off"
+    c29 = "Off"
+    c30 = "Off"
+    c31 = "Off"
+    c32 = "Off"
+    c33 = "Off"
+    c34 = "Off"
+    c35 = "Off"
+    c36 = "Off"
+    c37 = "Off"
+    c38 = "Off"
+    c39 = "Off"
+    c40 = "Off"
+    if "acrobatics" in c.proficiencies["skill"]:
+        c23 = "Yes"
+    if "animal handling" in c.proficiencies["skill"]:
+        c24 = "Yes"
+    if "arcana" in c.proficiencies["skill"]:
+        c25 = "Yes"
+    if "athletics" in c.proficiencies["skill"]:
+        c26 = "Yes"
+    if "deception" in c.proficiencies["skill"]:
+        c27 = "Yes"
+    if "history" in c.proficiencies["skill"]:
+        c28 = "Yes"
+    if "insight" in c.proficiencies["skill"]:
+        c29 = "Yes"
+    if "intimidation" in c.proficiencies["skill"]:
+        c30 = "Yes"
+    if "investigation" in c.proficiencies["skill"]:
+        c31 = "Yes"
+    if "medicine" in c.proficiencies["skill"]:
+        c32 = "Yes"
+    if "nature" in c.proficiencies["skill"]:
+        c33 = "Yes"
+    if "perception" in c.proficiencies["skill"]:
+        c34 = "Yes"
+    if "performance" in c.proficiencies["skill"]:
+        c35 = "Yes"
+    if "persuasion" in c.proficiencies["skill"]:
+        c36 = "Yes"
+    if "religion" in c.proficiencies["skill"]:
+        c37 = "Yes"
+    if "sleight of hand" in c.proficiencies["skill"]:
+        c38 = "Yes"
+    if "stealth" in c.proficiencies["skill"]:
+        c39 = "Yes"
+    if "survival" in c.proficiencies["skill"]:
+        c40 = "Yes"
     fields = [('ClassLevel',str(c.my_class.class_name)+" "+str(c.level)),
               ('CharacterName',c.name),
               ('Background',c.background.name),
@@ -53,7 +90,6 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",{"strength":16,"dext
               ('Initiative',pre(c.get_initiative())),
               ('AC',c.get_armor_class()),
               ('Speed',c.my_race.base_speed),
-              ('PersonalityTraits',c.background.personality_traits),
               ('STRmod',pre(c.get_modifier(c.ability_scores["strength"]))),
               ('HPMax',c.get_max_hit_points()),
               ('ST Strength',pre(c.saves["strength"])),
@@ -72,10 +108,7 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",{"strength":16,"dext
               ('CHA',c.ability_scores["charisma"]),
               ('CHamod',pre(c.get_modifier(c.ability_scores["charisma"]))),
               ('ST Charisma',pre(c.saves["charisma"])),
-              ('Ideals',c.background.ideals),
-              ('Bonds',c.background.bonds),
               ('HDTotal',str(c.level)+"d"+str(c.my_class.hit_die)),
-              ('Flaws',c.background.flaws),
               ('Acrobatics',pre(c.skills["acrobatics"])),
               ('Animal',pre(c.skills["animal handling"])),
               ('Athletics',pre(c.skills["athletics"])),
@@ -98,80 +131,87 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",{"strength":16,"dext
               ('ProficienciesLang',list_to_string(c.languages)),
               ('Equipment',list_to_string(c.equipment)),
               ('Features and Traits',list_to_string(c.features)),
-              ('Wpn Name',wpn1),
-              ('Wpn1 AtkBonus',wpn1a),
-              ('Wpn1 Damage',wpn1d),
-              ('Wpn Name 2',wpn2),
-              ('Wpn2 AtkBonus ',wpn2a),
-              ('Wpn2 Damage ',wpn2d),
-              ('Wpn Name 3',wpn3),
-              ('Wpn3 AtkBonus  ',wpn3a),
-              ('Wpn3 Damage ',wpn3d),
-              #('PersonalityTraits ',personality),
-              #('Bonds',bond),
-              #('Flaws',flaw),
-              #('Ideals',ideal),
+              ('Wpn Name',c.wpn1),
+              ('Wpn1 AtkBonus',c.wpn1a),
+              ('Wpn1 Damage',c.wpn1d),
+              ('Wpn Name 2',c.wpn2),
+              ('Wpn2 AtkBonus ',c.wpn2a),
+              ('Wpn2 Damage ',c.wpn2d),
+              ('Wpn Name 3',c.wpn3),
+              ('Wpn3 AtkBonus  ',c.wpn3a),
+              ('Wpn3 Damage ',c.wpn3d),
+              ('PersonalityTraits ',c.background.personality),
+              ('Bonds',c.background.bonds),
+              ('Flaws',c.background.flaws),
+              ('Ideals',c.background.ideals),
+              ('Check Box 23',c23),
+              ('Check Box 24',c24),
+              ('Check Box 25',c25),
+              ('Check Box 26',c26),
+              ('Check Box 27',c27),
+              ('Check Box 28',c28),
+              ('Check Box 29',c29),
+              ('Check Box 30',c30),
+              ('Check Box 31',c31),
+              ('Check Box 32',c32),
+              ('Check Box 33',c33),
+              ('Check Box 34',c34),
+              ('Check Box 35',c35),
+              ('Check Box 36',c36),
+              ('Check Box 37',c37),
+              ('Check Box 38',c38),
+              ('Check Box 39',c39),
+              ('Check Box 40',c40),
+              ('Check Box 11',c11),
+              ('Check Box 18',c18),
+              ('Check Box 19',c19),
+              ('Check Box 20',c20),
+              ('Check Box 21',c21),
+              ('Check Box 22',c22),
               ]
+    character2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
+    spellcastingclasses = ["Druid","Cleric","Bard","Wizard","Sorcerer","Warlock"]
+    if (c.level==1):
+        if c.my_class.class_name in spellcastingclasses:
+            fields2 = [('Spellcasting Class 2',c.my_class.class_name),
+                       ('SpellcastingAbility 2',c.my_class.spell_casting_ability),
+                       ]
+            fdf = forge_fdf("",fields2,[],[],[])
+            path = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
+            fdf_file = open(path,"w")
+            fdf_file.write(fdf)
+            fdf_file.close()
+            pdftk = os.path.abspath('..')+'/oursite/chargen/pdftk/bin/pdftk'
+            data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
+            character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
+            myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
+            os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
     fdf = forge_fdf("",fields,[],[],[])
-    path2 = os.path.abspath('..')+'/oursite/chargen/data.fdf'
-    fdf_file = open(path2,"w")
+    path = os.path.abspath('..')+'/oursite/chargen/data.fdf'
+    fdf_file = open(path,"w")
     fdf_file.write(fdf)
     fdf_file.close()
-    path = os.path.abspath('..')+'/oursite/chargen/myfile.pdf'
-    path2 = os.path.abspath('..')+'/oursite/chargen/data.fdf'
-    path3 = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
-    path4 = os.path.abspath('..')+'/oursite/chargen/pdftk/bin/pdftk'
-    os.system(path4+' ' + path + ' fill_form ' + path2 + ' output '+path3)
-    path = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
-    with open(path, 'r') as pdf:
-        response = HttpResponse(pdf.read(), mimetype='application/pdf')
-        response['Content-Disposition'] = 'inline;filename=mycharacter.pdf'
-        return response
-    pdf.closed
 
-    """
-    pdftk_bin = None
-    if pdftk_bin is None:
-            from django.conf import settings
-            assert hasattr(settings, 'PDFTK_BIN'), "PDF generation requires pdftk (http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/). Edit your PDFTK_BIN settings accordingly."
-    pdftk_bin = settings.PDFTK_BIN
-    cmd = [
-            pdftk_bin,
-            src,
-            'fill_form',
-            '-',
-            'output',
-            '-',
-            'flatten',
-        ]
-    cmd = ' '.join(cmd)
-    process = subprocess.Popen(cmd, stdin=subprocess.PIPE,
-                                       stdout=subprocess.PIPE, shell=True)
     
-    #subprocess.Popen(["/usr/local/bin/pdftk",path,"fill_form",path2,"output"])
-    cmd = [
-            settings.PDFTK_BIN,
-            path,
-            'fill_form',
-            path2,
-            'output',
-            path3,
-        ]
-    cmd = ' '.join(cmd)
-    process = subprocess.Popen(cmd, stdin=subprocess.PIPE,
-                                       stdout=subprocess.PIPE, shell=True)
+    
+    myfile = os.path.abspath('..')+'/oursite/chargen/myfile.pdf'
+    data = os.path.abspath('..')+'/oursite/chargen/data.fdf'
+    character1 = os.path.abspath('..')+'/oursite/chargen/character1.pdf'
+    pdftk = os.path.abspath('..')+'/oursite/chargen/pdftk/bin/pdftk'
+    myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
+    charactergen = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
+    myfile3 = os.path.abspath('..')+'/oursite/chargen/myfile3.pdf'
 
-    from subprocess import Popen, PIPE
+    os.system(pdftk+' ' + myfile + ' fill_form ' + data + ' output '+character1)
+    os.system(pdftk + ' ' + character1 + ' ' + myfile3 + ' ' + character2 + ' cat output ' + charactergen)
+    with open(charactergen, 'r') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        filename = c.name+"_character_sheet.pdf"
+        response['Content-Disposition'] = 'inline; filename='+filename
+        return response
+    
 
-    cmd = path4+' ' + path +'  fill_form ' + ' '+ path2 + ' output '+ path3
-    proc = Popen(cmd,stdin=PIPE,stdout=PIPE,stderr=PIPE)
-    cmdout,cmderr = proc.communicate(fdf)
-    if cmderr: raise Hppt404
-    response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = 'inline; filename=mycharacter.pdf'
-    response.write(cmdout)
-    return response
-    """
+    
 def pre(x):
     if x>0:
         return "+" + str(x)

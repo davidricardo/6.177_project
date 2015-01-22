@@ -3,10 +3,10 @@ sys.path.append('../')
 import oursite.settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from django.contrib import admin
-from import_export import resources
-from import_export.admin import ImportExportModelAdmin
+#from import_export import resources
+#from import_export.admin import ImportExportModelAdmin
 from chargen.models import *
-
+"""
 class dWeaponResource(resources.ModelResource):
     class Meta:
         model = dWeapon
@@ -71,3 +71,44 @@ class dRaceAdmin(ImportExportModelAdmin):
     
 
 admin.site.register(dRace,dRaceAdmin)
+
+class dpersonalitiesResource(resources.ModelResource):
+    class Meta:
+        model = dpersonalities
+
+class dpersonalitiesAdmin(ImportExportModelAdmin):
+    resource_class = dpersonalitiesResource
+    
+
+admin.site.register(dpersonalities,dpersonalitiesAdmin)
+
+class dbondsResource(resources.ModelResource):
+    class Meta:
+        model = dbonds
+
+class dbondsAdmin(ImportExportModelAdmin):
+    resource_class = dbondsResource
+    
+
+admin.site.register(dbonds,dbondsAdmin)
+
+class didealsResource(resources.ModelResource):
+    class Meta:
+        model = dideals
+
+class didealsAdmin(ImportExportModelAdmin):
+    resource_class = didealsResource
+    
+
+admin.site.register(dideals,didealsAdmin)
+
+class dflawsResource(resources.ModelResource):
+    class Meta:
+        model = dflaws
+
+class dflawsAdmin(ImportExportModelAdmin):
+    resource_class = dflawsResource
+    
+
+admin.site.register(dflaws,dflawsAdmin)
+"""

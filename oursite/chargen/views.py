@@ -286,23 +286,18 @@ def index(request):
 
 # ============== do pdf stuff here ===========================================================================
                 c = Character(character_in_progress.name,
-                              character_in_progress.char_class,
-                              character_in_progress.race,
-                              character_in_progress.backround,
-                              {"strength":int(character_in_progress.strength),
-                               "dexterity":int(character_in_progress.dexterity),
-                               "constitution":int(character_in_progress.constitution),
-                               "intelligence":int(character_in_progress.intelegence),
-                               "wisdom":int(character_in_progress.wisdom),
-                               "charisma":int(character_in_progress.charisma)})
-                pdftest.fill_pdf(c)
-                path = os.path.abspath('..')+'/oursite/chargen/charactergen.pdf'
-                with open(path, 'r') as pdf:
-                    response = HttpResponse(pdf.read(), mimetype='application/pdf')
-                    response['Content-Disposition'] = 'inline;filename=mycharacter.pdf'
-                    return response
-                pdf.closed
-"""
+                              character_in_progress.char_class.name,
+                              character_in_progress.race.name,
+                              #character_in_progress.backround.name,
+                              "",
+                              int(character_in_progress.strength),
+                              int(character_in_progress.dexterity),
+                              int(character_in_progress.constitution),
+                              int(character_in_progress.intelegence),
+                              int(character_in_progress.wisdom),
+                              int(character_in_progress.charisma))
+                return pdftest.fill_pdf(c)
+                
                 # return HttpResponse(
                 #     background.render(
                 #         RequestContext( request, {
@@ -321,4 +316,4 @@ def index(request):
             return HttpResponse("Something broke!")
 
 
-"""
+
