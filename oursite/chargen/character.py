@@ -574,13 +574,22 @@ class Char_Class:
             else:
                 self.equipment.append("explorer's pack")
             character.weapons.extend(["dagger","dagger"])
-"""
-Warlock
-light crossbow or simple weapon
-component pouch or arcane focus
-scholar's pack or dungeoneer's pack
-leather armor, simple weapon, two daggers
 
+        if self.class_name=="Wizard":
+            if (random.randrange(0,2)==0):
+                character.weapons.append("quarterstaff")
+            else:
+                character.weapons.append("dagger")
+            if (random.randrange(0,2)==0):
+                self.equipment.append("component pouch")
+            else:
+                self.equipment.append("arcane focus")
+            if (random.randrange(0,2)==0):
+                 self.equipment.append("scholar's pack")
+            else:
+                self.equipment.append("explorer's pack")
+            character.equipment.append("spellbook")
+"""
 Wizard
 quarterstaff or dagger
 component pouch or arcane focus
