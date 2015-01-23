@@ -50,18 +50,6 @@ class dsubclassAdmin(ImportExportModelAdmin):
     resource_class = dsubclassResource
 admin.site.register(dsubclass,dsubclassAdmin)
 
-admin.site.register(user_entry)
-
-class dspellResource(resources.ModelResource):
-    class Meta:
-        model = dspell
-
-class dspellAdmin(ImportExportModelAdmin):
-    resource_class = dspellResource
-
-admin.site.register(dspell,dspellAdmin)
-
-
 class dRaceResource(resources.ModelResource):
     class Meta:
         model = dRace

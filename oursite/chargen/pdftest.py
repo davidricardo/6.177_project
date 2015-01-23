@@ -11,7 +11,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, RequestContext, loader
 
-def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
+def fill_pdf(c = Character("Rachel Thorn","Bard","","Human","",16,10,14,8,12,8)):
     #c__ fields are checkboxes; checked off if character is proficient in that skill/save
     c11 = "Off"
     c18 = "Off"
@@ -254,19 +254,21 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","Human","",16,10,14,8,12,8)):
     return response
     
 
-#
+#adds + in front of numbers greater than or equal to zero - used so that modifiers are formatted either -x or +x
 def pre(x):
     if x>=0:
         return "+" + str(x)
     else:
         return str(x)
 
+#formats a list into a string properly, including uppercasing first letter of each entry
 def list_to_string(list):
     string = ""
     for x in list:
         string+=x[0].upper()+x[1:len(x)].lower()+", "
     return string[0:len(string)-2]
 
+#capitalizes given string
 def cap(string):
     if string=="":
         return string
