@@ -1,4 +1,10 @@
+//I would wrap all of these functions in a class for this page to avoid cluttering the global scope,
+//but given that this is the only javascript that will be used I don't think that will be an issue.
+
 function getTotalAbilityScores(){
+    //Sets the values of each total ability score and modifier.
+
+    //These sets of six are indented so you can collapse them.
     var strength_total_box = document.getElementById("total_strength_score");
         var dexterity_total_box = document.getElementById("total_dexterity_score");
         var constitution_total_box = document.getElementById("total_constitution_score");
@@ -50,6 +56,8 @@ function getTotalAbilityScores(){
 }
 
 function updateAbilityScores() {
+    //Calculates how many point-buy points the user has spent on their ability scores.
+
     var strength_box = document.getElementById("id_ab_score_form-strength");
         var dexterity_box = document.getElementById("id_ab_score_form-dexterity");
         var constitution_box = document.getElementById("id_ab_score_form-constitution");
@@ -66,15 +74,14 @@ function updateAbilityScores() {
 
     var total_cost = getCost(strength) + getCost(dexterity) + getCost(constitution) + getCost(intelligence) + getCost(wisdom) + getCost(charisma);
 
-    // console.log("updating ability scores");
-
     document.getElementById("total_ability_score_box").innerHTML = total_cost.toString();
 
     getTotalAbilityScores();
 }
 
 function getCost(ability) {
-    //returns the point-buy cost for an ability
+    //returns the point-buy cost for an ability.
+
     var cost_table = new Array();
     cost_table [8] = 0;
     cost_table [9] = 1;
@@ -92,6 +99,8 @@ function getCost(ability) {
 }
 
 function getModifier(ability) {
+    //returns the modifier (-1 to +4) on an ability score.
+
     var to_return =  Math.floor( 0.5 * (ability - 10) );
     if (to_return >= 0 ){
         return "+" + to_return.toString();
@@ -100,19 +109,18 @@ function getModifier(ability) {
     }
 }
 
-function updateRaceMods(race){  
+function updateRaceMods(race){
+    // Displays the racial modifiers to ability scores.
 
     var race_box = document.getElementById("id_class_race_form-race");
     var race = race_box.options[race_box.selectedIndex].text;
 
     var strength_box = document.getElementById("race_mod_strength");
-    var dexterity_box = document.getElementById("race_mod_dexterity");
-    var constitution_box = document.getElementById("race_mod_constitution");
-    var intelligence_box = document.getElementById("race_mod_intelligence");
-    var wisdom_box = document.getElementById("race_mod_wisdom");
-    var charisma_box = document.getElementById("race_mod_charisma");
-
-    // console.log("Your race is now" + race);
+        var dexterity_box = document.getElementById("race_mod_dexterity");
+        var constitution_box = document.getElementById("race_mod_constitution");
+        var intelligence_box = document.getElementById("race_mod_intelligence");
+        var wisdom_box = document.getElementById("race_mod_wisdom");
+        var charisma_box = document.getElementById("race_mod_charisma");
 
     var race_mods = [];
 
@@ -239,16 +247,17 @@ function updateRaceMods(race){
     } 
 
     strength_box.innerHTML = race_mods["strength"];
-    dexterity_box.innerHTML = race_mods["dexterity"];
-    constitution_box.innerHTML = race_mods["constitution"];
-    intelligence_box.innerHTML = race_mods["intelligence"];
-    wisdom_box.innerHTML = race_mods["wisdom"];
-    charisma_box.innerHTML = race_mods["charisma"]; 
+        dexterity_box.innerHTML = race_mods["dexterity"];
+        constitution_box.innerHTML = race_mods["constitution"];
+        intelligence_box.innerHTML = race_mods["intelligence"];
+        wisdom_box.innerHTML = race_mods["wisdom"];
+        charisma_box.innerHTML = race_mods["charisma"]; 
 
     getTotalAbilityScores();
 }
 
 function updateRaceDescription() {
+    //Updates the descriptions for the currently selected race and subrace.
 
     var race_box = document.getElementById("id_class_race_form-race");
     var race = race_box.options[race_box.selectedIndex].text;
@@ -256,73 +265,59 @@ function updateRaceDescription() {
     var subrace_description_box = document.getElementById("subrace_explanation")
 
     switch (race) {  
-        
         case "Human":
             race_description_box.innerHTML = "<b>Humans</b> are the most varied race. They are ambitious, but short-lived.";    
             subrace_description_box.innerHTML = "Humans have widely varying ethnicities, unlike other races.";
             break;
-        
         case "Tiefling":
             race_description_box.innerHTML = "<b>Tieflings</b> are humanoids related to evil outsiders: the devils or demons.";    
             subrace_description_box.innerHTML = "Even the weakest of tieflings can cast some spells.";
             break;
-        
         case "Half-Orc":
             race_description_box.innerHTML = "<b>Half-orcs</b> are often stereotyped as monsters, but they're not always villains.";    
             subrace_description_box.innerHTML = "Half-orcs are strong and tough, and they can see in the dark.";
             break;
-        
         case "Half-Elf":
             race_description_box.innerHTML = "<b>Half-elves</b> are born to human and elven parents, and they have some characteristics of both. ";    
             subrace_description_box.innerHTML = "They can blend in with humans or elves, but are neither.";
             break;
-        
         case "Gnome - Forest":
         case "Gnome - Forrest":
             race_description_box.innerHTML = "<b>Gnomes</b> are tiny and impulsive. They're bold or foolhardy, depending who you ask.";    
             subrace_description_box.innerHTML = "<b>Forest Gnomes</b> have a knack for illusions and stealth.";
             break;
-        
         case "Gnome - Rock":
             race_description_box.innerHTML = "<b>Gnomes</b> are tiny and impulsive. They're bold or foolhardy, depending who you ask.";    
             subrace_description_box.innerHTML = "<b>Rock Gnomes</b> are commonly tinkerers, inventors, and alchemists.";
             break;
-        
         case "Dragonborn":
             race_description_box.innerHTML = "<b>Dragonborn</b> are strong, charismatic humanoids hatched from dragon eggs. ";    
             subrace_description_box.innerHTML = "Dragonborn can breathe fire, lightning, ice, or another element.";
             break;
-        
         case "Halfling - Stout":
             race_description_box.innerHTML = "<b>Halflings</b>, also called <b>hobbits</b>, enjoy the finer things in life: food, drink, and friends.";    
             subrace_description_box.innerHTML = "<b>Stout Halflings</b> are hardier than average and are soemtimes related to dwarves.";
             break;
-        
         case "Halfling - Lightfoot":
             race_description_box.innerHTML = "<b>Halflings</b>, also called <b>hobbits</b>, enjoy the finer things in life: food, drink, and friends.";    
             subrace_description_box.innerHTML = "<b>Lightfoot halflings</b> are even smaller and more prone to wanderlust.";
             break;
-        
         case "Elf - Dark (Drow)":
             race_description_box.innerHTML = "<b>Elves</b> are slender and graceful, and live for centuries. They love art, nature, and magic.";    
             subrace_description_box.innerHTML = "<b>Dark elves</b> were banished from the surface world. They now live underground.";
             break;
-        
         case "Elf - Wood":
             race_description_box.innerHTML = "<b>Elves</b> are slender and graceful, and live for centuries. They love art, nature, and magic.";    
             subrace_description_box.innerHTML = "<b>Wood elves</b> have keen senses and intuition, and they live in forests.";
             break;
-        
         case "Elf- High":
             race_description_box.innerHTML = "<b>Elves</b> are slender and graceful, and live for centuries. They love art, nature, and magic.";    
             subrace_description_box.innerHTML = "<b>High elves</b> are extremely intelligent. All of them have at least some magic.";
             break;
-        
         case "Dwarf - Mountain":
             race_description_box.innerHTML = "<b>Dwarves</b> are short and stout. They love mining and smithing, and they value their clans.";    
             subrace_description_box.innerHTML = "<b>Mountain dwarves</b> live in difficult terrain, and as such are especially strong.";
             break;
-        
         case "Dwarf - Hill":
             race_description_box.innerHTML = "<b>Dwarves</b> are short and stout. They love mining and smithing, and they value their clans.";    
             subrace_description_box.innerHTML = "<b>Hill dwarves</b> have keen senses, and are connected to the earth around them.";
@@ -333,10 +328,11 @@ function updateRaceDescription() {
 }
 
 function updateClassDescription(){
+    //Updates the description for the currently selected class.
+
     var class_box = document.getElementById("id_class_race_form-character_class");
     var char_class = class_box.options[class_box.selectedIndex].text;
     var class_description_box = document.getElementById("class_explanation");
-    // var subclass_description_box = document.getElementById("subclass_explanation")
 
     switch (char_class) {
         case "Barbarian":
@@ -376,6 +372,8 @@ function updateClassDescription(){
             class_description_box.innerHTML = "<b>Wizard</b> are spellcasters who earn their power through rigorous study.";    
             break;        
     }
+
+    updateSubclass();
 }
 
 function updateBackgroundDescription(){
@@ -386,8 +384,87 @@ function updateBackgroundDescription(){
 
     background_description_box.innerHTML = "I haven't typed up strings for the backgrounds yet."
     // switch (background) {
-    //     case "Barbarian":
-    //         background_description_box.innerHTML = "<b>Barbarians</b> are fierce warriors from a primitive background who can enter a rage.";    
+    //     case "Acolyte":
+    //         background_description_box.innerHTML = "<b>Acolytes</b> are ...";    
     //         break;
     // }
 }
+
+function getSubclassesFromClass(char_class){
+
+    var to_return = [];
+
+    switch (char_class) {
+        case "Bard":
+            to_return = ["College of Lore", "College of Valor"];
+            break;
+        case "Barbarian":
+            to_return = ["Path of the Berserker", "Path of the Totem Warrior"];
+            break;
+        case "Cleric":
+            to_return = ["Knowledge Domain", "Life Domain", "Nature Domain", "Trickery Domain", "Tempest Domain", "War Domain"];
+            break;
+        case "Druid":
+            to_return = ["Circle of the Land", "Circle of the Moon"];
+            break;
+        case "Fighter":
+            to_return = ["Champion", "Battle Master", "Eldritch Knight"]
+            break;
+        case "Monk":
+            to_return = ["Way of the Open Hand", "Way of the Shadow", "Way of the Four Elements"];
+            break;
+        case "Paladin":
+            to_return = ["Oath of Devotion", "Oath of the Ancients", "Oath of Vengeance"];
+            break;
+        case "Ranger":
+            to_return = ["Hunter", "Beast Master"];
+            break;
+        case "Rogue":
+            to_return = ["Thief", "Assassin", "Arcane Trickster"];
+            break;
+        case "Sorcerer":
+            to_return = ["Draconic Bloodline", "Wild Magic"];
+            break;
+        case "Warlock":
+            to_return = ["The Archfey", "The Fiend", "The Great Old One"];
+            break;
+        case "Wizard":
+            to_return = ["School of Abjuration", "School of Conjuration", "School of Divination", "School of Enchantment", "School of Evocation", "School of Illusion", "School of Necromancy", "School of Transmutation"];
+            break;
+        case "---------":
+            to_return = ["---------"];
+            break;
+
+    }
+
+    return to_return;
+}
+
+function updateSubclass(){
+    var subclass_box = document.getElementById("id_subclass_form-subclass");
+    var class_box = document.getElementById("id_class_race_form-character_class");
+    var char_class = class_box.options[class_box.selectedIndex].text;
+
+    //delete all options in the subclass box
+    while ( subclass_box.length > 0) {
+        subclass_box.remove(0);
+    }
+
+    var subclasses = getSubclassesFromClass(char_class);
+
+    // console.log("Subclasses: ");
+    // console.log(subclasses);
+
+    //create new ones corresponding to the appropriate subclass
+    for (var i = 0; i <= subclasses.length -1 ; i++) {
+        var new_option = document.createElement('option');
+        new_option.value = i;
+        new_option.innerHTML = subclasses[i];
+        subclass_box.appendChild(new_option);
+        // console.log("Creating new option: ");
+        // console.log(new_option)
+    }
+}
+
+
+updateSubclass(); 

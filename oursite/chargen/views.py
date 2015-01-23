@@ -21,7 +21,7 @@ from django.forms import ModelForm
 import pdftest
 from character import Character
 
-from models import dChar_class, dRace, dbackstory
+from models import dChar_class, dRace, dbackstory, dsubclass
 
 def pdf_view(request):
     with open('myfile.pdf', 'r') as pdf:
@@ -165,6 +165,11 @@ class BackgroundForm(forms.Form):
         })
     )
 
+class SubclassForm(forms.Form):
+    subclass = forms.ModelChoiceField(
+        queryset = dsubclass.objects.all()
+    )
+
 
 
 def index(request):
@@ -174,6 +179,7 @@ def index(request):
     class_race_form = ClassRaceForm( prefix = "class_race_form" )
     ab_score_form = AbilityScoreForm( prefix = "ab_score_form" )
     background_form = BackgroundForm( prefix = "background_form" )
+    subclass_form = SubclassForm( prefix = "subclass_form" )
     
     if request.method != 'POST': 
         return HttpResponse(
@@ -182,7 +188,8 @@ def index(request):
                         "name_form" : name_form,
                         "class_race_form" : class_race_form,
                         "ab_score_form" : ab_score_form,
-                        "background_form": background_form
+                        "background_form": background_form,
+                        "subclass_form": subclass_form,
                     } )
                 )
             )        
@@ -192,12 +199,14 @@ def index(request):
         class_race_form = ClassRaceForm( request.POST, prefix = "class_race_form")
         ab_score_form = AbilityScoreForm( request.POST, prefix = "ab_score_form")
         background_form = BackgroundForm( request.POST, prefix = "background_form")
+        subclass_form = SubclassForm( request.POST, prefix = "subclass_form")
 
         if all([
             name_form.is_valid(),
             class_race_form.is_valid(),
             ab_score_form.is_valid(),
-            background_form.is_valid()
+            background_form.is_valid(),
+            subclass_form.is_valid()
         ]):
 
 
@@ -219,8 +228,10 @@ def index(request):
         else:
             return HttpResponse("<p>Sorry, something went wrong. Our system found errors in your form.</p>" + 
                 "<p>Those errors were: </p>" + 
-                name_form.errors + 
-                class_race_form.errors + 
-                ab_score_form.errors + 
-                background_form.errors)
+                str(name_form.errors) + 
+                str(class_race_form.errors) + 
+                str(ab_score_form.errors) + 
+                str(background_form.errors) + 
+                str(subclass_form.errors)
+                )
 
