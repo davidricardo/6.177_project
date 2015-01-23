@@ -62,6 +62,8 @@ class dRace(models.Model):
         
     class Meta:
         app_label= 'chargen'
+# database stores a Charcter 'class' or job and teh skill and proficencies they ahve from their 'class'
+
 class dChar_class(models.Model):
     name= models.CharField(max_length=40)
     hit_die=models.IntegerField()
@@ -84,6 +86,8 @@ class dChar_class(models.Model):
 
     class Meta:
         app_label= 'chargen'
+
+# Armour database stores armour stastics to find charcter compatiblity wiht armour and statics charcters gain from wearing armour
 class darmors(models.Model):
      name= models.CharField(max_length=40)
      armour_class= models.CharField(max_length=40)
@@ -97,6 +101,8 @@ class darmors(models.Model):
         return self.name
      class Meta:
         app_label= 'chargen'
+
+# backstory stores langauges and proficencies gained from a charcters backstory
 class dbackstory(models.Model):
     name= models.CharField(max_length=40)
     skill_proficiencies= models.CharField(max_length=400)
@@ -113,6 +119,7 @@ class dbackstory(models.Model):
         return self.name
     class Meta:
         app_label= 'chargen'
+# dpersonalties, dflaws, dideals and dbonds are pieces of backstroy that setup information about a charcter
 
 class dpersonalities(models.Model):
     background= models.CharField(max_length=40)
@@ -183,7 +190,7 @@ class dflaws(models.Model):
         return self.background
     class Meta:
         app_label= 'chargen'
-
+#lists the class features by subclass and level
 class dsubclass(models.Model):
     name = models.CharField(max_length=40)
     char_class=models.ForeignKey('dChar_class')
@@ -221,7 +228,8 @@ class dsubclass(models.Model):
         
 
   
-#dictionary of spells with there levels to use for 
+#dictionary of spells with there levels to use for upper level charcter generation in the future
+        
 spells= {'aid':2,
          'alarm':2,
          'alter self':2,
