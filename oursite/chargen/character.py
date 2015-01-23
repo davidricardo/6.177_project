@@ -127,6 +127,25 @@ DRUID_CANTRIPS = [
     "thorn whip"
     ]
 
+WIZARD_CANTRIPS = [
+    "acid splash",
+    "blade ward",
+    "chill touch",
+    "dancing lights",
+    "fire bolt",
+    "friends",
+    "light",
+    "mage hand",
+    "mending",
+    "message",
+    "minor illusion",
+    "poison spray",
+    "prestidigitation",
+    "ray of frost",
+    "shocking grasp",
+    "true strike"
+    ]
+
 #first level spells for Clerics
 CLERIC_SPELLS1 = [
     "bane",
@@ -185,12 +204,18 @@ class Character:
         for v in self.saves.keys():
             self.saves[v] = self.calculate_save(v)
         self.equipment.extend(self.weapons)
+        if "unarmed strike" in self.equipment:
+            self.equipment.remove("unarmed strike")
         if self.armor !="":
             self.equipment.append(self.armor + " armor")
         if "javelin" in self.equipment:
             self.equipment.remove("javelin")
         if "dart" in self.equipment:
             self.equipment.remove("dart")
+        while len(self.spells1)<12:
+            self.spells1.append("")
+        while len(self.cantrips)<8:
+            self.cantrips.append("")
         self.wpn1 = ""
         self.wpn1a = ""
         self.wpn1d = ""
@@ -387,7 +412,6 @@ class Char_Class:
                 self.spell_slots1 = dclass.spell_slots_1st_level
                 if self.class_name=="Druid":
                     q = character.get_modifier(character.ability_scores["wisdom"])+character.level
-                    print q
                     if q<1:
                         q = 1
                     for i in range(q):
@@ -395,7 +419,6 @@ class Char_Class:
                         while DRUID_SPELLS1[y] in character.spells1 or DRUID_SPELLS1[y].lower() in character.spells1:
                             y = random.randrange(0,len(DRUID_SPELLS1))
                         character.spells1.append(DRUID_SPELLS1[y])
-                        print DRUID_SPELLS1[y]
                 elif self.class_name=="Cleric":
                     q = character.get_modifier(character.ability_scores["wisdom"])+character.level
                     if q<1:
@@ -407,12 +430,7 @@ class Char_Class:
                         character.spells1.append(CLERIC_SPELLS1[y])
                 else:
                     character.spells1.extend(string_to_list(dclass.sugested_1st_level_spells))
-                while len(character.spells1)<12:
-                    character.spells1.append("")
                 character.cantrips.extend(string_to_list(dclass.sugested_cantrips))
-                while len(character.cantrips)<8:
-                    character.cantrips.append("")
-
     def get_features(self,character):
         features = string_to_list(dsubclass.objects.get(name=self.subclass).level_1_feature)
         if character.level>=2:
@@ -569,6 +587,7 @@ class Char_Class:
                  self.equipment.append("explorer's pack")
             self.equipment.append("ten darts")
             character.weapons.append("dart")
+            character.weapons.append("unarmed strike")
 
         if self.class_name=="Paladin":
             if (random.randrange(0,2)==0):
@@ -700,6 +719,27 @@ class Race:
         self.base_speed = dRace.objects.get(name=name).speed
         self.features = string_to_list(dRace.objects.get(name=name).features.lower())
         character.features.extend(self.features)
+        if name=="Elf - High":
+            x = random.randrange(0,len(WIZARD_CANTRIPS))
+            character.cantrips.append(WIZARD_CANTRIPS[x])
+            self.spell_casting_ability = "intelligence"
+            self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+            self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+        if name=="Gnome - Forest":
+            character.cantrips.append("minor illusion")
+            self.spell_casting_ability = "intelligence"
+            self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+            self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+        if name=="Elf - Dark (Drow)":
+            character.cantrips.append("dancing lights")
+            self.spell_casting_ability = "charisma"
+            self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+            self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+        if name=="Tiefling":
+            character.cantrips.append("thaumaturgy")
+            self.spell_casting_ability = "charisma"
+            self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+            self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
 
 
 class Background:

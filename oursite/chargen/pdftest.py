@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, RequestContext, loader
 
-def fill_pdf(c = Character("Rachel Thorn","Bard","","Human","",16,10,14,8,12,8)):
+def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,12,8)):
     #c__ fields are checkboxes; checked off if character is proficient in that skill/save
     c11 = "Off"
     c18 = "Off"
@@ -82,7 +82,11 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","","Human","",16,10,14,8,12,8))
         c39 = "Yes"
     if "survival" in c.proficiencies["skill"]:
         c40 = "Yes"
-    fields = [('ClassLevel',str(c.my_class.class_name)+" "+str(c.level)),
+    if c.my_class.class_name=="Cleric" or c.my_class.class_name=="Sorcerer":
+        classLevel = str(c.my_class.class_name)+" ("+c.my_class.subclass+ ') '+str(c.level)
+    else:
+        classLevel = str(c.my_class.class_name)+" "+str(c.level)
+    fields = [('ClassLevel',classLevel),
               ('CharacterName',c.name),
               ('Background',c.background.name),
               ('Race ',c.my_race.name),
@@ -211,6 +215,22 @@ def fill_pdf(c = Character("Rachel Thorn","Bard","","Human","",16,10,14,8,12,8))
             character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
             myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
             os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
+        elif (c.my_race.name=="Elf - High" or c.my_race.name=="Tiefling" or c.my_race.name=="Gnome - Forest" or c.my_race.name=="Elf - Dark (Drow)"):
+            fields2 = [('Spellcasting Class 2',c.my_race.name),
+                       ('SpellcastingAbility 2',cap(c.my_race.spell_casting_ability)),
+                       ('SpellSaveDC  2',c.my_race.spell_save_dc),
+                       ('SpellAtkBonus 2',pre(c.my_race.spell_atk_bonus)),
+                       ('Spells 1014',cap(c.cantrips[0])),
+                       ]
+            fdf = forge_fdf("",fields2,[],[],[])
+            data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
+            fdf_file = open(data2,"w")
+            fdf_file.write(fdf)
+            fdf_file.close()
+            character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
+            myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
+            os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
+            
     fdf = forge_fdf("",fields,[],[],[])
     data = os.path.abspath('..')+'/oursite/chargen/data.fdf'
     fdf_file = open(data,"w")
