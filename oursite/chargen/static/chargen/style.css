@@ -1,4 +1,44 @@
-#total_ability_score_box {
-	border-style: solid;
-	border-width: 3px;
+* {
+    font-family: sans-serif;
 }
+
+table {
+    border-collapse: collapse;
+}
+
+.main_table_label_box, .main_table_cell {
+/*    border-style: solid;
+    border-width: 1px;*/
+    padding-bottom: 12px;
+}
+
+
+
+.main_table_label_box {
+    vertical-align: top;
+}
+
+.prompt {
+    color: #999999;
+}
+
+.explanation {
+    color: #999999;
+}
+
+#ability_score_table td {
+    /*border-style: solid;*/
+    border-width: 1px;
+    text-align: center;
+}
+
+#ability_score_table td.ability_score_label {
+    text-align: left;
+}
+
+#ability_score_table th {
+    /*border-style: solid;*/
+    border-width: 1px;
+    padding: 0px 6px;
+}
+

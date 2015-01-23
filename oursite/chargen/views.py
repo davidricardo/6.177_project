@@ -35,12 +35,15 @@ class NameInputForm(forms.Form):
 
 class ClassRaceForm(forms.Form):
     character_class = forms.ModelChoiceField(
-        queryset = dChar_class.objects.all()
+        queryset = dChar_class.objects.all(),
+        widget = forms.Select(attrs = {
+            "onChange": 'updateClassDescription()'
+        })
     )
     race = forms.ModelChoiceField(
         queryset = dRace.objects.all(),
         widget = forms.Select(attrs = {
-            "onChange": 'updateRaceMods()'
+            "onChange": 'updateRaceDescription()'
             })
     )
 
@@ -156,7 +159,10 @@ class AbilityScoreForm(forms.Form):
 
 class BackgroundForm(forms.Form):
     background = forms.ModelChoiceField(
-        queryset = dbackstory.objects.all()
+        queryset = dbackstory.objects.all(),
+        widget = forms.Select(attrs = {
+            "onChange": 'updateBackgroundDescription()'
+        })
     )
 
 
