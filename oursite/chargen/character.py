@@ -31,6 +31,15 @@ RULING_ABILITIES = {
     "survival": "wisdom"
 }
 
+ABILITY_SCORES = [
+    "strength",
+    "dexterity",
+    "constitution",
+    "intelligence",
+    "wisdom",
+    "charisma"
+    ]
+
 #instruments given in handbook
 INSTRUMENTS = ["bagpipes",
                "drum",
@@ -707,6 +716,23 @@ class Race:
         weapons = string_to_list(dRace.objects.get(name=name).weapon_proficiencies.lower())
         armor = string_to_list(dRace.objects.get(name=name).armour_proficiencies.lower())
         tools = string_to_list(dRace.objects.get(name=name).tool_proficiencies.lower())
+        if self.name == "Half-Elf":
+            n = 2
+            done = []
+            for key in character.ability_scores.keys():
+                if character.ability_scores[key]%2==1 and character.ability_scores[key]<20 and key!="charisma":
+                    character.ability_scores[key]+=1
+                    done.append(key)
+                    n-=1
+                    if n==0:
+                        break
+            while n>0:
+                x = random.randrange(0,6)
+                while ABILITY_SCORES[x] in done and character.ability_scores[ABILITY_SCORES[x]]<20 and key!="charisma":
+                    x = random.randrange(0,6)
+                character.ability_scores[ABILITY_SCORES[x]]+=1
+                done.append(ABILITY_SCORES[x])
+                n-=1
         if self.name == "Dwarf - Hill":
             x = random.randrange(0,len(tools))
             tools = tools[x:x+1]

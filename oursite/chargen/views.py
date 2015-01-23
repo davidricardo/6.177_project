@@ -212,6 +212,7 @@ def index(request):
 
             c = Character(name_form.cleaned_data["name"],
                         class_race_form.cleaned_data["character_class"].name,
+                        "",
                         class_race_form.cleaned_data["race"].name,
                         background_form.cleaned_data["background"].name,
                         int(ab_score_form.cleaned_data["strength"]),

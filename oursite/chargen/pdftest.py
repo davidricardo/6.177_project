@@ -86,9 +86,10 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
     if "survival" in c.proficiencies["skill"]:
         c40 = "Yes"
     if c.my_class.class_name=="Cleric" or c.my_class.class_name=="Sorcerer":
-        classLevel = str(c.my_class.class_name)+" ("+c.my_class.subclass+ ') '+str(c.level)
+        myfeatures = list_to_string(c.features)+"\n\n"+c.my_class.subclass+" " + c.my_class.class_name
     else:
-        classLevel = str(c.my_class.class_name)+" "+str(c.level)
+        myfeatures = list_to_string(c.features)
+    classLevel = str(c.my_class.class_name)+" "+str(c.level)
     #fields contains values for the empty fillable fields in the pdf
     #field names were set by the makers of the pdf (not us - it is an offical D&D pdf form)
     fields = [('ClassLevel',classLevel),
@@ -140,7 +141,7 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
               ('Passive',c.get_passive_perception()),
               ('ProficienciesLang',list_to_string(c.languages)),
               ('Equipment',list_to_string(c.equipment)),
-              ('Features and Traits',list_to_string(c.features)),
+              ('Features and Traits',myfeatures),
               ('Wpn Name',c.wpn1),
               ('Wpn1 AtkBonus',c.wpn1a),
               ('Wpn1 Damage',c.wpn1d),
