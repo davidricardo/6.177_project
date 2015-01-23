@@ -8,8 +8,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from models import *
 from collections import OrderedDict
 
-#splitting up long lists and dicts like this makes them much easier to read,
-#plus it gets rid of obnoxiously long lines and you can easily collapse them.
+#the skill in each key is ruled by the ability that is the value of that key:
+#means that that skill check is equal to the modifier of the ruling ability
 RULING_ABILITIES = {
     "acrobatics": "dexterity",
     "animal handling":"wisdom",
@@ -31,6 +31,7 @@ RULING_ABILITIES = {
     "survival": "wisdom"
 }
 
+#instruments given in handbook
 INSTRUMENTS = ["bagpipes",
                "drum",
                "dulcimer",
@@ -43,6 +44,7 @@ INSTRUMENTS = ["bagpipes",
                "viol"
                ]
 
+#list of all skills, used when choosing proficiencies from whole skill list
 SKILLS_TOTAL = [
     "acrobatics",
     "animal handling",
@@ -64,6 +66,7 @@ SKILLS_TOTAL = [
     "survival"
 ]
 
+#abbreviations used in database
 ABILITY_KEYS = {"strength":"str",
                 "dexterity":"dex",
                 "constitution":"con",
@@ -71,6 +74,7 @@ ABILITY_KEYS = {"strength":"str",
                 "wisdom":"wis",
                 "charisma":"char"}
 
+#languages given in handbook
 LANGUAGES = [
     "Abyssal",
     "Celestial",
@@ -92,6 +96,7 @@ LANGUAGES = [
     "Undercommon"
 ]
 
+#first level spells for Druids
 DRUID_SPELLS1 = [
     "animal friendship",
     "charm person",
@@ -111,6 +116,37 @@ DRUID_SPELLS1 = [
     "thunderwave"
     ]
 
+DRUID_CANTRIPS = [
+    "druidcraft",
+    "guidance",
+    "mending",
+    "poison spray",
+    "produce flame",
+    "resistance",
+    "shillelagh",
+    "thorn whip"
+    ]
+
+WIZARD_CANTRIPS = [
+    "acid splash",
+    "blade ward",
+    "chill touch",
+    "dancing lights",
+    "fire bolt",
+    "friends",
+    "light",
+    "mage hand",
+    "mending",
+    "message",
+    "minor illusion",
+    "poison spray",
+    "prestidigitation",
+    "ray of frost",
+    "shocking grasp",
+    "true strike"
+    ]
+
+#first level spells for Clerics
 CLERIC_SPELLS1 = [
     "bane",
     "bless",
@@ -129,29 +165,15 @@ CLERIC_SPELLS1 = [
     "shield of faith"
     ]
 
-#this dictionary includes everything that will be passed to the user.
-# its entries should take the form of "<variable name>": <varible value>.
-VARS_TO_PASS = {
-    # "test_message" : Weapon.objects.all()
-    "starting_ability_scores" : {
-        "strength" : 8,
-        "dexterity" : 8,
-        "constitution" : 8,
-        "intelligence" : 8,
-        "wisdom" : 8,
-        "charisma" : 8
-        }
-}
-
-
-
+#main class which holds all information for character
 class Character:
-    def __init__(self, name, char_class, race, background, strength = 10,dexterity = 10, constitution = 10, intelligence = 10, wisdom = 10, charisma = 10, level=1):
+    def __init__(self, name, char_class,subclass, race, background, strength = 10,dexterity = 10, constitution = 10, intelligence = 10, wisdom = 10, charisma = 10, level=1):
         self.languages = []
         self.equipment = []
         self.proficiencies = {"weapon":[],"armor":[],"skill":[],"saves":[],"tools":[]}
         self.features = []
         self.weapons = []
+        self.expertise = []
         self.cantrips = []
         self.spells1 = []
         self.armor = ""
@@ -159,7 +181,7 @@ class Character:
         self.name = name
         self.ability_scores = ability_scores={"strength":strength,"dexterity":dexterity,"constitution":constitution,"intelligence":intelligence,"wisdom":wisdom,"charisma":charisma}
         self.background = Background(self,background)
-        self.my_class = Char_Class(self, char_class, self.level)
+        self.my_class = Char_Class(self, char_class,subclass)
         self.my_race = Race(self, race)
         self.skills = {"acrobatics":0,"animal handling":0,"arcana":0,"athletics":0,"deception":0,"history":0,"insight":0,"intimidation":0,"investigation":0,"medicine":0,"nature":0,"perception":0,"performance":0,"persuasion":0,"religion":0,"sleight of hand":0,"stealth":0,"survival":0}
         self.saves = {"strength":0,"dexterity":0,"constitution":0,"intelligence":0,"wisdom":0,"charisma":0}
@@ -170,7 +192,6 @@ class Character:
         [x.lower() for x in self.languages]
         self.languages = list(set(self.languages))
         if self.my_class.class_name=="Rogue":
-            self.expertise = []
             x = random.randrange(0,len(self.proficiencies["skill"]))
             y = random.randrange(0,len(self.proficiencies["skill"]))
             while y==x:
@@ -183,12 +204,18 @@ class Character:
         for v in self.saves.keys():
             self.saves[v] = self.calculate_save(v)
         self.equipment.extend(self.weapons)
+        if "unarmed strike" in self.equipment:
+            self.equipment.remove("unarmed strike")
         if self.armor !="":
             self.equipment.append(self.armor + " armor")
         if "javelin" in self.equipment:
             self.equipment.remove("javelin")
         if "dart" in self.equipment:
             self.equipment.remove("dart")
+        while len(self.spells1)<12:
+            self.spells1.append("")
+        while len(self.cantrips)<8:
+            self.cantrips.append("")
         self.wpn1 = ""
         self.wpn1a = ""
         self.wpn1d = ""
@@ -268,7 +295,7 @@ class Character:
         if (self.my_race.name[0:4]=="Dwar" or self.my_race.name=="Gnome - Rock") and skill=="history":
             return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+2*self.get_proficiency_bonus()
         if skill in self.proficiencies["skill"]:
-            if self.my_class.class_name=="Rogue":
+            if self.my_class.class_name=="Rogue" or self.my_class.class_name=="Cleric":
                 if skill in self.expertise:
                     return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+2*self.get_proficiency_bonus()
             return self.get_modifier(self.ability_scores[RULING_ABILITIES[skill]])+self.get_proficiency_bonus()
@@ -287,7 +314,9 @@ class Character:
     def get_max_hit_points(self):
         bonus = 0
         if self.my_race.name=="Dwarf - Hill":
-            bonus = self.level
+            bonus += self.level
+        if self.my_class.subclass=="Draconic Bloodline":
+            bonus += self.level
         if self.level==1:
             return self.my_class.hit_die+self.get_modifier(self.ability_scores["constitution"])+bonus
         else:
@@ -300,6 +329,8 @@ class Character:
                 return 10 + dex + self.get_modifier(self.ability_scores["constitution"])
             if self.my_class.class_name=="Monk":
                 return 10 + dex + self.get_modifier(self.ability_scores["wisdom"])
+            if self.my_class.subclass=="Draconic Bloodline":
+                return 13+dex
             return 10 + dex
         armor = darmors.objects.get(name=self.armor)
         if armor.armour_class=="light":
@@ -313,10 +344,42 @@ class Character:
         
     
 class Char_Class:
-    def __init__(self, character, name, level):
+    def __init__(self, character, name, subclass):
         self.class_name = name
+        self.languages = []
         dclass = dChar_class.objects.get(name=name)
-        self.subclass = dsubclass.objects.filter(char_class = dChar_class.objects.get(name="Bard"))[0]
+        self.subclass = subclass
+        if self.subclass=="":
+            self.subclass = dsubclass.objects.filter(char_class = dChar_class.objects.get(name=name))[0].name
+        if name=="Cleric":
+            if self.subclass=="Life Domain":
+                character.spells1.extend(["bless","cure wounds"])
+                character.proficiencies["armor"].append("heavy")
+            if self.subclass=="Light Domain":
+                character.spells1.extend(["burning hands","faerie fire"])
+                character.cantrips.append("light")
+            if self.subclass=="Nature Domain":
+                character.spells1.extend(["animal friendship","speak with animals"])
+                x = random.randrange(0,len(DRUID_CANTRIPS))
+                character.cantrips.append(DRUID_CANTRIPS[x])
+                character.expertise.extend(choosex(["animal handling","nature","survival"],1,character.proficiencies["skill"]))
+            if self.subclass=="Knowledge Domain":
+                character.spells1.extend(["command","identify"])
+                self.languages.extend(choose(LANGUAGES,2,character.languages))
+                character.expertise.extend(choosex(["arcana","history","nature","religion"],2,character.proficiencies["skill"]))
+            if self.subclass=="Trickery Domain":
+                character.spells1.extend(["charm person","disguise self"])
+            if self.subclass=="Tempest Domain":
+                character.spells1.extend(["fog cloud","thunderwave"])
+                character.proficiencies["armor"].append("heavy")
+                character.proficiencies["weapon"].append("martial")
+            if self.subclass=="War Domain":
+                character.spells1.extend(["divine favor","shield of faith"])
+                character.proficiencies["armor"].append("heavy")
+                character.proficiencies["weapon"].append("martial")
+        if name=="Sorcerer":
+            if self.subclass=="Draconic Bloodline":
+                self.languages.append("draconic")
         self.hit_die = dclass.hit_die
         weapons = string_to_list(dclass.weapon_proficiencies.lower())
         armor = string_to_list(dclass.armour_proficiencies.lower())
@@ -332,8 +395,7 @@ class Char_Class:
         self.features = []
         self.get_features(character)
         character.features.extend(self.features)
-        self.archetype = Archetype("",level)
-        self.languages = []
+        self.archetype = Archetype("",character.level)
         if self.class_name == "Druid":
             self.languages.append("druidic")
         if self.class_name == "Rogue":
@@ -350,72 +412,65 @@ class Char_Class:
                 self.spell_slots1 = dclass.spell_slots_1st_level
                 if self.class_name=="Druid":
                     q = character.get_modifier(character.ability_scores["wisdom"])+character.level
-                    print q
                     if q<1:
                         q = 1
                     for i in range(q):
                         y = random.randrange(0,len(DRUID_SPELLS1))
-                        while DRUID_SPELLS1[y] in character.spells1:
+                        while DRUID_SPELLS1[y] in character.spells1 or DRUID_SPELLS1[y].lower() in character.spells1:
                             y = random.randrange(0,len(DRUID_SPELLS1))
                         character.spells1.append(DRUID_SPELLS1[y])
-                        print DRUID_SPELLS1[y]
                 elif self.class_name=="Cleric":
                     q = character.get_modifier(character.ability_scores["wisdom"])+character.level
                     if q<1:
                         q = 1
                     for i in range(q):
                         y = random.randrange(0,len(CLERIC_SPELLS1))
-                        while DRUID_SPELLS1[y] in character.spells1:
+                        while CLERIC_SPELLS1[y] in character.spells1 or CLERIC_SPELLS1[y].lower() in character.spells1:
                             y = random.randrange(0,len(CLERIC_SPELLS1))
                         character.spells1.append(CLERIC_SPELLS1[y])
                 else:
                     character.spells1.extend(string_to_list(dclass.sugested_1st_level_spells))
-                while len(character.spells1)<12:
-                    character.spells1.append("")
                 character.cantrips.extend(string_to_list(dclass.sugested_cantrips))
-                while len(character.cantrips)<8:
-                    character.cantrips.append("")
-
     def get_features(self,character):
-        features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_1_feature)
+        features = string_to_list(dsubclass.objects.get(name=self.subclass).level_1_feature)
         if character.level>=2:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_2_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_2_feature)
         if character.level>=3:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_3_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_3_feature)
         if character.level>=4:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_4_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_4_feature)
         if character.level>=5:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_5_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_5_feature)
         if character.level>=6:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_6_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_6_feature)
         if character.level>=7:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_7_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_7_feature)
         if character.level>=8:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_8_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_8_feature)
         if character.level>=9:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_9_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_9_feature)
         if character.level>=10:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_10_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_10_feature)
         if character.level>=11:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_11_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_11_feature)
         if character.level>=12:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_12_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_12_feature)
         if character.level>=13:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_13_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_13_feature)
         if character.level>=14:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_14_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_14_feature)
         if character.level>=15:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_15_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_15_feature)
         if character.level>=16:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_16_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_16_feature)
         if character.level>=17:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_17_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_17_feature)
         if character.level>=18:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_18_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_18_feature)
         if character.level>=19:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_19_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_19_feature)
         if character.level>=20:
-            features = string_to_list(dsubclass.objects.get(name=self.subclass.name).level_20_feature)
+            features = string_to_list(dsubclass.objects.get(name=self.subclass).level_20_feature)
         self.features.extend(features)
 
 
@@ -532,6 +587,7 @@ class Char_Class:
                  self.equipment.append("explorer's pack")
             self.equipment.append("ten darts")
             character.weapons.append("dart")
+            character.weapons.append("unarmed strike")
 
         if self.class_name=="Paladin":
             if (random.randrange(0,2)==0):
@@ -663,6 +719,27 @@ class Race:
         self.base_speed = dRace.objects.get(name=name).speed
         self.features = string_to_list(dRace.objects.get(name=name).features.lower())
         character.features.extend(self.features)
+        if name=="Elf - High":
+            x = random.randrange(0,len(WIZARD_CANTRIPS))
+            character.cantrips.append(WIZARD_CANTRIPS[x])
+            self.spell_casting_ability = "intelligence"
+            self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+            self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+        if name=="Gnome - Forest":
+            character.cantrips.append("minor illusion")
+            self.spell_casting_ability = "intelligence"
+            self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+            self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+        if name=="Elf - Dark (Drow)":
+            character.cantrips.append("dancing lights")
+            self.spell_casting_ability = "charisma"
+            self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+            self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+        if name=="Tiefling":
+            character.cantrips.append("thaumaturgy")
+            self.spell_casting_ability = "charisma"
+            self.spell_save_dc = 8+character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
+            self.spell_atk_bonus = character.get_proficiency_bonus()+character.get_modifier(character.ability_scores[self.spell_casting_ability])
 
 
 class Background:
@@ -780,6 +857,29 @@ def choose(l,n,l2):
         return_array.append(l[x])
     return return_array
 
+def choosex(l,n,l2):
+    if n==0:
+        return []
+    index_array = []
+    return_array = []
+    p = 0
+    for k in range(len(l)):
+        if l[k] in l2:
+            p+=1
+    if len(l)-p<n:
+        for i in range(n):
+            x = random.randrange(0,len(l))
+            index_array.append(x)
+            return_array.append(l[x])
+        return return_array
+    for i in range(n):
+        x = random.randrange(0,len(l))
+        while (x in index_array) or (l[x] in l2):
+            x = random.randrange(0,len(l))
+        index_array.append(x)
+        return_array.append(l[x])
+    return return_array
+                                             
 def pre(x):
     if x>0:
         return "+" + str(x)
