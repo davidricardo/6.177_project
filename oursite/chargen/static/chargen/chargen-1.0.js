@@ -461,3 +461,5 @@ function updateSubclass(){
 
 
 updateSubclass(); 
+
+document.title = "D&D 5E Character Generator"

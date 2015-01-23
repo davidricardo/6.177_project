@@ -7,6 +7,10 @@
 </head>
 <body>
 
+<div class="title_container">
+    <div class="title">Dungeons and Dragons 5th Edition Character Builder</div>
+</div>
+
 <div class="main_form">
 <form method="POST">{% csrf_token %}
 <table class="main_table">
@@ -92,7 +96,7 @@
                     <td class="ability_score_label">{{ field.label }}</td>
                     <td>{{ field }}</td>
                     <td id="race_mod_{{ field.name }}"> +0 </td>
-                    <td id="total_{{ field.name }}_score">8</td>
+                    <td class="ability_score_total" id="total_{{ field.name }}_score">8</td>
                     <td id="total_{{ field.name }}_mod">-1</td>
                 </tr>
                 {% endfor %}
@@ -129,12 +133,9 @@
 </form>
 </div>
 
-<div class="title_container">
-    <div class="title">Dungeons and Dragons 5E Character Builder</div>
-    <div class="subtitle">
-        <div class="subtitle_by">By Rachel Thornton, David Ricardo, and Rachael Devlin</div>
-        <div class="subtitle_for">For 6.177 IAP 2015</div>
-    </div>
+<div class="subtitle">
+    <div class="subtitle_by">By Rachel Thornton, David Ricardo, and Rachael Devlin</div>
+    <div class="subtitle_for">For 6.177 IAP 2015</div>
 </div>
 
 </body>
