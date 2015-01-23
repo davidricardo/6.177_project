@@ -381,13 +381,6 @@ function updateBackgroundDescription(){
     var background = background_box.options[background_box.selectedIndex].text;
     var background_description_box = document.getElementById("background_explanation");
 
-
-    background_description_box.innerHTML = "I haven't typed up strings for the backgrounds yet."
-    // switch (background) {
-    //     case "Acolyte":
-    //         background_description_box.innerHTML = "<b>Acolytes</b> are ...";    
-    //         break;
-    // }
 }
 
 function getSubclassesFromClass(char_class){

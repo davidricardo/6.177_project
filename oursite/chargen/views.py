@@ -30,10 +30,13 @@ def pdf_view(request):
         return response
     pdf.closed
 
+#These are form outlines that are called in the index function.
 class NameInputForm(forms.Form):
     name = forms.CharField()
 
 class ClassRaceForm(forms.Form):
+    #These modelchoicefield objects are linked to rows in the dChar_class and dRace models, respectively.
+    #Each row in the database becomes one select option here.
     character_class = forms.ModelChoiceField(
         queryset = dChar_class.objects.all(),
         widget = forms.Select(attrs = {
@@ -49,6 +52,7 @@ class ClassRaceForm(forms.Form):
 
 class AbilityScoreForm(forms.Form):
     strength     = forms.ChoiceField(
+        #This ugliness is necessary to provide the <select> with the correct range of values.
         [
             (8, 8),
             (9, 9),
@@ -173,8 +177,17 @@ class SubclassForm(forms.Form):
 
 
 def index(request):
+    """
+    This function handles all requests from users.
+
+    It doesn't need to store any user data because there are only two types of requests:
+    1) not POST, to which it responds with a blank form, or
+    2) POST, to which it responds with a pdf generated from the form data.
+    """
+
     allform = loader.get_template('chargen/allform.html')
 
+    #prefixes are used so that each form can find its own fields in the POST data.
     name_form = NameInputForm( prefix = "name_form" )
     class_race_form = ClassRaceForm( prefix = "class_race_form" )
     ab_score_form = AbilityScoreForm( prefix = "ab_score_form" )
@@ -210,6 +223,7 @@ def index(request):
         ]):
 
 
+            #Character is from character.py
             c = Character(name_form.cleaned_data["name"],
                         class_race_form.cleaned_data["character_class"].name,
                         "",
@@ -223,6 +237,7 @@ def index(request):
                         int(ab_score_form.cleaned_data["charisma"]),
                         )
 
+            #pdftest takes a character argument and returns a pdf file as an HttpResponse.
             return pdftest.fill_pdf(c)
 
 
