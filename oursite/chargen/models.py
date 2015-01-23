@@ -13,6 +13,9 @@ from django.db import models
 
 # Create your models here.
 
+# Database Names preceded by a d to differinate from classes in chacter.py
+# Weapons Database-  states properties of given weapons;
+    #simple or martial, mele or ranged; ranges of thrown weapons; damage caused
 class dWeapon(models.Model):
     weapon_name= models.CharField(max_length=30)
     martial_arts= models.BooleanField(default=False)
@@ -33,6 +36,8 @@ class dWeapon(models.Model):
 
     class Meta:
         app_label= 'chargen'
+
+#Race Database contains race stastics, proficencies, and features
 class dRace(models.Model):
     name= models.CharField(max_length=40)
     dex_mod= models.IntegerField(default=0)
@@ -212,66 +217,11 @@ class dsubclass(models.Model):
         app_label= 'chargen'
         
 
-class user_entry(models.Model):
-    name = models.CharField(max_length=40)
-    char_class= models.ForeignKey('dChar_class', default=1)
-    sub_class= models.ForeignKey('dsubclass', default=1)
-    race= models.ForeignKey('dRace', default=1)
-    strgenth=models.IntegerField(default=8)
-    dexterity=models.IntegerField(default=8)
-    constitution=models.IntegerField(default=8)
-    intelegence=models.IntegerField(default=8)
-    wisdom=models.IntegerField(default=8)
-    charisma=models.IntegerField(default=8)
-    level=models.IntegerField(default=1)
-    backround= models.ForeignKey('dbackstory', default=1)
-    
 
-
-    def __unicode__(self):
-        return self.name
-
-
-    class Meta:
-        app_label= 'chargen'
         
 
-class dspell(models.Model):
-    char_class= models.ForeignKey('dChar_class')
-    sub_class= models.ForeignKey('dsubclass')
-    level=models.IntegerField()
-    slots_or_prepered_spell_level1= models.IntegerField(default=0)
-    slots_or_prepered_spell_level2= models.IntegerField(default=0)
-    slots_or_prepered_spell_level3= models.IntegerField(default=0)
-    slots_or_prepered_spell_level4= models.IntegerField(default=0)
-    slots_or_prepered_spell_level5= models.IntegerField(default=0)
-    slots_or_prepered_spell_level6= models.IntegerField(default=0)
-    slots_or_prepered_spell_level7= models.IntegerField(default=0)
-    slots_or_prepered_spell_level8= models.IntegerField(default=0)
-    slots_or_prepered_spell_level9=models.IntegerField(default=0)
-    possible_spells_level1= models.IntegerField(default=0)
-    possible_spells_level2= models.IntegerField(default=0)
-    possible_spells_level3= models.IntegerField(default=0)
-    possible_spells_level4= models.IntegerField(default=0)
-    possible_spells_level5= models.IntegerField(default=0)
-    possible_spells_level6= models.IntegerField(default=0)
-    possible_spells_level7= models.IntegerField(default=0)
-    possible_spells_level8= models.IntegerField(default=0)
-    possible_spells_level9= models.IntegerField(default=0)
-    cantrips_known= models.IntegerField()
-    total_spells= models.IntegerField()
-    minium_1st_level_spells= models.IntegerField()
-
-
-    def __unicode__(self):
-        name=self.char_class.name +" "+ self.sub_class.name + " level "+ str(self.level)
-        return name
-
-
-    class Meta:
-        app_label= 'chargen'
-    
-
+  
+#dictionary of spells with there levels to use for 
 spells= {'aid':2,
          'alarm':2,
          'alter self':2,
