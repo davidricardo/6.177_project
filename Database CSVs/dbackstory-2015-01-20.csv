@@ -1,0 +1,14 @@
+id,name,skill_proficiencies,language,optional_lang_proficiencies,tool_proficiencies,equipment,feature
+2,Charlatan,deception; sleight of hand, ,0,disguise kit; forgery kit,set of fine clothes; disguise kit; tools of the con of your choice,False Identity
+1,Acolyte,insight; religion, ,2, ,A holy symbol; prayer book or prayer wheel; 5 sticks of incense; vestments; common clothes,Shelter of the Faithful
+3,Criminal,deception; stealth,,0,gaming set; thieves' tools,crowbar; set of dark common clothes (including hood),Criminal Contact
+4,Entertainer,acrobatics; performance,,0,disguise kit; one musical instrument,musical instrument; favor of an admirer; costume,By Popular Demand
+5,Folk Hero,animal handling; survival,,0,one type of artisan's tools; land vehicles,one set of artisan's tools; shove; iron pot; common clothes,Rustic Hospitality
+6,Guild Artisan,insight; persuasion,,1,one type of artisan's tools,one type of artisan's tools; letter of introduction from guild; traveler's clothes,Guild Membership
+7,Hermit,medicine; religion,,1,herbalism kit,scroll case stuffed full of notes; winter blanket; common clothes; herbalism kit,Discovery
+8,Noble,history; persuasion,,1,gaming set,fine clothes; signet ring; scroll of pedigree,Position of Privilege
+9,Outlander,athletics; survival,,1,musical instrument,staff; hunting trap; trophy from animal you killed; traveler's clothes,Wanderer
+10,Sage,arcana; history,,2,,bottle of black ink; quill; small knife; letter from dead colleague; common clothes,Researcher
+11,Sailor,athletics; perception,,0,navigator's tools; water vehicles,belaying pin; 50 ft of silk rope; lucky char; common clothes,Ship's Passage
+12,Soldier,athletics; intimidation,,0,gaming set; land vehicles,insignia of rank; trophy from fallen enemy; bone dice or cards; common clothes,Military Rank
+13,Urchin,sleight of hand; stealth,,0,disguise kit; thieves' tools,small knife; map of home city; pet mouse; token from parents; common clothes,City Secrets

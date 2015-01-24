@@ -381,13 +381,6 @@ function updateBackgroundDescription(){
     var background = background_box.options[background_box.selectedIndex].text;
     var background_description_box = document.getElementById("background_explanation");
 
-
-    background_description_box.innerHTML = "I haven't typed up strings for the backgrounds yet."
-    // switch (background) {
-    //     case "Acolyte":
-    //         background_description_box.innerHTML = "<b>Acolytes</b> are ...";    
-    //         break;
-    // }
 }
 
 function getSubclassesFromClass(char_class){
@@ -402,7 +395,7 @@ function getSubclassesFromClass(char_class){
             to_return = ["Path of the Berserker", "Path of the Totem Warrior"];
             break;
         case "Cleric":
-            to_return = ["Knowledge Domain", "Life Domain", "Nature Domain", "Trickery Domain", "Tempest Domain", "War Domain"];
+            to_return = ["Knowledge Domain", "Life Domain", "Light Domain", "Nature Domain", "Tempest Domain", "Trickery Domain", "War Domain"];
             break;
         case "Druid":
             to_return = ["Circle of the Land", "Circle of the Moon"];
@@ -446,8 +439,8 @@ function updateSubclass(){
     var char_class = class_box.options[class_box.selectedIndex].text;
 
     //delete all options in the subclass box
-    while ( subclass_box.length > 0) {
-        subclass_box.remove(0);
+    while ( subclass_box.length > 1) {
+        subclass_box.remove(1);
     }
 
     var subclasses = getSubclassesFromClass(char_class);
@@ -456,10 +449,10 @@ function updateSubclass(){
     // console.log(subclasses);
 
     //create new ones corresponding to the appropriate subclass
-    for (var i = 0; i <= subclasses.length -1 ; i++) {
+    for (var i = 1; i <= subclasses.length; i++) {
         var new_option = document.createElement('option');
         new_option.value = i;
-        new_option.innerHTML = subclasses[i];
+        new_option.innerHTML = subclasses[i-1];
         subclass_box.appendChild(new_option);
         // console.log("Creating new option: ");
         // console.log(new_option)
@@ -468,3 +461,5 @@ function updateSubclass(){
 
 
 updateSubclass(); 
+
+document.title = "D&D 5E Character Generator"

@@ -4,7 +4,7 @@
 #uses outside packages fdfgen and PDFtk
 from fdfgen import forge_fdf
 from character import Character
-import os, subprocess, platform
+import os, platform
 import random
 from django.conf import settings
 from django.shortcuts import render
@@ -86,9 +86,10 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
     if "survival" in c.proficiencies["skill"]:
         c40 = "Yes"
     if c.my_class.class_name=="Cleric" or c.my_class.class_name=="Sorcerer":
-        classLevel = str(c.my_class.class_name)+" ("+c.my_class.subclass+ ') '+str(c.level)
+        myfeatures = list_to_string(c.features)+"\n\n"+c.my_class.subclass+" " + c.my_class.class_name
     else:
-        classLevel = str(c.my_class.class_name)+" "+str(c.level)
+        myfeatures = list_to_string(c.features)
+    classLevel = str(c.my_class.class_name)+" "+str(c.level)
     #fields contains values for the empty fillable fields in the pdf
     #field names were set by the makers of the pdf (not us - it is an offical D&D pdf form)
     fields = [('ClassLevel',classLevel),
@@ -140,7 +141,7 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
               ('Passive',c.get_passive_perception()),
               ('ProficienciesLang',list_to_string(c.languages)),
               ('Equipment',list_to_string(c.equipment)),
-              ('Features and Traits',list_to_string(c.features)),
+              ('Features and Traits',myfeatures),
               ('Wpn Name',c.wpn1),
               ('Wpn1 AtkBonus',c.wpn1a),
               ('Wpn1 Damage',c.wpn1d),
@@ -222,6 +223,7 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
             myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
             #use pdftk to write .fdf form data to blank spell pdf and save as character2.pdf
             os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
+        #also generates spell file for races that happen to get one cantrip (spell of level 0)
         elif (c.my_race.name=="Elf - High" or c.my_race.name=="Tiefling" or c.my_race.name=="Gnome - Forest" or c.my_race.name=="Elf - Dark (Drow)"):
             fields2 = [('Spellcasting Class 2',c.my_race.name),
                        ('SpellcastingAbility 2',cap(c.my_race.spell_casting_ability)),
@@ -265,30 +267,35 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
 
     #merges all three filled in pages into one 3-page pdf file
     os.system(pdftk + ' ' + character1 + ' ' + character3 + ' ' + character2 + ' cat output ' + charactergen)
-    
+
+    #return HttpResponse from the generated pdf, so views.py can present it
     pdf = open(charactergen, 'rb')
     response = HttpResponse(pdf.read(), content_type='application/pdf')
-    filename = c.name+"_character_sheet.pdf"
+    filename = c.name+"_character_sheet.pdf" #names file after the user's character
     response['Content-Disposition'] = 'inline; filename='+filename
     return response
     
 
-#
+#returns string with + in front of int if >=0
+#so that modifier numbers have +- in front to demonstrate that it is a modifier
 def pre(x):
     if x>=0:
         return "+" + str(x)
     else:
         return str(x)
 
-def list_to_string(list):
-    string = ""
-    for x in list:
-        string+=x[0].upper()+x[1:len(x)].lower()+", "
-    return string[0:len(string)-2]
 
+#capitalizes first letter of string
 def cap(string):
     if string=="":
         return string
     else:
         return string[0].upper()+string[1:len(string)].lower()
+    
+#turns a list into a well formatted string for presentation, including capitalizing first letter
+def list_to_string(list):
+    string = ""
+    for x in list:
+        string+=cap(x)+", "
+    return string[0:len(string)-2]
     
