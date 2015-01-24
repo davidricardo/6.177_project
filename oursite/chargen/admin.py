@@ -105,9 +105,13 @@ admin.site.register(dideals,didealsAdmin)
 class dflawsResource(resources.ModelResource):
     class Meta:
         model = dflaws
-"""
+
 class dflawsAdmin(ImportExportModelAdmin):
     resource_class = dflawsResource
     
 
 admin.site.register(dflaws,dflawsAdmin)
+
+
+
+"""
