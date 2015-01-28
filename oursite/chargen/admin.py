@@ -1,5 +1,3 @@
-#the commented out stuff allows for database editing on admin site
-#commented out to avoid breaking on computers without import_export installed
 import os, sys
 sys.path.append('../')
 import oursite.settings
@@ -95,11 +93,10 @@ admin.site.register(dideals,didealsAdmin)
 class dflawsResource(resources.ModelResource):
     class Meta:
         model = dflaws
-        
+
 class dflawsAdmin(ImportExportModelAdmin):
     resource_class = dflawsResource
     
 
 admin.site.register(dflaws,dflawsAdmin)
-
 """
