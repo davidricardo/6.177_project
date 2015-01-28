@@ -197,11 +197,11 @@ class Character:
         self.my_race = Race(self, race)
         self.skills = {"acrobatics":0,"animal handling":0,"arcana":0,"athletics":0,"deception":0,"history":0,"insight":0,"intimidation":0,"investigation":0,"medicine":0,"nature":0,"perception":0,"performance":0,"persuasion":0,"religion":0,"sleight of hand":0,"stealth":0,"survival":0}
         self.saves = {"strength":0,"dexterity":0,"constitution":0,"intelligence":0,"wisdom":0,"charisma":0}
-        [x.lower() for x in self.features]
+        self.features = [x.lower() for x in self.features]
         self.features = list(set(self.features)) #calling list(set()) removes duplicates from list (sets cannot have duplicates)
-        [x.lower() for x in self.equipment]
+        self.equipment = [x.lower() for x in self.equipment]
         self.equipment = list(set(self.equipment))
-        [x.lower() for x in self.languages]
+        self.languages = [x.lower() for x in self.languages]
         self.languages = list(set(self.languages))
 
         #unique feature of Rogues, hard-coded

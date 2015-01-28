@@ -157,7 +157,7 @@ function updateRaceMods(race){
             race_mods["wisdom"] = "+0";
             race_mods["charisma"] = "+2";
             break;
-        case "Gnome - Forrest":
+        case "Gnome - Forest":
             race_mods["strength"] = "+0";
             race_mods["dexterity"] = "+1";
             race_mods["constitution"] = "+0";
@@ -213,7 +213,7 @@ function updateRaceMods(race){
             race_mods["wisdom"] = "+1";
             race_mods["charisma"] = "+0";
             break;
-        case "Elf- High":
+        case "Elf - High":
             race_mods["strength"] = "+0";
             race_mods["dexterity"] = "+2";
             race_mods["constitution"] = "+0";
@@ -282,7 +282,6 @@ function updateRaceDescription() {
             subrace_description_box.innerHTML = "They can blend in with humans or elves, but are neither.";
             break;
         case "Gnome - Forest":
-        case "Gnome - Forrest":
             race_description_box.innerHTML = "<b>Gnomes</b> are tiny and impulsive. They're bold or foolhardy, depending who you ask.";    
             subrace_description_box.innerHTML = "<b>Forest Gnomes</b> have a knack for illusions and stealth.";
             break;
@@ -310,7 +309,7 @@ function updateRaceDescription() {
             race_description_box.innerHTML = "<b>Elves</b> are slender and graceful, and live for centuries. They love art, nature, and magic.";    
             subrace_description_box.innerHTML = "<b>Wood elves</b> have keen senses and intuition, and they live in forests.";
             break;
-        case "Elf- High":
+        case "Elf - High":
             race_description_box.innerHTML = "<b>Elves</b> are slender and graceful, and live for centuries. They love art, nature, and magic.";    
             subrace_description_box.innerHTML = "<b>High elves</b> are extremely intelligent. All of them have at least some magic.";
             break;
@@ -369,7 +368,7 @@ function updateClassDescription(){
             class_description_box.innerHTML = "<b>Warlocks</b> are spellcasters who made a pact with a poweful being for their power.";    
             break;
         case "Wizard":
-            class_description_box.innerHTML = "<b>Wizard</b> are spellcasters who earn their power through rigorous study.";    
+            class_description_box.innerHTML = "<b>Wizards</b> are spellcasters who earn their power through rigorous study.";
             break;        
     }
 
@@ -380,7 +379,47 @@ function updateBackgroundDescription(){
     var background_box = document.getElementById("id_background_form-background");
     var background = background_box.options[background_box.selectedIndex].text;
     var background_description_box = document.getElementById("background_explanation");
-
+    switch (background) {
+        case "Acolyte":
+            background_description_box.innerHTML = "<b>Acolytes</b> spent their lives in the service of a temple to a specific god or pantheon of gods.";
+            break;
+        case "Charlatan":
+            background_description_box.innerHTML = "<b>Charlatans</b> have always had a way with people - and are perfectly willing to use this to their advantage.";
+            break;
+        case "Criminal":
+            background_description_box.innerHTML = "<b>Criminals</b> have a history of breaking the law and have contacts within the criminal underworld.";
+            break;
+        case "Entertainer":
+            background_description_box.innerHTML = "<b>Entertainers</b> thrive in front of an audience, and know how to entrance, entertain, and even inspire them.";
+            break;
+        case "Folk Hero":
+            background_description_box.innerHTML = "<b>Folk Heroes</b> come from humble social ranks, but are already regarded by their home villages as champions.";
+            break;
+        case "Guild Artisan":
+            background_description_box.innerHTML = "<b>Guild Artisans</b> are members of a guild, skilled in a particular field and associated with other artisans.";
+            break;
+        case "Hermit":
+            background_description_box.innerHTML = "<b>Hermits</b> lived in seclusion for a formative part of their lives.";
+            break;
+        case "Noble":
+            background_description_box.innerHTML = "<b>Nobles</b> carry a noble title and understand wealth, power, and privelage.";
+            break;
+        case "Outlander":
+            background_description_box.innerHTML = "<b>Outlanders</b> grew up in the wilds, far from civilization and the comforts of town and technology.";
+            break;
+        case "Sage":
+            background_description_box.innerHTML = "<b>Sages</b> spent years learning the lore of the multiverse, making them masters in their fields of study.";
+            break;
+        case "Sailor":
+            background_description_box.innerHTML = "<b>Sailors</b> sailed on seagoing vessels for years.";
+            break;
+        case "Soldier":
+            background_description_box.innerHTML = "<b>Soldiers</b> have trained and fought in wars for most of their lives.";
+            break;
+        case "Urchin":
+            background_description_box.innerHTML = "<b>Urchins</b> grew up on the streets alone, orphaned, and poor, learning to provide for themselves.";
+            break;
+            }
 }
 
 function getSubclassesFromClass(char_class){
@@ -425,7 +464,7 @@ function getSubclassesFromClass(char_class){
             to_return = ["School of Abjuration", "School of Conjuration", "School of Divination", "School of Enchantment", "School of Evocation", "School of Illusion", "School of Necromancy", "School of Transmutation"];
             break;
         case "---------":
-            to_return = ["---------"];
+            to_return = [];
             break;
 
     }
@@ -456,6 +495,140 @@ function updateSubclass(){
         subclass_box.appendChild(new_option);
         // console.log("Creating new option: ");
         // console.log(new_option)
+    }
+    
+    updateSubclassDescription()
+}
+
+function updateSubclassDescription()
+{
+    var subclass_box = document.getElementById("id_subclass_form-subclass");
+    var subclass = subclass_box.options[subclass_box.selectedIndex].text;
+    var subclass_description_box = document.getElementById("subclass_explanation");
+    
+    switch (subclass) {
+        case "College of Lore":
+            subclass_description_box.innerHTML = "Bards in the <b>College of Lore</b> pursue beauty and truth, collecting knowledge from sources as diverse as scholarly tomes and peasant tales.";
+            break;
+        case "College of Valor":
+            subclass_description_box.innerHTML = "Bards of the <b>College of Valor</b> are daring skalds whose tales keep alive the memory of the great heroes of the past.";
+            break;
+        case "Path of the Berserker":
+            subclass_description_box.innerHTML = "Barbarians who follow the <b>Path of the Berserker</b> thrill in the chaos of battle and delight in violence and their untrammeled fury.";
+            break;
+        case "Path of the Totem Warrior":
+            subclass_description_box.innerHTML = "Barbarians who follow the <b>Path of the Totem Warrior</b> choose a spirit animal to guide, protect, and inspire them in battle.";
+            break;
+        case "Knowledge Domain":
+            subclass_description_box.innerHTML = "Clerics who emphasize the <b>Knowledge Domain</b> study esoteric lore, collect old tomes, delve into the secret places of earth, and learn all they can.";
+            break;
+        case "Life Domain":
+            subclass_description_box.innerHTML = "Clerics who emphasize the <b>Life Domain</b> focus on the vibrant positive energy that sustains all live, healing the sick and wounded, caring for those in need, and driving away the forces of death and undeath..";
+            break;
+        case "Light Domain":
+            subclass_description_box.innerHTML = "Clerics who emphasize the <b>Light Domain</b> are enlightened souls infused with radiance and the power of their gods' discerning vision, charged with chasing away lies and burning away darkness.";
+            break;
+        case "Nature Domain":
+            subclass_description_box.innerHTML = "Clerics who emphasize the <b>Nature Domain</b> might hunt the evil monstrosities that despoil the woodlands, bless the harvest of the faithful, or wither the crops of those who anger their gods.";
+            break;
+        case "Tempest Domain":
+            subclass_description_box.innerHTML = "Clerics who emphasize the <b>Tempest Domain</b> seek to inspire fear in the common folk, either to keep those folk on the path of righteousness or to encourage them to offer sacrifices of propitiation to ward off divine wrath.";
+            break;
+        case "Trickery Domain":
+            subclass_description_box.innerHTML = "Clerics who emphasize the <b>Trickery Domain</b> are a disruptive force in the world, prefering subterfuge, pranks, deception, and theft rather than direct confrontation.";
+            break;
+        case "War Domain":
+            subclass_description_box.innerHTML = "Clerics who emphasize the <b>War Domain</b> excel in battle, inspiring others to fight the good fight or offering acts of violence as prayers.";
+            break;
+        case "Circle of the Land":
+            subclass_description_box.innerHTML = "Druid members of the <b>Circle of Land</b> have magic influenced by the land where they were initiated into the circle's mysterious rites.";
+            break;
+        case "Circle of the Moon":
+            subclass_description_box.innerHTML = "Druid members of the <b>Circle of the Moon</b> haunt the deepest parts of the wild and are as changeable as the moon.";
+            break;
+        case "Champion":
+            subclass_description_box.innerHTML = "Fighters who emulate the <b>Champion</b> archetype focus on developing raw physical power honed to deadly perfection.";
+            break;
+        case "Battle Master":
+            subclass_description_box.innerHTML = "Fighters who emulate the <b>Battle Master</b> archetype employ martial techniques passed down through generations and treat combat as an academic field.";
+            break;
+        case "Eldritch Knight":
+            subclass_description_box.innerHTML = "Fighters who emulate the <b>Eldritch Knight</b> archetype combine martial mastery with a careful study of magic.";
+            break;
+        case "Way of the Open Hand":
+            subclass_description_box.innerHTML = "Monks of the <b>Way of the Open Hand</b> are the ultimate masters of martial arts combat, whether armed or unarmed.";
+            break;
+        case "Way of the Shadow":
+            subclass_description_box.innerHTML = "Monks of the <b>Way of the Shadow</b> value stealth and subterfuge, and might serve as spies or assassins.";
+            break;
+        case "Way of the Four Elements":
+            subclass_description_box.innerHTML = "Monks of the <b>Way of the Four Elements</b> align themselves with the forces of creation and bend the four elements to their will.";
+            break;
+        case "Oath of Devotion":
+            subclass_description_box.innerHTML = "Paladins sworn to the <b>Oath of Devotion</b> are bound to the loftiest ideals of justice, virtue, and order, holding themselves and sometimes the world to the highest standards of conduct.";
+            break;
+        case "Oath of the Ancients":
+            subclass_description_box.innerHTML = "Paladins sworn to the <b>Oath of the Ancients</b> cast their lot with the side of the light int he cosmic struggle against darkness because they love the beautiful and life-giving things of the world.";
+            break;
+        case "Oath of Vengeance":
+            subclass_description_box.innerHTML = "Paladins sworn to the <b>Oath of Vengeance</b> are devoted to punishing those who have committed a grievous sin and hold delivering justice above their own purity.";
+            break;
+        case "Hunter":
+            subclass_description_box.innerHTML = "Rangers who emulate the <b>Hunter</b> archetype accept their place as a bulwark between civilization and the terrors of the wilderness.";
+            break;
+        case "Beast Master":
+            subclass_description_box.innerHTML = "Rangers who emulate the <b>Beast Master</b> archetype embody a friendship between the civilized races and the beasts of the world, working in partnership with an animal.";
+            break;
+        case "Thief":
+            subclass_description_box.innerHTML = "Rogues who prefer the techniques of the <b>Thief</b> hone their skills in the larcenous arts, and are often burglars, bandits, treasure seekers, or explorers.";
+            break;
+        case "Assassin":
+            subclass_description_box.innerHTML = "Rogues who prefer the techniques of the <b>Assassin</b> focus their training on the grim art of death, using stealth, poison, and disguise to eliminate foes with deadly efficiency.";
+            break;
+        case "Arcane Trickster":
+            subclass_description_box.innerHTML = "Rogues who prefer the techniques of the <b>Arcane Trickster</b> enhance their fine-honed skills of stealth and agility with magic, learning tricks of enchantment and illusion.";
+            break;
+        case "Draconic Bloodline":
+            subclass_description_box.innerHTML = "Sorcerers with the <b>Draconic Bloodline</b> origin trace their descent back to a mighty sorcerer who made a bargain with a dragon or claimed a dragon parent.";
+            break;
+        case "Wild Magic":
+            subclass_description_box.innerHTML = "Sorcerers with the <b>Wild Magic</b> origin get their magic from the wild forces of chaos that underlie the order of creation.";
+            break;
+        case "The Archfey":
+            subclass_description_box.innerHTML = "Warlocks of <b>The Archfey</b> have a lord or lady of the fey patron with inscrutable and sometimes whimsical motivations.";
+            break;
+        case "The Fiend":
+            subclass_description_box.innerHTML = "Warlocks of <b>The Fiend</b> made a pact with a fiend from the lower planes of existence, a being whose aims are evil and desire total corruption or destruction of all things.";
+            break;
+        case "The Great Old One":
+            subclass_description_box.innerHTML = "Warlocks of <b>The Great Old One</b> have a mysterious entity of an utterly foreign nature for a patron with motives incomprehensible to mortals, and may be unaware of or indifferent to your existance.";
+            break;
+        case "School of Abjuration":
+            subclass_description_box.innerHTML = "Wizards of the <b>School of Abjuration</b> emphasize magic that blocks, banishes, or protects.";
+            break;
+        case "School of Conjuration":
+            subclass_description_box.innerHTML = "Wizards of the <b>School of Conjuration</b> favor spells that produce objects and creatures out of thin air.";
+            break;
+        case "School of Divination":
+            subclass_description_box.innerHTML = "Wizards of the <b>School of Divination</b> strive to part the veils of space, time, and consciousness so that they can see clearly.";
+            break;
+        case "School of Enchantment":
+            subclass_description_box.innerHTML = "Wizards of the <b>School of Enchantment</b> have honed their ability to magically entrance and beguile other people and monsters.";
+            break;
+        case "School of Evocation":
+            subclass_description_box.innerHTML = "Wizards of the <b>School of Evocation</b> focus on magic that creates powerful elemental effects such as bitter cold, searing flame, rolling thunder, crackling lightning, and burning acid.";
+            break;
+        case "School of Illusion":
+            subclass_description_box.innerHTML = "Wizards of the <b>School of Illusion</b> focus on magic that dazzles the senses, befuddles the mind, and tricks even the wisest folk.";
+            break;
+        case "School of Necromancy":
+            subclass_description_box.innerHTML = "Wizards of the <b>School of Necromancy</b> explore the cosmic forces of life, death, and undeath.";
+            break;
+        case "School of Transmutation":
+            subclass_description_box.innerHTML = "Wizards of the <b>School of Transmutation</b> study spells that modify energy and matter.";
+            break;
+        default:
+            subclass_description_box.innerHTML = "Members of this subclass are...";
     }
 }
 
