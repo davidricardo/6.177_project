@@ -402,7 +402,7 @@ function updateBackgroundDescription(){
             background_description_box.innerHTML = "<b>Hermits</b> lived in seclusion for a formative part of their lives.";
             break;
         case "Noble":
-            background_description_box.innerHTML = "<b>Nobles</b> carry a noble title and understand wealth, power, and privelage.";
+            background_description_box.innerHTML = "<b>Nobles</b> carry a noble title and understand wealth, power, and privilege.";
             break;
         case "Outlander":
             background_description_box.innerHTML = "<b>Outlanders</b> grew up in the wilds, far from civilization and the comforts of town and technology.";
