@@ -3,10 +3,11 @@ sys.path.append('../')
 import oursite.settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from django.contrib import admin
-#from import_export import resources
-#from import_export.admin import ImportExportModelAdmin
-from chargen.models import *
 """
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
+from chargen.models import *
+
 class dWeaponResource(resources.ModelResource):
     class Meta:
         model = dWeapon
@@ -99,4 +100,14 @@ class dflawsAdmin(ImportExportModelAdmin):
     
 
 admin.site.register(dflaws,dflawsAdmin)
+
+class dDescriptionResource(resources.ModelResource):
+    class Meta:
+        model = dDescription
+
+class dDescriptionAdmin(ImportExportModelAdmin):
+    resource_class = dDescriptionResource
+
+
+admin.site.register(dDescription,dDescriptionAdmin)
 """

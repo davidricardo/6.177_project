@@ -223,11 +223,14 @@ class dsubclass(models.Model):
     class Meta:
         app_label= 'chargen'
         
-
-
+class dDescription(models.Model):
+    name = models.CharField(max_length=40)
+    description =models.CharField(max_length=2000)    
+    def __unicode__(self):
+        return self.name
+    class Meta:
+        app_label= 'chargen'
         
-
-  
 #dictionary of spells with there levels to use for upper level charcter generation in the future
         
 spells= {'aid':2,

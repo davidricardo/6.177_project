@@ -523,7 +523,7 @@ function updateSubclassDescription()
             subclass_description_box.innerHTML = "Clerics who emphasize the <b>Knowledge Domain</b> study esoteric lore, collect old tomes, delve into the secret places of earth, and learn all they can.";
             break;
         case "Life Domain":
-            subclass_description_box.innerHTML = "Clerics who emphasize the <b>Life Domain</b> focus on the vibrant positive energy that sustains all live, healing the sick and wounded, caring for those in need, and driving away the forces of death and undeath..";
+            subclass_description_box.innerHTML = "Clerics who emphasize the <b>Life Domain</b> focus on the vibrant positive energy that sustains all live, healing the sick and wounded, caring for those in need, and driving away the forces of death and undeath.";
             break;
         case "Light Domain":
             subclass_description_box.innerHTML = "Clerics who emphasize the <b>Light Domain</b> are enlightened souls infused with radiance and the power of their gods' discerning vision, charged with chasing away lies and burning away darkness.";
