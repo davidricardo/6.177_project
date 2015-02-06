@@ -25,10 +25,10 @@ from character import Character
 from models import dChar_class, dRace, dbackstory, dsubclass
 
 #These are form outlines that are called in the index function.
-class NameInputForm(forms.Form):
+
+class OneForm(forms.Form):
     name = forms.CharField()
 
-class ClassRaceForm(forms.Form):
     #These modelchoicefield objects are linked to rows in the dChar_class and dRace models, respectively.
     #Each row in the database becomes one select option here.
     character_class = forms.ModelChoiceField(
@@ -44,7 +44,6 @@ class ClassRaceForm(forms.Form):
             })
     )
 
-class AbilityScoreForm(forms.Form):
     strength     = forms.ChoiceField(
         #This ugliness is necessary to provide the <select> with the correct range of values.
         [
@@ -63,7 +62,7 @@ class AbilityScoreForm(forms.Form):
         widget = forms.Select(attrs = {
             "onChange": 'updateAbilityScores()'
             })
-        )
+        )      
     dexterity    = forms.ChoiceField(
         [
             (8, 8),
@@ -155,21 +154,13 @@ class AbilityScoreForm(forms.Form):
             })
         )
 
-class BackgroundForm(forms.Form):
-    background = forms.ModelChoiceField(
-        queryset = dbackstory.objects.all(),
-        widget = forms.Select(attrs = {
-            "onChange": 'updateBackgroundDescription()'
-        })
-    )
-
-class SubclassForm(forms.Form):
     subclass = forms.ModelChoiceField(
         queryset = dsubclass.objects.all(),
         widget = forms.Select(attrs = {
             "onChange": 'updateSubclassDescription()'
         })
         )    
+
 
 
 def index(request):
@@ -182,55 +173,41 @@ def index(request):
     """
 
     allform = loader.get_template('chargen/allform.html')
-
-    #prefixes are used so that each form can find its own fields in the POST data.
-    name_form = NameInputForm( prefix = "name_form" )
-    class_race_form = ClassRaceForm( prefix = "class_race_form" )
-    ab_score_form = AbilityScoreForm( prefix = "ab_score_form" )
-    background_form = BackgroundForm( prefix = "background_form" )
-    subclass_form = SubclassForm( prefix = "subclass_form")
     
+    one_form = OneForm()
+
     if request.method != 'POST': 
         return HttpResponse(
                 allform.render(
                     RequestContext( request, {
-                        "name_form" : name_form,
-                        "class_race_form" : class_race_form,
-                        "ab_score_form" : ab_score_form,
-                        "background_form": background_form,
-                        "subclass_form": subclass_form,
+                        "one_form": one_form,
+                        #this is necessary so that the template knows which fields to render in the table
+                        "ab_scores": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"],
                     } )
                 )
             )        
 
     else:
-        name_form = NameInputForm( request.POST, prefix="name_form")
-        class_race_form = ClassRaceForm( request.POST, prefix = "class_race_form")
-        ab_score_form = AbilityScoreForm( request.POST, prefix = "ab_score_form")
-        background_form = BackgroundForm( request.POST, prefix = "background_form")
-        subclass_form = SubclassForm( request.POST, prefix = "subclass_form")
+        one_form = OneForm(request.POST)
          
-        if all([
-            name_form.is_valid(),
-            class_race_form.is_valid(),
-            ab_score_form.is_valid(),
-            background_form.is_valid(),
-            subclass_form.is_valid()
-        ]):
+        if one_form.is_valid(): 
 
-            index = subclass_form.cleaned_data["subclass"].id
+
+            #Not sure what this is for? Ask Rachel, I think,
+            index = one_form.cleaned_data["subclass"].id
+
             #Character is from character.py
-            c = Character(name_form.cleaned_data["name"],
-                        class_race_form.cleaned_data["character_class"].name,
-                        dsubclass.objects.filter(char_class = dChar_class.objects.get(name = class_race_form.cleaned_data["character_class"].name))[index-1].name,
-                        class_race_form.cleaned_data["race"].name,
-                        background_form.cleaned_data["background"].name,
-                        int(ab_score_form.cleaned_data["strength"]),
-                        int(ab_score_form.cleaned_data["dexterity"]),
-                        int(ab_score_form.cleaned_data["constitution"]),
-                        int(ab_score_form.cleaned_data["intelligence"]),
-                        int(ab_score_form.cleaned_data["wisdom"]),
-                        int(ab_score_form.cleaned_data["charisma"]),
+            c = Character(one_form.cleaned_data["name"],
+                        one_form.cleaned_data["character_class"].name,
+                        dsubclass.objects.filter(char_class = dChar_class.objects.get(name = one_form.cleaned_data["character_class"].name))[index-1].name,
+                        one_form.cleaned_data["race"].name,
+                        one_form.cleaned_data["background"].name,
+                        int(one_form.cleaned_data["strength"]),
+                        int(one_form.cleaned_data["dexterity"]),
+                        int(one_form.cleaned_data["constitution"]),
+                        int(one_form.cleaned_data["intelligence"]),
+                        int(one_form.cleaned_data["wisdom"]),
+                        int(one_form.cleaned_data["charisma"]),
                         )
 
             #pdftest takes a character argument and returns a pdf file as an HttpResponse.
@@ -239,10 +216,6 @@ def index(request):
         else:
             return HttpResponse("<p>Sorry, something went wrong. Our system found errors in your form.</p>" + 
                 "<p>Those errors were: </p>" + 
-                str(name_form.errors) + 
-                str(class_race_form.errors) + 
-                str(ab_score_form.errors) + 
-                str(background_form.errors) + 
-                str(subclass_form.errors)
+                str(one_form.errors)
                 )
 

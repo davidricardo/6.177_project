@@ -21,7 +21,7 @@
             <p class="main_table_label_text">Name: </p>
         </th>
         <td class="main_table_cell">
-            {{ name_form.name }}
+            {{ one_form.name }}
             <span class="prompt">
                 Every character needs a name.
             </span>
@@ -34,7 +34,7 @@
             <p class="main_table_label_text">Race: </p>
         </th>
         <td class="main_table_cell">
-            {{ class_race_form.race }}
+            {{ one_form.race }}
             <span class="prompt">
                 What is their species?
             </span>
@@ -51,7 +51,7 @@
             <p class="main_table_label_text">Class: </p>
         </th>
         <td class="main_table_cell">
-            {{ class_race_form.character_class }}
+            {{ one_form.character_class }}
             <span class="prompt">
                 What kind of adventurer are they?
             </span>
@@ -66,7 +66,7 @@
             <p class="main_table_label_text">Subclass: </p>
         </th>
         <td class="main_table_cell">
-            {{ subclass_form.subclass }}
+            {{ one_form.subclass }}
             <span class="prompt">
                 What is their specialization?
             </span>
@@ -93,7 +93,8 @@
                     <th>Modifier</th>
                 </tr>
 
-                {% for field in ab_score_form %}
+                {% for field in one_form %}
+                {% if field.name in ab_scores %}
                 <tr>
                     <td class="ability_score_label">{{ field.label }}</td>
                     <td>{{ field }}</td>
@@ -101,6 +102,7 @@
                     <td class="ability_score_total" id="total_{{ field.name }}_score">8</td>
                     <td id="total_{{ field.name }}_mod">-1</td>
                 </tr>
+                {% endif %}
                 {% endfor %}
             </table>
             <div>
