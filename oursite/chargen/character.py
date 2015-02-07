@@ -8,6 +8,7 @@ import oursite.settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from models import *
 from collections import OrderedDict
+from NameGen import RandomNameGenerator
 
 #the skill in each key is ruled by the ability that is the value of that key:
 #means that that skill check is equal to the modifier of the ruling ability
@@ -31,6 +32,23 @@ RULING_ABILITIES = {
     "stealth": "dexterity",
     "survival": "wisdom"
 }
+
+RACES = [
+    "Dwarf - Hill",
+    "Dwarf - Mountain",
+    "Elf - High",
+    "Elf - Wood",
+    "Elf - Dark (Drow)",
+    "Halfling - Lightfoot",
+    "Halfling - Stout",
+    "Human",
+    "Dragonborn",
+    "Gnome - Forest",
+    "Gnome - Rock",
+    "Half-Elf",
+    "Half-Orc",
+    "Tiefling"
+    ]
 
 #list of all six ability scores
 ABILITY_SCORES = [
@@ -191,10 +209,19 @@ class Character:
         self.armor = ""
         self.level = level #this tool defaults to 1 but in future higher levels may be supported
         self.name = name
-        self.ability_scores = ability_scores={"strength":strength,"dexterity":dexterity,"constitution":constitution,"intelligence":intelligence,"wisdom":wisdom,"charisma":charisma}
+        if char_class=="":
+            number_of_records = dChar_class.objects.count()
+            random_index = random.randrange(0,number_of_records)
+            char_class = dChar_class.objects.all()[random_index].name
+        if strength==8 and dexterity==8 and constitution==8 and intelligence==8 and wisdom==8 and charisma==8:
+            self.ability_scores = self.generateAbilityScores(char_class)
+        else:
+            self.ability_scores = ability_scores={"strength":strength,"dexterity":dexterity,"constitution":constitution,"intelligence":intelligence,"wisdom":wisdom,"charisma":charisma}
         self.background = Background(self,background)
         self.my_class = Char_Class(self, char_class,subclass)
         self.my_race = Race(self, race)
+        if name=="":
+            self.name = self.generateName()
         self.skills = {"acrobatics":0,"animal handling":0,"arcana":0,"athletics":0,"deception":0,"history":0,"insight":0,"intimidation":0,"investigation":0,"medicine":0,"nature":0,"perception":0,"performance":0,"persuasion":0,"religion":0,"sleight of hand":0,"stealth":0,"survival":0}
         self.saves = {"strength":0,"dexterity":0,"constitution":0,"intelligence":0,"wisdom":0,"charisma":0}
         self.features = [x.lower() for x in self.features]
@@ -230,6 +257,8 @@ class Character:
             self.equipment.remove("javelin")
         if "dart" in self.equipment:
             self.equipment.remove("dart")
+        if "handaxe" in self.equipment and "2 handaxes" in self.equipment:
+            self.equipment.remove("handaxe")
 
         #pdf file takes 12 first level spells and 8 cantrips, this prevents errors    
         while len(self.spells1)<12:
@@ -307,7 +336,40 @@ class Character:
     #returns modifier on ability score
     def get_modifier(self, score):
         return int(math.floor((score-10)/2.0))
-    
+
+    def generateAbilityScores(self,char_class):
+        if random.randrange(0,4)==0:
+            l = [16,14,12,10,10,8]
+        elif random.randrange(0,3)==0:
+            l = [15,14,14,10,10,8]
+        elif random.randrange(0,2)==0:
+            l = [15,14,12,12,10,9]
+        else:
+            l = [16,13,12,11,10,9]
+        points = {"8":0,"9":1,"10":2,"11":3,"12":4,"13":5,"14":7,"15":9,"16":12,"17":15,"18":19}
+        scores = {}
+        wts = {}
+        wts["strength"] = dabilityweights.objects.get(name=char_class).strength
+        wts["dexterity"] = dabilityweights.objects.get(name=char_class).dexterity
+        wts["constitution"] = dabilityweights.objects.get(name=char_class).constitution
+        wts["intelligence"] = dabilityweights.objects.get(name=char_class).intelligence
+        wts["wisdom"] = dabilityweights.objects.get(name=char_class).wisdom
+        wts["charisma"] = dabilityweights.objects.get(name=char_class).charisma
+        for x in range(1,4):
+            for key in wts.keys():
+                if wts[key]==x:
+                    scores[key] = l.pop(0)
+                    wts[key] = 0
+                    for key in wts.keys():
+                        if wts[key]==x:
+                            wts[key] = 6
+                    break
+        for key in wts.keys():
+            if wts[key]==6:
+                scores[key] = l.pop(0)
+                wts[key] = 0
+        return scores
+
     #returns initiative modifier (just the dex modifier)
     def get_initiative(self):
         return self.get_modifier(self.ability_scores["dexterity"])
@@ -366,6 +428,10 @@ class Character:
             else:
                 return armor.ac_mod+dex
         return armor.ac_mod
+
+    def generateName(self):
+        return RandomNameGenerator.randomname(self.my_race.name)
+        
         
 #class containing the character's class
 #class in d&d is like your job (Rogue, Bard, Wizard, Fighter, etc.)
@@ -378,7 +444,9 @@ class Char_Class:
         dclass = dChar_class.objects.get(name=name)
         self.subclass = subclass #subclasses are specific paths within classes, given slightly different features and stats
         if self.subclass=="":
-            self.subclass = dsubclass.objects.filter(char_class = dChar_class.objects.get(name=name))[0].name
+            number_of_records = dsubclass.objects.filter(char_class = dChar_class.objects.get(name=name)).count()
+            random_index = random.randrange(0,number_of_records)
+            self.subclass = dsubclass.objects.filter(char_class = dChar_class.objects.get(name=name))[random_index].name
         #only clerics and sorcerer's get their subclass at first level; as this tool only supports first level right now, only those are coded in
         if name=="Cleric":
             if self.subclass=="Life Domain":
@@ -519,7 +587,8 @@ class Char_Class:
                 character.weapons.append(dWeapon.objects.filter(martial_arts=True).filter(mele=True)[random.randrange(0,x)].weapon_name)
                 
             if (random.randrange(0,2)==0):
-                character.weapons.extend(["handaxe","handaxe"])
+                character.weapons.append("handaxe")
+                self.equipment.append("2 handaxes")
             else:
                 x = len(dWeapon.objects.filter(martial_arts=False))
                 character.weapons.append(dWeapon.objects.filter(martial_arts=False)[random.randrange(0,x)].weapon_name)
@@ -605,7 +674,8 @@ class Char_Class:
             if (random.randrange(0,2)==0):
                  character.weapons.append("light crossbow")
             else:
-                character.weapons.extend(["handaxe","handaxe"])
+                character.weapons.append("handaxe")
+                self.equipment.append("2 handaxes")
             if (random.randrange(0,2)==0):
                  self.equipment.append("dungeoneer's pack")
             else:
@@ -727,10 +797,15 @@ class Char_Class:
                 self.equipment.append("explorer's pack")
             character.equipment.append("spellbook")
 
+
 #Race stores the race of the character (Human, Elf, Gnome, Dwarf, etc)
 #Race gives ability score increases, languages, some features
 class Race:
     def __init__(self, character, name):
+        if name=="":
+            number_of_records = dRace.objects.count()
+            random_index = random.randrange(number_of_records)
+            name = dRace.objects.all()[random_index].name
         self.name = name
         character.ability_scores["strength"]+=dRace.objects.get(name=name).str_mod
         character.ability_scores["dexterity"]+=dRace.objects.get(name=name).dex_mod
@@ -945,5 +1020,3 @@ def pre(x):
         return "+" + str(x)
     else:
         return str(x)
-
-        

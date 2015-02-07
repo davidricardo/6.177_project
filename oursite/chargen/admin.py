@@ -110,4 +110,16 @@ class dDescriptionAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(dDescription,dDescriptionAdmin)
+
+
+class dabilityweightsResource(resources.ModelResource):
+    class Meta:
+        model = dabilityweights
+
+class dabilityweightsAdmin(ImportExportModelAdmin):
+    resource_class = dabilityweightsResource
+
+
+admin.site.register(dabilityweights,dabilityweightsAdmin)
+
 """

@@ -19,12 +19,12 @@ function getTotalAbilityScores(){
         var wisdom_mod_box = document.getElementById("total_wisdom_mod");
         var charisma_mod_box = document.getElementById("total_charisma_mod");
 
-    var strength_from_pb_box = document.getElementById("id_ab_score_form-strength");
-        var dexterity_from_pb_box = document.getElementById("id_ab_score_form-dexterity");
-        var constitution_from_pb_box = document.getElementById("id_ab_score_form-constitution");
-        var intelligence_from_pb_box = document.getElementById("id_ab_score_form-intelligence");
-        var wisdom_from_pb_box = document.getElementById("id_ab_score_form-wisdom");
-        var charisma_from_pb_box = document.getElementById("id_ab_score_form-charisma");
+    var strength_from_pb_box = document.getElementById("id_strength");
+        var dexterity_from_pb_box = document.getElementById("id_dexterity");
+        var constitution_from_pb_box = document.getElementById("id_constitution");
+        var intelligence_from_pb_box = document.getElementById("id_intelligence");
+        var wisdom_from_pb_box = document.getElementById("id_wisdom");
+        var charisma_from_pb_box = document.getElementById("id_charisma");
 
     var strength_from_pb = strength_from_pb_box.options[strength_from_pb_box.selectedIndex].value;
         var dexterity_from_pb = dexterity_from_pb_box.options[dexterity_from_pb_box.selectedIndex].value;
@@ -58,12 +58,12 @@ function getTotalAbilityScores(){
 function updateAbilityScores() {
     //Calculates how many point-buy points the user has spent on their ability scores.
 
-    var strength_box = document.getElementById("id_ab_score_form-strength");
-        var dexterity_box = document.getElementById("id_ab_score_form-dexterity");
-        var constitution_box = document.getElementById("id_ab_score_form-constitution");
-        var intelligence_box = document.getElementById("id_ab_score_form-intelligence");
-        var wisdom_box = document.getElementById("id_ab_score_form-wisdom");
-        var charisma_box = document.getElementById("id_ab_score_form-charisma");
+    var strength_box = document.getElementById("id_strength");
+        var dexterity_box = document.getElementById("id_dexterity");
+        var constitution_box = document.getElementById("id_constitution");
+        var intelligence_box = document.getElementById("id_intelligence");
+        var wisdom_box = document.getElementById("id_wisdom");
+        var charisma_box = document.getElementById("id_charisma");
 
     var strength = strength_box.options[strength_box.selectedIndex].value;
         var dexterity = dexterity_box.options[dexterity_box.selectedIndex].value;
@@ -112,7 +112,7 @@ function getModifier(ability) {
 function updateRaceMods(race){
     // Displays the racial modifiers to ability scores.
 
-    var race_box = document.getElementById("id_class_race_form-race");
+    var race_box = document.getElementById("id_race");
     var race = race_box.options[race_box.selectedIndex].text;
 
     var strength_box = document.getElementById("race_mod_strength");
@@ -259,7 +259,7 @@ function updateRaceMods(race){
 function updateRaceDescription() {
     //Updates the descriptions for the currently selected race and subrace.
 
-    var race_box = document.getElementById("id_class_race_form-race");
+    var race_box = document.getElementById("id_race");
     var race = race_box.options[race_box.selectedIndex].text;
     var race_description_box = document.getElementById("race_explanation")
     var subrace_description_box = document.getElementById("subrace_explanation")
@@ -329,7 +329,7 @@ function updateRaceDescription() {
 function updateClassDescription(){
     //Updates the description for the currently selected class.
 
-    var class_box = document.getElementById("id_class_race_form-character_class");
+    var class_box = document.getElementById("id_character_class");
     var char_class = class_box.options[class_box.selectedIndex].text;
     var class_description_box = document.getElementById("class_explanation");
 
@@ -376,7 +376,7 @@ function updateClassDescription(){
 }
 
 function updateBackgroundDescription(){
-    var background_box = document.getElementById("id_background_form-background");
+    var background_box = document.getElementById("id_background");
     var background = background_box.options[background_box.selectedIndex].text;
     var background_description_box = document.getElementById("background_explanation");
     switch (background) {
@@ -473,8 +473,8 @@ function getSubclassesFromClass(char_class){
 }
 
 function updateSubclass(){
-    var subclass_box = document.getElementById("id_subclass_form-subclass");
-    var class_box = document.getElementById("id_class_race_form-character_class");
+    var subclass_box = document.getElementById("id_subclass");
+    var class_box = document.getElementById("id_character_class");
     var char_class = class_box.options[class_box.selectedIndex].text;
 
     //delete all options in the subclass box
@@ -502,7 +502,7 @@ function updateSubclass(){
 
 function updateSubclassDescription()
 {
-    var subclass_box = document.getElementById("id_subclass_form-subclass");
+    var subclass_box = document.getElementById("id_subclass");
     var subclass = subclass_box.options[subclass_box.selectedIndex].text;
     var subclass_description_box = document.getElementById("subclass_explanation");
     

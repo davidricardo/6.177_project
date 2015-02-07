@@ -230,7 +230,23 @@ class dDescription(models.Model):
         return self.name
     class Meta:
         app_label= 'chargen'
-        
+
+
+class dabilityweights(models.Model):
+    name= models.CharField(max_length=40)
+    strength= models.IntegerField(default=0)
+    dexterity= models.IntegerField(default=0)
+    constitution= models.IntegerField(default=0)
+    intelligence= models.IntegerField(default=0)
+    wisdom= models.IntegerField(default=0)
+    charisma= models.IntegerField(default=0)
+    
+    
+    def __unicode__(self):
+        return self.name
+    class Meta:
+        app_label= 'chargen'
+
 #dictionary of spells with there levels to use for upper level charcter generation in the future
         
 spells= {'aid':2,

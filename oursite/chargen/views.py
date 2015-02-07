@@ -27,7 +27,7 @@ from models import dChar_class, dRace, dbackstory, dsubclass
 #These are form outlines that are called in the index function.
 
 class OneForm(forms.Form):
-    name = forms.CharField()
+    name = forms.CharField(required = False)
 
     #These modelchoicefield objects are linked to rows in the dChar_class and dRace models, respectively.
     #Each row in the database becomes one select option here.
@@ -35,13 +35,15 @@ class OneForm(forms.Form):
         queryset = dChar_class.objects.all(),
         widget = forms.Select(attrs = {
             "onChange": 'updateClassDescription()'
-        })
+        }),
+        required=False
     )
     race = forms.ModelChoiceField(
         queryset = dRace.objects.all(),
         widget = forms.Select(attrs = {
             "onChange": 'updateRaceDescription()'
-            })
+            }),
+        required= False
     )
 
     strength     = forms.ChoiceField(
@@ -158,9 +160,17 @@ class OneForm(forms.Form):
         queryset = dsubclass.objects.all(),
         widget = forms.Select(attrs = {
             "onChange": 'updateSubclassDescription()'
-        })
-        )    
-
+        }),
+        required = False
+        )
+    
+    background = forms.ModelChoiceField(
+        queryset = dbackstory.objects.all(),
+        widget = forms.Select(attrs = {
+            "onChange": 'updateBackgroundDescription()'
+        }),
+        required = False
+        )  
 
 
 def index(request):
@@ -192,16 +202,35 @@ def index(request):
          
         if one_form.is_valid(): 
 
+            if one_form.cleaned_data["race"]==None:
+                race = ""
+            else:
+                race = one_form.cleaned_data["race"].name
 
-            #Not sure what this is for? Ask Rachel, I think,
-            index = one_form.cleaned_data["subclass"].id
+            if one_form.cleaned_data["character_class"]==None:
+                char_class = ""
+                subclass = ""
+            else:
+                char_class = one_form.cleaned_data["character_class"].name
+                if one_form.cleaned_data["subclass"]==None:
+                    subclass = ""
+                else:
+                    #Not sure what this is for? Ask Rachel, I think,
+                    #this is so that the proper subclass is passed. I can explain in person if you want
+                    index = one_form.cleaned_data["subclass"].id
+                    subclass = dsubclass.objects.filter(char_class = dChar_class.objects.get(name = one_form.cleaned_data["character_class"].name))[index-1].name
+
+            if one_form.cleaned_data["background"]==None:
+                background = ""
+            else:
+                background = one_form.cleaned_data["background"].name
 
             #Character is from character.py
             c = Character(one_form.cleaned_data["name"],
-                        one_form.cleaned_data["character_class"].name,
-                        dsubclass.objects.filter(char_class = dChar_class.objects.get(name = one_form.cleaned_data["character_class"].name))[index-1].name,
-                        one_form.cleaned_data["race"].name,
-                        one_form.cleaned_data["background"].name,
+                        char_class,
+                        subclass,
+                        race,
+                        background,
                         int(one_form.cleaned_data["strength"]),
                         int(one_form.cleaned_data["dexterity"]),
                         int(one_form.cleaned_data["constitution"]),
