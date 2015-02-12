@@ -9,7 +9,7 @@ or at https://docs.djangoproject.com/en/1.6/topics/http/views/
 """
 
 
-import os, sys
+import os, sys, json
 sys.path.append('../')
 import oursite.settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
@@ -19,10 +19,11 @@ from django.template import Context, RequestContext, loader
 from django import forms
 from django.db import models
 from django.forms import ModelForm
+from django.core import serializers
 import pdftest
 from character import Character
 
-from models import dChar_class, dRace, dbackstory, dsubclass
+from models import dChar_class, dRace, dbackstory, dsubclass, dDescription
 
 #These are form outlines that are called in the index function.
 
@@ -34,14 +35,14 @@ class OneForm(forms.Form):
     character_class = forms.ModelChoiceField(
         queryset = dChar_class.objects.all(),
         widget = forms.Select(attrs = {
-            "onChange": 'updateClassDescription()'
+            "onChange": 'onCharClassChange()'
         }),
         required=False
     )
     race = forms.ModelChoiceField(
         queryset = dRace.objects.all(),
         widget = forms.Select(attrs = {
-            "onChange": 'updateRaceDescription()'
+            "onChange": 'onRaceChange()'
             }),
         required= False
     )
@@ -62,7 +63,7 @@ class OneForm(forms.Form):
             (18, 18)
         ],
         widget = forms.Select(attrs = {
-            "onChange": 'updateAbilityScores()'
+            "onChange": 'onAbilityScoreChange()'
             })
         )      
     dexterity    = forms.ChoiceField(
@@ -80,7 +81,7 @@ class OneForm(forms.Form):
             (18, 18)
         ],
         widget = forms.Select(attrs = {
-            "onChange": 'updateAbilityScores()'
+            "onChange": 'onAbilityScoreChange()'
             })
         )
     constitution = forms.ChoiceField(
@@ -98,7 +99,7 @@ class OneForm(forms.Form):
             (18, 18)
         ],
         widget = forms.Select(attrs = {
-            "onChange": 'updateAbilityScores()'
+            "onChange": 'onAbilityScoreChange()'
             })
         )
     intelligence = forms.ChoiceField(
@@ -116,7 +117,7 @@ class OneForm(forms.Form):
             (18, 18)
         ],
         widget = forms.Select(attrs = {
-            "onChange": 'updateAbilityScores()'
+            "onChange": 'onAbilityScoreChange()'
             })
         )
     wisdom       = forms.ChoiceField(
@@ -134,7 +135,7 @@ class OneForm(forms.Form):
             (18, 18)
         ],
         widget = forms.Select(attrs = {
-            "onChange": 'updateAbilityScores()'
+            "onChange": 'onAbilityScoreChange()'
             })
         )
     charisma     = forms.ChoiceField(
@@ -152,14 +153,14 @@ class OneForm(forms.Form):
             (18, 18)
         ],
         widget = forms.Select(attrs = {
-            "onChange": 'updateAbilityScores()'
+            "onChange": 'onAbilityScoreChange()'
             })
         )
 
     subclass = forms.ModelChoiceField(
         queryset = dsubclass.objects.all(),
         widget = forms.Select(attrs = {
-            "onChange": 'updateSubclassDescription()'
+            "onChange": 'onSubclassChange()'
         }),
         required = False
         )
@@ -167,7 +168,7 @@ class OneForm(forms.Form):
     background = forms.ModelChoiceField(
         queryset = dbackstory.objects.all(),
         widget = forms.Select(attrs = {
-            "onChange": 'updateBackgroundDescription()'
+            "onChange": 'onBackgroundChange()'
         }),
         required = False
         )  
@@ -182,10 +183,40 @@ def index(request):
     2) POST, to which it responds with a pdf generated from the form data.
     """
 
+    #Create and initialize the template and form
     allform = loader.get_template('chargen/allform.html')
-    
     one_form = OneForm()
 
+    #get data to pass to the Javascript and make it JSON
+    # description_data = serializers.serialize('json', dDescription.objects.all() )
+    # description_data = str(description_data)
+
+
+    # description_data = dDescription.objects.values_list('name', 'description')
+
+    # description_data = [description.encode("utf8") for description in str(dDescription.objects.values_list ('name', "description"))]
+
+    # a = dDescription.objects.values_list ('name', "description")
+    # b = str(a)
+    # c = b.split(',')
+    # description_data = b
+
+    # description_data = dDescription.objects.values('name', 'description')
+
+    description_data = []
+
+    for pk in range(dDescription.objects.count()):
+
+        a = dDescription.objects.get( id = pk + 1 )
+
+        description_data.append( {
+            "name": a.name,
+            "description": a.description,
+        } )
+
+    # return HttpResponse( description_data )
+
+    
     if request.method != 'POST': 
         return HttpResponse(
                 allform.render(
@@ -193,6 +224,7 @@ def index(request):
                         "one_form": one_form,
                         #this is necessary so that the template knows which fields to render in the table
                         "ab_scores": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"],
+                        "description_data": description_data
                     } )
                 )
             )        

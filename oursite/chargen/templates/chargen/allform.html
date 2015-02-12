@@ -3,7 +3,31 @@
 <head>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'chargen/style.css' %}">
-    <script type="text/javascript" src="{% static 'chargen/chargen-1.0.js' %}" async></script>
+    <script type="text/javascript">
+        var DATA;
+
+        var temp_element = document.createElement('textarea');
+        temp_element.innerHTML = ' {{ description_data }} ';
+
+        DATA = unescape( temp_element.value );
+    
+
+
+        //Uncomment this function to test stuff
+        // (function() {
+        //     console.log ("Testing getDescriptionFromName");
+        //     console.log ("Test case 1: 'Acolyte'");
+        //     console.log( getDescriptionFromName("Acolyte") );
+        //     console.log ("Test case 2: 'Halfling - Stout'");
+        //     console.log( getDescriptionFromName("Halfling - Stout") );
+        //     console.log ("Test case 3: 'Druid'");
+        //     console.log( getDescriptionFromName("Druid") );
+        //     console.log ("Test case 4: 'Light Domain'");
+        //     console.log( getDescriptionFromName("Light Domain") );
+        //     console.log("\n \n \n \n \n")
+        // })();
+    </script>
+    <script type="text/javascript" src="{% static 'chargen/chargen-1.0.js' %}"></script>
 </head>
 <body>
 
@@ -24,7 +48,7 @@
             {{ one_form.name }}
             <span class="prompt">
                 Every character needs a name.
-            </span>
+            </s     pan>
         </td>
     </tr>
 
