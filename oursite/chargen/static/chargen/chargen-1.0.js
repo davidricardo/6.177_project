@@ -1,61 +1,201 @@
-//I would wrap all of these functions in a class for this page to avoid cluttering the global scope,
-//but given that this is the only javascript that will be used I don't think that will be an issue.
+document.title = "D&D 5E Character Generator"
+window.onload = function(){
 
-function getTotalAbilityScores(){
-    //Sets the values of each total ability score and modifier.
+    console.log ("window ready");
 
-    //These sets of six are indented so you can collapse them.
-    var strength_total_box = document.getElementById("total_strength_score");
-        var dexterity_total_box = document.getElementById("total_dexterity_score");
-        var constitution_total_box = document.getElementById("total_constitution_score");
-        var intelligence_total_box = document.getElementById("total_intelligence_score");
-        var wisdom_total_box = document.getElementById("total_wisdom_score");
-        var charisma_total_box = document.getElementById("total_charisma_score");
+        //This object contains variable names for all the useful elements on the page.
+    var elements = {
+        //These are indented so you can collapse them.
+        strength_total_box : document.getElementById("total_strength_score"),
+            dexterity_total_box : document.getElementById("total_dexterity_score"),
+            constitution_total_box : document.getElementById("total_constitution_score"),
+            intelligence_total_box : document.getElementById("total_intelligence_score"),
+            wisdom_total_box : document.getElementById("total_wisdom_score"),
+            charisma_total_box : document.getElementById("total_charisma_score"),
 
-    var strength_mod_box = document.getElementById("total_strength_mod");
-        var dexterity_mod_box = document.getElementById("total_dexterity_mod");
-        var constitution_mod_box = document.getElementById("total_constitution_mod");
-        var intelligence_mod_box = document.getElementById("total_intelligence_mod");
-        var wisdom_mod_box = document.getElementById("total_wisdom_mod");
-        var charisma_mod_box = document.getElementById("total_charisma_mod");
+        strength_mod_box : document.getElementById("total_strength_mod"),
+            dexterity_mod_box : document.getElementById("total_dexterity_mod"),
+            constitution_mod_box : document.getElementById("total_constitution_mod"),
+            intelligence_mod_box : document.getElementById("total_intelligence_mod"),
+            wisdom_mod_box : document.getElementById("total_wisdom_mod"),
+            charisma_mod_box : document.getElementById("total_charisma_mod"),
 
-    var strength_from_pb_box = document.getElementById("id_strength");
-        var dexterity_from_pb_box = document.getElementById("id_dexterity");
-        var constitution_from_pb_box = document.getElementById("id_constitution");
-        var intelligence_from_pb_box = document.getElementById("id_intelligence");
-        var wisdom_from_pb_box = document.getElementById("id_wisdom");
-        var charisma_from_pb_box = document.getElementById("id_charisma");
+        strength_from_pb_box : document.getElementById("id_strength"),
+            dexterity_from_pb_box : document.getElementById("id_dexterity"),
+            constitution_from_pb_box : document.getElementById("id_constitution"),
+            intelligence_from_pb_box : document.getElementById("id_intelligence"),
+            wisdom_from_pb_box : document.getElementById("id_wisdom"),
+            charisma_from_pb_box : document.getElementById("id_charisma"),
+    };
 
-    var strength_from_pb = strength_from_pb_box.options[strength_from_pb_box.selectedIndex].value;
-        var dexterity_from_pb = dexterity_from_pb_box.options[dexterity_from_pb_box.selectedIndex].value;
-        var constitution_from_pb = constitution_from_pb_box.options[constitution_from_pb_box.selectedIndex].value;
-        var intelligence_from_pb = intelligence_from_pb_box.options[intelligence_from_pb_box.selectedIndex].value;
-        var wisdom_from_pb = wisdom_from_pb_box.options[wisdom_from_pb_box.selectedIndex].value;
-        var charisma_from_pb = charisma_from_pb_box.options[charisma_from_pb_box.selectedIndex].value;
-
-    var strength_from_race = document.getElementById("race_mod_strength").innerHTML;
-        var dexterity_from_race = document.getElementById("race_mod_dexterity").innerHTML;
-        var constitution_from_race = document.getElementById("race_mod_constitution").innerHTML;
-        var intelligence_from_race = document.getElementById("race_mod_intelligence").innerHTML;
-        var wisdom_from_race = document.getElementById("race_mod_wisdom").innerHTML;
-        var charisma_from_race = document.getElementById("race_mod_charisma").innerHTML;
-
-    strength_total_box.innerHTML = (parseInt(strength_from_pb)+parseInt(strength_from_race)).toString();
-        dexterity_total_box.innerHTML = (parseInt(dexterity_from_pb) + parseInt(dexterity_from_race)).toString();
-        constitution_total_box.innerHTML = (parseInt(constitution_from_pb) + parseInt(constitution_from_race)).toString();
-        intelligence_total_box.innerHTML = (parseInt(intelligence_from_pb) + parseInt(intelligence_from_race)).toString();
-        wisdom_total_box.innerHTML = (parseInt(wisdom_from_pb) + parseInt(wisdom_from_race)).toString();
-        charisma_total_box.innerHTML = (parseInt(charisma_from_pb) + parseInt(charisma_from_race)).toString();
-
-    strength_mod_box.innerHTML=getModifier(parseInt(strength_from_pb)+parseInt(strength_from_race));
-        dexterity_mod_box.innerHTML = getModifier(parseInt(dexterity_from_pb) + parseInt(dexterity_from_race));
-        constitution_mod_box.innerHTML = getModifier(parseInt(constitution_from_pb) + parseInt(constitution_from_race));
-        intelligence_mod_box.innerHTML = getModifier(parseInt(intelligence_from_pb) + parseInt(intelligence_from_race));
-        wisdom_mod_box.innerHTML = getModifier(parseInt(wisdom_from_pb) + parseInt(wisdom_from_race));
-        charisma_mod_box.innerHTML = getModifier(parseInt(charisma_from_pb) + parseInt(charisma_from_race));
+    console.log(elements.strength_from_pb_box.options[elements.strength_from_pb_box.selectedIndex].value);
+    elements.dexterity_from_pb = elements.dexterity_from_pb_box.options[elements.dexterity_from_pb_box.selectedIndex].value;
+    elements.constitution_from_pb = elements.constitution_from_pb_box.options[elements.constitution_from_pb_box.selectedIndex].value;
+    elements.intelligence_from_pb = elements.intelligence_from_pb_box.options[elements.intelligence_from_pb_box.selectedIndex].value;
+    elements.wisdom_from_pb = elements.wisdom_from_pb_box.options[elements.wisdom_from_pb_box.selectedIndex].value;
+    elements.charisma_from_pb = elements.charisma_from_pb_box.options[elements.charisma_from_pb_box.selectedIndex].value;
 }
 
-function updateAbilityScores() {
+// Functions that are called from the HTML ------------------------------------------------------------------------
+// All of these just call other functions. Do not change any of their names because they're referenced in views.py.
+
+function onCharClassChange(){
+    console.log("You just changed your class");
+}
+
+function onRaceChange(){
+    console.log("You just changed your race");
+}
+
+function onAbilityScoreChange(){
+    console.log("You just changed an ability score");
+}
+
+function onSubclassChange(){
+    console.log("You just changed your subclass");
+}
+
+function onBackgroundChange(){
+    console.log("You just changed your background");
+}
+
+
+// Helper functions to get something from something else ----------------------------------------------------------
+
+function getDescriptionFromName(name_arg){
+    //Given a class, (sub)race, subclass, or specialization, this function returns its description.
+    //It is returned as raw html in quotes. The quotes are important because when its output is set
+    //as the innerHTML of an element, JS knows that it's supposed to be a string.
+    
+    var name = name_arg;
+    var description;
+
+    //This replaces spaces or dashes in the incoming name with \s or \-, respectively
+    name = name.replace(/\s/g,"\\s");
+    name = name.replace(/\-/g,"\\-");
+
+    //This returns the name and its description, up to but not including the first instance of the literals '}
+    re1 = new RegExp("u\\'((?:" + name + ").*?(?=\\'\\}))");
+
+    description = re1.exec(DATA)[0]
+
+    //This trims it to get strictly the HTML for the description.
+    re2 = new RegExp( "(?:u\\'.*?u\\')(.*)" );
+
+    d = re2.exec(description);
+
+    return d[1];
+}
+
+function getCostFromAbility(ability) {
+    //returns the point-buy cost for an ability.
+
+    var cost_table = new Array();
+    cost_table [8] = 0;
+    cost_table [9] = 1;
+    cost_table [10] = 2;
+    cost_table [11] = 3;
+    cost_table [12] = 4;
+    cost_table [13] = 5;
+    cost_table [14] = 7;
+    cost_table [15] = 9;
+    cost_table [16] = 12;
+    cost_table [17] = 15;
+    cost_table [18] = 19;
+
+    return cost_table[ability]        
+}
+
+function getModifierFromAbility(ability) {
+    //returns the modifier (-1 to +4) on an ability score.
+
+    var to_return =  Math.floor( 0.5 * (ability - 10) );
+    if (to_return >= 0 ){
+        return "+" + to_return.toString();
+    } else {
+        return to_return.toString();
+    }
+}
+
+function getSubclassesFromClass(char_class){
+
+    var to_return = [];
+
+    switch (char_class) {
+        case "Bard":
+            to_return = ["College of Lore", "College of Valor"];
+            break;
+        case "Barbarian":
+            to_return = ["Path of the Berserker", "Path of the Totem Warrior"];
+            break;
+        case "Cleric":
+            to_return = ["Knowledge Domain", "Life Domain", "Light Domain", "Nature Domain", "Tempest Domain", "Trickery Domain", "War Domain"];
+            break;
+        case "Druid":
+            to_return = ["Circle of the Land", "Circle of the Moon"];
+            break;
+        case "Fighter":
+            to_return = ["Champion", "Battle Master", "Eldritch Knight"]
+            break;
+        case "Monk":
+            to_return = ["Way of the Open Hand", "Way of the Shadow", "Way of the Four Elements"];
+            break;
+        case "Paladin":
+            to_return = ["Oath of Devotion", "Oath of the Ancients", "Oath of Vengeance"];
+            break;
+        case "Ranger":
+            to_return = ["Hunter", "Beast Master"];
+            break;
+        case "Rogue":
+            to_return = ["Thief", "Assassin", "Arcane Trickster"];
+            break;
+        case "Sorcerer":
+            to_return = ["Draconic Bloodline", "Wild Magic"];
+            break;
+        case "Warlock":
+            to_return = ["The Archfey", "The Fiend", "The Great Old One"];
+            break;
+        case "Wizard":
+            to_return = ["School of Abjuration", "School of Conjuration", "School of Divination", "School of Enchantment", "School of Evocation", "School of Illusion", "School of Necromancy", "School of Transmutation"];
+            break;
+        case "---------":
+            to_return = [];
+            break;
+    }
+
+    return to_return;
+}
+
+//Functions that actually do things on the page -------------------------------------------------------------------
+
+
+/*
+function setTotalAbilityScores(){
+    //Sets the values of each total ability score and modifier.
+
+    elements.strength_total_box.innerHTML = 
+    (parseInt( elements.strength_from_pb ) + parseInt( elements.strength_from_race ) ).toString();
+        elements.dexterity_total_box.innerHTML = (
+            parseInt( elements.dexterity_from_pb )   +  parseInt(elements . dexterity_from_race)).toString();
+        elements.constitution_total_box.innerHTML = (
+            parseInt( elements.constitution_from_pb )   +  parseInt(elements . constitution_from_race)).toString();
+        elements.intelligence_total_box.innerHTML = (
+            parseInt( elements.intelligence_from_pb )   +  parseInt(elements . intelligence_from_race)).toString();
+        elements.wisdom_total_box.innerHTML = (
+            parseInt( elements.wisdom_from_pb )   +  parseInt(elements . wisdom_from_race)).toString();
+        elements.charisma_total_box.innerHTML = (
+            parseInt( elements.charisma_from_pb )   +  parseInt(elements . charisma_from_race)).toString();
+
+    strength_mod_box.innerHTML = 
+    getModifierFromAbility( parseInt( elements.strength_from_pb ) + parseInt( elements.strength_from_race ) );
+        dexterity_mod_box.innerHTML = getModifierFromAbility(parseInt(elements.dexterity_from_pb) + parseInt(elements.dexterity_from_race));
+        constitution_mod_box.innerHTML = getModifierFromAbility(parseInt(elements.constitution_from_pb) + parseInt(elements.constitution_from_race));
+        intelligence_mod_box.innerHTML = getModifierFromAbility(parseInt(elements.intelligence_from_pb) + parseInt(elements.intelligence_from_race));
+        wisdom_mod_box.innerHTML = getModifierFromAbility(parseInt(elements.wisdom_from_pb) + parseInt(elements.wisdom_from_race));
+        charisma_mod_box.innerHTML = getModifierFromAbility(parseInt(elements.charisma_from_pb) + parseInt(elements.charisma_from_race));
+}
+
+function updateAbiiltyScores() {
     //Calculates how many point-buy points the user has spent on their ability scores.
 
     var strength_box = document.getElementById("id_strength");
@@ -79,36 +219,6 @@ function updateAbilityScores() {
     getTotalAbilityScores();
 }
 
-function getCost(ability) {
-    //returns the point-buy cost for an ability.
-
-    var cost_table = new Array();
-    cost_table [8] = 0;
-    cost_table [9] = 1;
-    cost_table [10] = 2;
-    cost_table [11] = 3;
-    cost_table [12] = 4;
-    cost_table [13] = 5;
-    cost_table [14] = 7;
-    cost_table [15] = 9;
-    cost_table [16] = 12;
-    cost_table [17] = 15;
-    cost_table [18] = 19;
-
-    return cost_table[ability]        
-}
-
-function getModifier(ability) {
-    //returns the modifier (-1 to +4) on an ability score.
-
-    var to_return =  Math.floor( 0.5 * (ability - 10) );
-    if (to_return >= 0 ){
-        return "+" + to_return.toString();
-    } else {
-        return to_return.toString();
-    }
-}
-
 function updateRaceMods(race){
     // Displays the racial modifiers to ability scores.
 
@@ -123,6 +233,7 @@ function updateRaceMods(race){
         var charisma_box = document.getElementById("race_mod_charisma");
 
     var race_mods = [];
+
 
     switch (race) {  
         case "Human":
@@ -422,55 +533,7 @@ function updateBackgroundDescription(){
             }
 }
 
-function getSubclassesFromClass(char_class){
 
-    var to_return = [];
-
-    switch (char_class) {
-        case "Bard":
-            to_return = ["College of Lore", "College of Valor"];
-            break;
-        case "Barbarian":
-            to_return = ["Path of the Berserker", "Path of the Totem Warrior"];
-            break;
-        case "Cleric":
-            to_return = ["Knowledge Domain", "Life Domain", "Light Domain", "Nature Domain", "Tempest Domain", "Trickery Domain", "War Domain"];
-            break;
-        case "Druid":
-            to_return = ["Circle of the Land", "Circle of the Moon"];
-            break;
-        case "Fighter":
-            to_return = ["Champion", "Battle Master", "Eldritch Knight"]
-            break;
-        case "Monk":
-            to_return = ["Way of the Open Hand", "Way of the Shadow", "Way of the Four Elements"];
-            break;
-        case "Paladin":
-            to_return = ["Oath of Devotion", "Oath of the Ancients", "Oath of Vengeance"];
-            break;
-        case "Ranger":
-            to_return = ["Hunter", "Beast Master"];
-            break;
-        case "Rogue":
-            to_return = ["Thief", "Assassin", "Arcane Trickster"];
-            break;
-        case "Sorcerer":
-            to_return = ["Draconic Bloodline", "Wild Magic"];
-            break;
-        case "Warlock":
-            to_return = ["The Archfey", "The Fiend", "The Great Old One"];
-            break;
-        case "Wizard":
-            to_return = ["School of Abjuration", "School of Conjuration", "School of Divination", "School of Enchantment", "School of Evocation", "School of Illusion", "School of Necromancy", "School of Transmutation"];
-            break;
-        case "---------":
-            to_return = [];
-            break;
-
-    }
-
-    return to_return;
-}
 
 function updateSubclass(){
     var subclass_box = document.getElementById("id_subclass");
@@ -634,5 +697,5 @@ function updateSubclassDescription()
 
 
 updateSubclass(); 
+*/
 
-document.title = "D&D 5E Character Generator"
