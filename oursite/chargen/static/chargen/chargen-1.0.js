@@ -53,6 +53,7 @@ function onAbilityScoreChange(){
     updateElements();
     calculateTotalPoints();
     setAbilityScoreTotals();
+    setAbilityModifiers();
     console.log("You just changed an ability score");
 }
 
@@ -210,6 +211,21 @@ function setAbilityScoreTotals(){
     document.getElementById("total_intelligence_score").innerHTML = intelligence.toString();
     document.getElementById("total_wisdom_score").innerHTML = wisdom.toString();
     document.getElementById("total_charisma_score").innerHTML = charisma.toString();
+}
+
+function setAbilityModifiers(){
+    strength = getModifierFromAbility(parseInt(document.getElementById("total_strength_score").innerHTML))
+    dexterity = getModifierFromAbility(parseInt(document.getElementById("total_dexterity_score").innerHTML))
+    constitution = getModifierFromAbility(parseInt(document.getElementById("total_constitution_score").innerHTML))
+    intelligence = getModifierFromAbility(parseInt(document.getElementById("total_intelligence_score").innerHTML))
+    wisdom = getModifierFromAbility(parseInt(document.getElementById("total_wisdom_score").innerHTML))
+    charisma = getModifierFromAbility(parseInt(document.getElementById("total_charisma_score").innerHTML))
+    document.getElementById("total_strength_mod").innerHTML = strength;
+    document.getElementById("total_dexterity_mod").innerHTML = dexterity;
+    document.getElementById("total_constitution_mod").innerHTML = constitution;
+    document.getElementById("total_intelligence_mod").innerHTML = intelligence;
+    document.getElementById("total_wisdom_mod").innerHTML = wisdom;
+    document.getElementById("total_charisma_mod").innerHTML = charisma;
 }
 
 function setRaceDescription(){
