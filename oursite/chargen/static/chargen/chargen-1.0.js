@@ -1,39 +1,6 @@
 document.title = "D&D 5E Character Generator"
 window.onload = function(){
 
-    console.log ("window ready");
-
-        //This object contains variable names for all the useful elements on the page.
-    var elements = {
-        //These are indented so you can collapse them.
-        strength_total_box : document.getElementById("total_strength_score"),
-            dexterity_total_box : document.getElementById("total_dexterity_score"),
-            constitution_total_box : document.getElementById("total_constitution_score"),
-            intelligence_total_box : document.getElementById("total_intelligence_score"),
-            wisdom_total_box : document.getElementById("total_wisdom_score"),
-            charisma_total_box : document.getElementById("total_charisma_score"),
-
-        strength_mod_box : document.getElementById("total_strength_mod"),
-            dexterity_mod_box : document.getElementById("total_dexterity_mod"),
-            constitution_mod_box : document.getElementById("total_constitution_mod"),
-            intelligence_mod_box : document.getElementById("total_intelligence_mod"),
-            wisdom_mod_box : document.getElementById("total_wisdom_mod"),
-            charisma_mod_box : document.getElementById("total_charisma_mod"),
-
-        strength_from_pb_box : document.getElementById("id_strength"),
-            dexterity_from_pb_box : document.getElementById("id_dexterity"),
-            constitution_from_pb_box : document.getElementById("id_constitution"),
-            intelligence_from_pb_box : document.getElementById("id_intelligence"),
-            wisdom_from_pb_box : document.getElementById("id_wisdom"),
-            charisma_from_pb_box : document.getElementById("id_charisma"),
-    };
-
-    console.log(elements.strength_from_pb_box.options[elements.strength_from_pb_box.selectedIndex].value);
-    elements.dexterity_from_pb = elements.dexterity_from_pb_box.options[elements.dexterity_from_pb_box.selectedIndex].value;
-    elements.constitution_from_pb = elements.constitution_from_pb_box.options[elements.constitution_from_pb_box.selectedIndex].value;
-    elements.intelligence_from_pb = elements.intelligence_from_pb_box.options[elements.intelligence_from_pb_box.selectedIndex].value;
-    elements.wisdom_from_pb = elements.wisdom_from_pb_box.options[elements.wisdom_from_pb_box.selectedIndex].value;
-    elements.charisma_from_pb = elements.charisma_from_pb_box.options[elements.charisma_from_pb_box.selectedIndex].value;
 }
 
 // Functions that are called from the HTML ------------------------------------------------------------------------
@@ -166,7 +133,37 @@ function getSubclassesFromClass(char_class){
     return to_return;
 }
 
+function getModifiersFromRace(race){
+
+}
+
 //Functions that actually do things on the page -------------------------------------------------------------------
+
+function calculateTotalPoints(){
+
+}
+
+function setAbilityScoreTotals(){
+
+}
+
+function setRaceDescription(){
+
+}
+
+function setClassDescription(){
+    
+}
+
+function setSubclassDescription(){
+    
+}
+
+function setBackgroundDescription(){
+    
+}
+
+
 
 
 /*
