@@ -85,7 +85,11 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
         c39 = "Yes"
     if "survival" in c.proficiencies["skill"]:
         c40 = "Yes"
-    if c.my_class.class_name=="Cleric" or c.my_class.class_name=="Sorcerer":
+    if c.my_class.class_name=="Cleric" or c.my_class.class_name=="Sorcerer" or c.my_class.class_name=="Warlock":
+        myfeatures = list_to_string(c.features)+"\n\n"+c.my_class.subclass+" " + c.my_class.class_name
+    elif (c.level>=2 and (c.my_class.class_name=="Druid" or c.my_class.class_name=="Wizard")):
+        myfeatures = list_to_string(c.features)+"\n\n"+c.my_class.subclass+" " + c.my_class.class_name
+    elif (c.level>=3):
         myfeatures = list_to_string(c.features)+"\n\n"+c.my_class.subclass+" " + c.my_class.class_name
     else:
         myfeatures = list_to_string(c.features)
@@ -185,13 +189,20 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
     if platform.system()=='Windows': #windows and mac use respective pdftk files
         pdftk = os.path.abspath('..')+'/oursite/chargen/pdftkserver/bin/pdftk.exe'
     spellcastingclasses = ["Druid","Cleric","Bard","Wizard","Sorcerer","Warlock"]
-    if (c.level==1): #only generates spell file for classes that get spells at level 1
-        if c.my_class.class_name in spellcastingclasses:
-            fields2 = [('Spellcasting Class 2',c.my_class.class_name),
+    if c.my_class.class_name in spellcastingclasses or ((c.my_class.subclass=="Path of the Totem Warrior" or c.my_class.subclass=="Eldritch Knight" or c.my_class.subclass == "Arcane Trickster") and c.level>=3) or ((c.my_class.class_name=="Paladin" or c.my_class.class_name=="Ranger") and c.level>=2):
+        fields2 = [('Spellcasting Class 2',c.my_class.class_name),
                        ('SpellcastingAbility 2',cap(c.my_class.spell_casting_ability)),
                        ('SpellSaveDC  2',c.my_class.spell_save_dc),
                        ('SpellAtkBonus 2',pre(c.my_class.spell_atk_bonus)),
                        ('SlotsTotal 19',c.my_class.spell_slots1),
+                       ('SlotsTotal 20',c.my_class.spell_slots2),
+                       ('SlotsTotal 21',c.my_class.spell_slots3),
+                       ('SlotsTotal 22',c.my_class.spell_slots4),
+                       ('SlotsTotal 23',c.my_class.spell_slots5),
+                       ('SlotsTotal 24',c.my_class.spell_slots6),
+                       ('SlotsTotal 25',c.my_class.spell_slots7),
+                       ('SlotsTotal 26',c.my_class.spell_slots8),
+                       ('SlotsTotal 27',c.my_class.spell_slots9),
                        ('Spells 1014',cap(c.cantrips[0])),
                        ('Spells 1016',cap(c.cantrips[1])),
                        ('Spells 1017',cap(c.cantrips[2])),
@@ -212,33 +223,113 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
                        ('Spells 1031',cap(c.spells1[9])),
                        ('Spells 1032',cap(c.spells1[10])),
                        ('Spells 1033',cap(c.spells1[11])),
-                       ]
+                       ('Spells 1034',cap(c.spells2[1])),
+                       ('Spells 1035',cap(c.spells2[2])),
+                       ('Spells 1036',cap(c.spells2[3])),
+                       ('Spells 1037',cap(c.spells2[4])),
+                       ('Spells 1038',cap(c.spells2[5])),
+                       ('Spells 1039',cap(c.spells2[6])),
+                       ('Spells 1040',cap(c.spells2[7])),
+                       ('Spells 1041',cap(c.spells2[8])),
+                       ('Spells 1042',cap(c.spells2[9])),
+                       ('Spells 1043',cap(c.spells2[10])),
+                       ('Spells 1044',cap(c.spells2[11])),
+                       ('Spells 1045',cap(c.spells2[12])),
+                       ('Spells 1046',cap(c.spells2[0])),
+                       ('Spells 1047',cap(c.spells3[1])),
+                       ('Spells 1048',cap(c.spells3[0])),
+                       ('Spells 1049',cap(c.spells3[2])),
+                       ('Spells 1050',cap(c.spells3[3])),
+                       ('Spells 1051',cap(c.spells3[4])),
+                       ('Spells 1052',cap(c.spells3[5])),
+                       ('Spells 1053',cap(c.spells3[6])),
+                       ('Spells 1054',cap(c.spells3[7])),
+                       ('Spells 1055',cap(c.spells3[8])),
+                       ('Spells 1056',cap(c.spells3[9])),
+                       ('Spells 1057',cap(c.spells3[10])),
+                       ('Spells 1058',cap(c.spells3[11])),
+                       ('Spells 1059',cap(c.spells3[12])),
+                       ('Spells 1060',cap(c.spells4[1])),
+                       ('Spells 1061',cap(c.spells4[0])),
+                       ('Spells 1062',cap(c.spells4[2])),
+                       ('Spells 1063',cap(c.spells4[3])),
+                       ('Spells 1064',cap(c.spells4[4])),
+                       ('Spells 1065',cap(c.spells4[5])),
+                       ('Spells 1066',cap(c.spells4[6])),
+                       ('Spells 1067',cap(c.spells4[7])),
+                       ('Spells 1068',cap(c.spells4[8])),
+                       ('Spells 1069',cap(c.spells4[9])),
+                       ('Spells 1070',cap(c.spells4[10])),
+                       ('Spells 1071',cap(c.spells4[11])),
+                       ('Spells 1072',cap(c.spells4[12])),
+                       ('Spells 1073',cap(c.spells5[1])),
+                       ('Spells 1074',cap(c.spells5[0])),
+                       ('Spells 1075',cap(c.spells5[2])),
+                       ('Spells 1076',cap(c.spells5[3])),
+                       ('Spells 1077',cap(c.spells5[4])),
+                       ('Spells 1078',cap(c.spells5[5])),
+                       ('Spells 1079',cap(c.spells5[6])),
+                       ('Spells 1080',cap(c.spells5[7])),
+                       ('Spells 1081',cap(c.spells5[8])),
+                       ('Spells 1082',cap(c.spells6[1])),
+                       ('Spells 1083',cap(c.spells6[0])),
+                       ('Spells 1084',cap(c.spells6[2])),
+                       ('Spells 1085',cap(c.spells6[3])),
+                       ('Spells 1086',cap(c.spells6[4])),
+                       ('Spells 1087',cap(c.spells6[5])),
+                       ('Spells 1088',cap(c.spells6[6])),
+                       ('Spells 1089',cap(c.spells6[7])),
+                       ('Spells 1090',cap(c.spells6[8])),
+                       ('Spells 1091',cap(c.spells7[1])),
+                       ('Spells 1092',cap(c.spells7[0])),
+                       ('Spells 1093',cap(c.spells7[2])),
+                       ('Spells 1094',cap(c.spells7[3])),
+                       ('Spells 1095',cap(c.spells7[4])),
+                       ('Spells 1096',cap(c.spells7[5])),
+                       ('Spells 1097',cap(c.spells7[6])),
+                       ('Spells 1098',cap(c.spells7[7])),
+                       ('Spells 1099',cap(c.spells7[8])),
+                       ('Spells 10100',cap(c.spells8[1])),
+                       ('Spells 10101',cap(c.spells8[0])),
+                       ('Spells 10102',cap(c.spells8[2])),
+                       ('Spells 10103',cap(c.spells8[3])),
+                       ('Spells 10104',cap(c.spells8[4])),
+                       ('Spells 10105',cap(c.spells8[5])),
+                       ('Spells 10106',cap(c.spells8[6])),
+                       ('Spells 10107',cap(c.spells9[1])),
+                       ('Spells 10108',cap(c.spells9[0])),
+                       ('Spells 10109',cap(c.spells9[2])),
+                       ('Spells 101010',cap(c.spells9[3])),
+                       ('Spells 101011',cap(c.spells9[4])),
+                       ('Spells 101012',cap(c.spells9[5])),
+                       ('Spells 101013',cap(c.spells9[6])),
+                ]
             #use fdfgen to write .fdf file with spell form data
-            fdf = forge_fdf("",fields2,[],[],[])
-            data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
-            fdf_file = open(data2,"w")
-            fdf_file.write(fdf)
-            fdf_file.close()
-            character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
-            myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
+        fdf = forge_fdf("",fields2,[],[],[])
+        data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
+        fdf_file = open(data2,"w")
+        fdf_file.write(fdf)
+        fdf_file.close()
+        character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
+        myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
             #use pdftk to write .fdf form data to blank spell pdf and save as character2.pdf
-            os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
+        os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
         #also generates spell file for races that happen to get one cantrip (spell of level 0)
-        elif (c.my_race.name=="Elf - High" or c.my_race.name=="Tiefling" or c.my_race.name=="Gnome - Forest" or c.my_race.name=="Elf - Dark (Drow)"):
-            fields2 = [('Spellcasting Class 2',c.my_race.name),
+    elif (c.my_race.name=="Elf - High" or c.my_race.name=="Tiefling" or c.my_race.name=="Gnome - Forest" or c.my_race.name=="Elf - Dark (Drow)"):
+        fields2 = [('Spellcasting Class 2',c.my_race.name),
                        ('SpellcastingAbility 2',cap(c.my_race.spell_casting_ability)),
                        ('SpellSaveDC  2',c.my_race.spell_save_dc),
                        ('SpellAtkBonus 2',pre(c.my_race.spell_atk_bonus)),
                        ('Spells 1014',cap(c.cantrips[0])),
                        ]
-            fdf = forge_fdf("",fields2,[],[],[])
-            data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
-            fdf_file = open(data2,"w")
-            fdf_file.write(fdf)
-            fdf_file.close()
-            character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
-            myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
-            os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
+        fdf = forge_fdf("",fields2,[],[],[])
+        data2 = os.path.abspath('..')+'/oursite/chargen/data2.fdf'
+        fdf_file = open(data2,"w")
+        fdf_file.write(fdf)
+        fdf_file.close()
+        character2 = os.path.abspath('..')+'/oursite/chargen/character2.pdf'
+        myfile2 = os.path.abspath('..')+'/oursite/chargen/myfile2.pdf'
+        os.system(pdftk+' ' + myfile2 + ' fill_form ' + data2 + ' output '+character2)
     #use fdfgen to write .fdf file with character form data
     fdf = forge_fdf("",fields,[],[],[])
     data = os.path.abspath('..')+'/oursite/chargen/data.fdf'
@@ -279,6 +370,8 @@ def fill_pdf(c = Character("Rachel Thorn","Rogue","","Elf - High","",16,10,14,8,
 #returns string with + in front of int if >=0
 #so that modifier numbers have +- in front to demonstrate that it is a modifier
 def pre(x):
+    if x=="":
+        return ""
     if x>=0:
         return "+" + str(x)
     else:
@@ -296,6 +389,6 @@ def cap(string):
 def list_to_string(list):
     string = ""
     for x in list:
-        string+=cap(x)+", "
+        string+=cap(x)+",\n"
     return string[0:len(string)-2]
     

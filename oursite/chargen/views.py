@@ -29,7 +29,31 @@ from models import dChar_class, dRace, dbackstory, dsubclass, dDescription
 
 class OneForm(forms.Form):
     name = forms.CharField(required = False)
-
+    
+    level = forms.ChoiceField(
+        [
+            (1,1),
+            (2,2),
+            (3,3),
+            (4,4),
+            (5,5),
+            (6,6),
+            (7,7),
+            (8, 8),
+            (9, 9),
+            (10, 10),
+            (11, 11),
+            (12, 12),
+            (13, 13),
+            (14, 14),
+            (15, 15),
+            (16, 16),
+            (17, 17),
+            (18, 18),
+            (19,19),
+            (20,20)
+        ]
+        )
     #These modelchoicefield objects are linked to rows in the dChar_class and dRace models, respectively.
     #Each row in the database becomes one select option here.
     character_class = forms.ModelChoiceField(
@@ -269,6 +293,7 @@ def index(request):
                         int(one_form.cleaned_data["intelligence"]),
                         int(one_form.cleaned_data["wisdom"]),
                         int(one_form.cleaned_data["charisma"]),
+                        int(one_form.cleaned_data["level"])
                         )
 
             #pdftest takes a character argument and returns a pdf file as an HttpResponse.
