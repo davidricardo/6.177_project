@@ -1,9 +1,10 @@
 document.title = "D&D 5E Character Generator"
+var elements;
 window.onload = function(){
     console.log ("window ready");
 
             //This object contains variable names for all the useful elements on the page.
-        var elements = {
+        elements = {
             //These are indented so you can collapse them.
             strength_total_box : document.getElementById("total_strength_score"),
                 dexterity_total_box : document.getElementById("total_dexterity_score"),
@@ -25,15 +26,17 @@ window.onload = function(){
                 intelligence_from_pb_box : document.getElementById("id_intelligence"),
                 wisdom_from_pb_box : document.getElementById("id_wisdom"),
                 charisma_from_pb_box : document.getElementById("id_charisma"),
+
+            strength_race_box : document.getElementById("race_mod_strength"),
+                dexterity_race_box : document.getElementById("race_mod_dexterity"),
+                constitution_race_box : document.getElementById("race_mod_constitution"),
+                intelligence_race_box : document.getElementById("race_mod_intelligence"),
+                wisdom_race_box : document.getElementById("race_mod_wisdom"),
+                charisma_race_box : document.getElementById("race_mod_charisma"),
         };
 
-        console.log(elements.strength_from_pb_box.options[elements.strength_from_pb_box.selectedIndex].value);
-        elements.dexterity_from_pb = elements.dexterity_from_pb_box.options[elements.dexterity_from_pb_box.selectedIndex].value;
-        elements.constitution_from_pb = elements.constitution_from_pb_box.options[elements.constitution_from_pb_box.selectedIndex].value;
-        elements.intelligence_from_pb = elements.intelligence_from_pb_box.options[elements.intelligence_from_pb_box.selectedIndex].value;
-        elements.wisdom_from_pb = elements.wisdom_from_pb_box.options[elements.wisdom_from_pb_box.selectedIndex].value;
-        elements.charisma_from_pb = elements.charisma_from_pb_box.options[elements.charisma_from_pb_box.selectedIndex].value;
-}
+        updateElements();
+    }
 
 // Functions that are called from the HTML ------------------------------------------------------------------------
 // All of these just call other functions. Do not change any of their names because they're referenced in views.py.
@@ -47,6 +50,9 @@ function onRaceChange(){
 }
 
 function onAbilityScoreChange(){
+    updateElements();
+    calculateTotalPoints();
+    setAbilityScoreTotals();
     console.log("You just changed an ability score");
 }
 
@@ -171,12 +177,39 @@ function getModifiersFromRace(race){
 
 //Functions that actually do things on the page -------------------------------------------------------------------
 
-function calculateTotalPoints(){
+function updateElements(){
+    elements.strength_from_pb = elements.strength_from_pb_box.options[elements.strength_from_pb_box.selectedIndex].value;
+    elements.dexterity_from_pb = elements.dexterity_from_pb_box.options[elements.dexterity_from_pb_box.selectedIndex].value;
+    elements.constitution_from_pb = elements.constitution_from_pb_box.options[elements.constitution_from_pb_box.selectedIndex].value;
+    elements.intelligence_from_pb = elements.intelligence_from_pb_box.options[elements.intelligence_from_pb_box.selectedIndex].value;
+    elements.wisdom_from_pb = elements.wisdom_from_pb_box.options[elements.wisdom_from_pb_box.selectedIndex].value;
+    elements.charisma_from_pb = elements.charisma_from_pb_box.options[elements.charisma_from_pb_box.selectedIndex].value;
+}
 
+function calculateTotalPoints(){
+    var strength = getCostFromAbility(parseInt( elements.strength_from_pb ));
+    var dexterity = getCostFromAbility(parseInt( elements.dexterity_from_pb ));
+    var constitution = getCostFromAbility(parseInt( elements.constitution_from_pb ));
+    var intelligence = getCostFromAbility(parseInt( elements.intelligence_from_pb ));
+    var wisdom = getCostFromAbility(parseInt( elements.wisdom_from_pb ));
+    var charisma = getCostFromAbility(parseInt( elements.charisma_from_pb ));
+    var total_cost = dexterity+strength+constitution+intelligence+wisdom+charisma;
+    document.getElementById("total_ability_score_box").innerHTML = total_cost.toString();
 }
 
 function setAbilityScoreTotals(){
-
+    strength = parseInt( elements.strength_from_pb ) + parseInt(elements.strength_race_box.innerHTML);
+    dexterity = parseInt( elements.dexterity_from_pb ) + parseInt(elements.dexterity_race_box.innerHTML);
+    constitution = parseInt( elements.constitution_from_pb ) + parseInt(elements.constitution_race_box.innerHTML);
+    intelligence = parseInt( elements.intelligence_from_pb ) + parseInt(elements.intelligence_race_box.innerHTML);
+    wisdom = parseInt( elements.wisdom_from_pb ) + parseInt(elements.wisdom_race_box.innerHTML);
+    charisma = parseInt( elements.charisma_from_pb ) + parseInt(elements.charisma_race_box.innerHTML);
+    document.getElementById("total_strength_score").innerHTML = strength.toString();
+    document.getElementById("total_dexterity_score").innerHTML = dexterity.toString();
+    document.getElementById("total_constitution_score").innerHTML = constitution.toString();
+    document.getElementById("total_intelligence_score").innerHTML = intelligence.toString();
+    document.getElementById("total_wisdom_score").innerHTML = wisdom.toString();
+    document.getElementById("total_charisma_score").innerHTML = charisma.toString();
 }
 
 function setRaceDescription(){
