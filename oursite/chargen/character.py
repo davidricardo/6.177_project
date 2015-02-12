@@ -406,11 +406,30 @@ def highestScore(character):
     highest = ""
     high = 0
     for key in character.ability_scores.keys():
-        if character.ability_scores[key]>high and character.ability_scores[key]+2<=20:
+        if character.ability_scores[key]>high and character.ability_scores[key]+1<=20:
             highest = key
             high = character.ability_scores[key]
     return highest
 
+def highestOdd(character):
+    highest = ""
+    high = 0
+    for key in character.ability_scores.keys():
+        if character.ability_scores[key]>high and character.ability_scores[key]+1<=20 and character.ability_scores[key]%2==1:
+            highest = key
+            high = character.ability_scores[key]
+    return highest
+
+def abilityScoreIncrease(character):
+    if character.ability_scores[highestScore(character)]%2==1:
+        character.ability_scores[highestScore(character)]+=1
+        if highestOdd(character)=="":
+            character.ability_scores[highestScore(character)]+=1
+        else:
+            character.ability_scores[highestOdd(character)]+=1
+    else:
+        character.ability_scores[highestScore(character)]+=2
+        
 #class containing the character's class
 #class in d&d is like your job (Rogue, Bard, Wizard, Fighter, etc.)
 #we name it Char_Class to distinguish from python classes
@@ -423,45 +442,45 @@ class Char_Class:
         self.subclass = subclass #subclasses are specific paths within classes, given slightly different features and stats
         if not(self.class_name=="Fighter" or self.class_name=="Rogue"):
             if character.level>=4:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=8:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=12:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=16:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=19:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
         if self.class_name=="Fighter":
             if character.level>=4:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=6:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=8:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=12:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=14:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=16:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=19:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
         if self.class_name=="Rogue":
             if character.level>=4:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=6:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=8:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=10:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=12:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=16:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
             if character.level>=19:
-                character.ability_scores[highestScore(character)]+=2
+                abilityScoreIncrease(character)
         if self.subclass=="":
             number_of_records = dsubclass.objects.filter(char_class = dChar_class.objects.get(name=name)).count()
             random_index = random.randrange(0,number_of_records)
