@@ -4,7 +4,11 @@
 \margl1440\margr1440\vieww10800\viewh8400\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
 
-\f0\fs24 \cf0 HOW TO RUN D&D CHARACTER GENERATOR\
+\f0\fs24 \cf0 6.177\
+Rachael Devlin (rdevlin), Rachel Thornton (rthorn), David Ricardo (kigaltan)\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 HOW TO RUN D&D CHARACTER GENERATOR\
 \
 Make sure Python 2.7 and Django 1.6 are installed.\
 Open Windows command line or Mac Terminal.\

@@ -3,7 +3,31 @@
 <head>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'chargen/style.css' %}">
-    <script type="text/javascript" src="{% static 'chargen/chargen-1.0.js' %}" async></script>
+    <script type="text/javascript">
+        var DATA;
+
+        var temp_element = document.createElement('textarea');
+        temp_element.innerHTML = ' {{ description_data }} ';
+
+        DATA = unescape( temp_element.value );
+    
+
+
+        //Uncomment this function to test stuff
+        // (function() {
+        //     console.log ("Testing getDescriptionFromName");
+        //     console.log ("Test case 1: 'Acolyte'");
+        //     console.log( getDescriptionFromName("Acolyte") );
+        //     console.log ("Test case 2: 'Halfling - Stout'");
+        //     console.log( getDescriptionFromName("Halfling - Stout") );
+        //     console.log ("Test case 3: 'Druid'");
+        //     console.log( getDescriptionFromName("Druid") );
+        //     console.log ("Test case 4: 'Light Domain'");
+        //     console.log( getDescriptionFromName("Light Domain") );
+        //     console.log("\n \n \n \n \n")
+        // })();
+    </script>
+    <script type="text/javascript" src="{% static 'chargen/chargen-1.0.js' %}"></script>
 </head>
 <body>
 
@@ -21,9 +45,21 @@
             <p class="main_table_label_text">Name: </p>
         </th>
         <td class="main_table_cell">
-            {{ name_form.name }}
+            {{ one_form.name }}
             <span class="prompt">
                 Every character needs a name.
+            </s     pan>
+        </td>
+    </tr>
+    
+    <tr> <!-- Level row -->
+        <th class="main_table_label_box">
+            <p class="main_table_label_text">Level: </p>
+        </th>
+        <td class="main_table_cell">
+            {{ one_form.level }}
+            <span class="prompt">
+                Choose your character's starting level, from 1 to 20.
             </span>
         </td>
     </tr>
@@ -34,7 +70,7 @@
             <p class="main_table_label_text">Race: </p>
         </th>
         <td class="main_table_cell">
-            {{ class_race_form.race }}
+            {{ one_form.race }}
             <span class="prompt">
                 What is their species?
             </span>
@@ -51,7 +87,7 @@
             <p class="main_table_label_text">Class: </p>
         </th>
         <td class="main_table_cell">
-            {{ class_race_form.character_class }}
+            {{ one_form.character_class }}
             <span class="prompt">
                 What kind of adventurer are they?
             </span>
@@ -66,10 +102,12 @@
             <p class="main_table_label_text">Subclass: </p>
         </th>
         <td class="main_table_cell">
-            {{ subclass_form.subclass }}
+            {{ one_form.subclass }}
             <span class="prompt">
                 What is their specialization?
             </span>
+            <br>
+            <span class="explanation" id="subclass_explanation">Members of this subclass are...</span>
         </td>
     </tr>
 
@@ -91,7 +129,8 @@
                     <th>Modifier</th>
                 </tr>
 
-                {% for field in ab_score_form %}
+                {% for field in one_form %}
+                {% if field.name in ab_scores %}
                 <tr>
                     <td class="ability_score_label">{{ field.label }}</td>
                     <td>{{ field }}</td>
@@ -99,6 +138,7 @@
                     <td class="ability_score_total" id="total_{{ field.name }}_score">8</td>
                     <td id="total_{{ field.name }}_mod">-1</td>
                 </tr>
+                {% endif %}
                 {% endfor %}
             </table>
             <div>
@@ -115,14 +155,12 @@
             <p class="main_table_label_text">Background: </p>
         </th>
         <td class="main_table_cell">
-            {{ background_form.background }}
+            {{ one_form.background }}
             <span class="prompt">
                 What were they before they started adventuring?
             </span>
-            <!-- 
-            This was created to give room for each background to have a descriptive line, the same way classes and races do.
             <br>
-            <span class="explanation" id="background_explanation">People with this background are...</span> -->
+            <span class="explanation" id="background_explanation">People with this background are...</span>
         </td>
     </tr>
 

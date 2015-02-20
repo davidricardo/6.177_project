@@ -5,8 +5,9 @@ sys.path.append('../')
 import oursite.settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oursite.settings'
 from django.contrib import admin
-#from import_export import resources
-#from import_export.admin import ImportExportModelAdmin
+
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 from chargen.models import *
 """
 class dWeaponResource(resources.ModelResource):
@@ -51,18 +52,6 @@ class dsubclassResource(resources.ModelResource):
 class dsubclassAdmin(ImportExportModelAdmin):
     resource_class = dsubclassResource
 admin.site.register(dsubclass,dsubclassAdmin)
-
-admin.site.register(user_entry)
-
-class dspellResource(resources.ModelResource):
-    class Meta:
-        model = dspell
-
-class dspellAdmin(ImportExportModelAdmin):
-    resource_class = dspellResource
-
-admin.site.register(dspell,dspellAdmin)
-
 
 class dRaceResource(resources.ModelResource):
     class Meta:
@@ -119,7 +108,26 @@ class dflawsAdmin(ImportExportModelAdmin):
 admin.site.register(dflaws,dflawsAdmin)
 <<<<<<< HEAD
 
+class dDescriptionResource(resources.ModelResource):
+    class Meta:
+        model = dDescription
 
+class dDescriptionAdmin(ImportExportModelAdmin):
+    resource_class = dDescriptionResource
+
+
+admin.site.register(dDescription,dDescriptionAdmin)
+
+
+class dabilityweightsResource(resources.ModelResource):
+    class Meta:
+        model = dabilityweights
+
+class dabilityweightsAdmin(ImportExportModelAdmin):
+    resource_class = dabilityweightsResource
+
+
+admin.site.register(dabilityweights,dabilityweightsAdmin)
 
 =======
 >>>>>>> origin/Rachael-shmer-shmer
