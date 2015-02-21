@@ -75,14 +75,17 @@ function onBackgroundChange(){
 
 // Helper functions to get something from something else ----------------------------------------------------------
 
-function getDescriptionFromName(name_arg){
+function getDescriptionFromName(name_arg,title){
     //Given a class, (sub)race, subclass, or specialization, this function returns its description.
     //It is returned as raw html in quotes. The quotes are important because when its output is set
     //as the innerHTML of an element, JS knows that it's supposed to be a string.
     
     var name = name_arg;
     if (name =="---------") {
-        return "dMembers of this subclass are...d";
+        if (title=="background") {
+            return "dPeople with this background are...d";
+        }
+        return "dMembers of this " + title + " are...d";
     }
     var description;
 
@@ -331,7 +334,7 @@ function setRaceDescription(){
     var race_box = document.getElementById("id_race");
     var race = race_box.options[race_box.selectedIndex].text;
     var race_description_box = document.getElementById("race_explanation");
-    var stringDesc = getDescriptionFromName(race);
+    var stringDesc = getDescriptionFromName(race,"race");
     race_description_box.innerHTML = stringDesc.substring(1,stringDesc.length-1);
 }
 
@@ -339,7 +342,7 @@ function setClassDescription(){
     var class_box = document.getElementById("id_character_class");
     var class2 = class_box.options[class_box.selectedIndex].text;
     var class_description_box = document.getElementById( "class_explanation");
-    var stringDesc = getDescriptionFromName(class2);
+    var stringDesc = getDescriptionFromName(class2,"class");
     class_description_box.innerHTML = stringDesc.substring(1,stringDesc.length-1);
     
 }
@@ -348,7 +351,7 @@ function setSubclassDescription(){
     var subclass_box = document.getElementById("id_subclass");
     var subclass = subclass_box.options[subclass_box.selectedIndex].text;
     var subclass_description_box = document.getElementById("subclass_explanation");
-    var stringDesc = getDescriptionFromName(subclass);
+    var stringDesc = getDescriptionFromName(subclass,"subclass");
     subclass_description_box.innerHTML = stringDesc.substring(1,stringDesc.length-1);
 }
 
@@ -356,6 +359,6 @@ function setBackgroundDescription(){
     var background_box = document.getElementById("id_background");
     var background = background_box.options[background_box.selectedIndex].text;
     var background_description_box = document.getElementById("background_explanation");
-    var stringDesc = getDescriptionFromName(background);
+    var stringDesc = getDescriptionFromName(background,"background");
     background_description_box.innerHTML = stringDesc.substring(1,stringDesc.length-1);
 }
