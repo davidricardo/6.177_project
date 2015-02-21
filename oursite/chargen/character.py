@@ -173,7 +173,8 @@ class Character:
         self.skills = {"acrobatics":0,"animal handling":0,"arcana":0,"athletics":0,"deception":0,"history":0,"insight":0,"intimidation":0,"investigation":0,"medicine":0,"nature":0,"perception":0,"performance":0,"persuasion":0,"religion":0,"sleight of hand":0,"stealth":0,"survival":0}
         self.saves = {"strength":0,"dexterity":0,"constitution":0,"intelligence":0,"wisdom":0,"charisma":0}
         self.features = [x.lower() for x in self.features]
-        self.features = list(set(self.features)) #calling list(set()) removes duplicates from list (sets cannot have duplicates)
+        while "feat" in self.features:
+            self.features.remove("feat")
         self.equipment = [x.lower() for x in self.equipment]
         self.equipment = list(set(self.equipment))
         self.languages = [x.lower() for x in self.languages]
@@ -597,7 +598,6 @@ class Char_Class:
                     character.cantrips.append(DRUID_CANTRIPS[x])
                     x = random.randrange(0,8)
                     if x==0:
-                        self.subclass = "Circle of the Land - Arctic"
                         if character.level>=3:
                             character.spells2.extend(["hold person","spike growth"])
                         if character.level>=5:
@@ -607,7 +607,6 @@ class Char_Class:
                         if character.level>=9:
                             character.spells5.extend(["commune with nature","cone of cold"])
                     elif x==1:
-                        self.subclass = "Circle of the Land - Coast"
                         if character.level>=3:
                             character.spells2.extend(["mirror image","misty step"])
                         if character.level>=5:
@@ -617,7 +616,6 @@ class Char_Class:
                         if character.level>=9:
                             character.spells5.extend(["conjure elemental","scrying"])
                     elif x==2:
-                        self.subclass = "Circle of the Land - Desert"
                         if character.level>=3:
                             character.spells2.extend(["blur","silence"])
                         if character.level>=5:
@@ -627,7 +625,6 @@ class Char_Class:
                         if character.level>=9:
                             character.spells5.extend(["insect plague","wall of stone"]) 
                     elif x==3:
-                        self.subclass = "Circle of the Land - Forest"
                         if character.level>=3:
                             character.spells2.extend(["barkskin","spider climb"])
                         if character.level>=5:
@@ -637,7 +634,6 @@ class Char_Class:
                         if character.level>=9:
                             character.spells5.extend(["commune with nature","tree stride"]) 
                     elif x==4:
-                        self.subclass = "Circle of the Land - Grassland"
                         if character.level>=3:
                             character.spells2.extend(["invisibility","pass without trace"])
                         if character.level>=5:
@@ -647,7 +643,6 @@ class Char_Class:
                         if character.level>=9:
                             character.spells5.extend(["dream","insect plague"])    
                     elif x==5:
-                        self.subclass = "Circle of the Land - Mountain"
                         if character.level>=3:
                             character.spells2.extend(["spider climb","spike growth"])
                         if character.level>=5:
@@ -657,7 +652,6 @@ class Char_Class:
                         if character.level>=9:
                             character.spells5.extend(["passwall","wall of stone"])    
                     elif x==6:
-                        self.subclass = "Circle of the Land - Swamp"
                         if character.level>=3:
                             character.spells2.extend(["darkness","melf's acid arrow"])
                         if character.level>=5:
@@ -667,7 +661,6 @@ class Char_Class:
                         if character.level>=9:
                             character.spells5.extend(["insect plague","scrying"])     
                     elif x==7:
-                        self.subclass = "Circle of the Land - Underdark"
                         if character.level>=3:
                             character.spells2.extend(["spider climb","web"])
                         if character.level>=5:
@@ -786,7 +779,7 @@ class Char_Class:
                 pass
             elif name=="Rogue":
                 if self.subclass=="Assassin":
-                    self.proficiencies["tools"].extend(["disguise kit","poisoner's kit"])
+                    character.proficiencies["tools"].extend(["disguise kit","poisoner's kit"])
                 if self.subclass=="Arcane Trickster":
                     if character.level<10:
                         character.cantrips.extend(choose(WIZARD_CANTRIPS,3,character.cantrips))

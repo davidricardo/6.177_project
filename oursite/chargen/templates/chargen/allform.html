@@ -11,7 +11,12 @@
 
         DATA = unescape( temp_element.value );
     
+        var MOD_DATA;
 
+        var temp_element2 = document.createElement('textarea');
+        temp_element2.innerHTML = ' {{ mod_data }} ';
+
+        MOD_DATA = unescape( temp_element2.value );
 
         //Uncomment this function to test stuff
         // (function() {
