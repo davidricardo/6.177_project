@@ -7,7 +7,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from chargen.models import *
-"""
+
 class dWeaponResource(resources.ModelResource):
     class Meta:
         model = dWeapon
@@ -122,4 +122,4 @@ class dabilityweightsAdmin(ImportExportModelAdmin):
 
 admin.site.register(dabilityweights,dabilityweightsAdmin)
 
-"""
+

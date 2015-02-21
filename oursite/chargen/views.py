@@ -238,6 +238,18 @@ def index(request):
             "description": a.description,
         } )
 
+    mod_data = []
+
+    for pk in range(dRace.objects.count()):
+        if pk+1==8:
+            continue
+        a = dRace.objects.get( id = pk + 1 )
+
+        mod_data.append( {
+            "name": a.name,
+            "scores": [a.str_mod,a.dex_mod,a.con_mod,a.int_mod,a.wis_mod,a.char_mod]
+        } )
+
     # return HttpResponse( description_data )
 
     
@@ -248,7 +260,8 @@ def index(request):
                         "one_form": one_form,
                         #this is necessary so that the template knows which fields to render in the table
                         "ab_scores": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"],
-                        "description_data": description_data
+                        "description_data": description_data,
+                        "mod_data": mod_data
                     } )
                 )
             )        
@@ -271,8 +284,6 @@ def index(request):
                 if one_form.cleaned_data["subclass"]==None:
                     subclass = ""
                 else:
-                    #Not sure what this is for? Ask Rachel, I think,
-                    #this is so that the proper subclass is passed. I can explain in person if you want
                     index = one_form.cleaned_data["subclass"].id
                     subclass = dsubclass.objects.filter(char_class = dChar_class.objects.get(name = one_form.cleaned_data["character_class"].name))[index-1].name
 
