@@ -482,6 +482,9 @@ class Char_Class:
                 abilityScoreIncrease(character)
             if character.level>=19:
                 abilityScoreIncrease(character)
+        if self.class_name=="Barbarian" and character.level==20:
+            character.ability_scores["strength"]+=4
+            character.ability_scores["constitution"]+=4
         if self.subclass=="":
             number_of_records = dsubclass.objects.filter(char_class = dChar_class.objects.get(name=name)).count()
             random_index = random.randrange(0,number_of_records)
