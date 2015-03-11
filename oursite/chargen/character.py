@@ -676,9 +676,9 @@ class Char_Class:
                 if self.subclass=="School of Illusion":
                     character.cantrips.append("minor illusion")
                 elif self.subclass=="School of Necromancy" and character.level>=6:
-                    self.spells5.append("animate dead")
+                    character.spells5.append("animate dead")
                 elif self.subclass=="School of Transmutation" and character.level>=10:
-                    self.spells4.append("polymorph")
+                    character.spells4.append("polymorph")
         elif character.level>=3:
             if name=="Barbarian":
                 if self.subclass=="Path of the Totem Warrior":
